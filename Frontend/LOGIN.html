@@ -444,6 +444,19 @@ body {
 }
 .trust-icon { font-size: 0.8rem; }
 
+.legal-consent {
+  font-size: 0.76rem;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 0.9rem;
+  line-height: 1.5;
+}
+.legal-consent a {
+  color: var(--gold);
+  text-decoration: none;
+}
+.legal-consent a:hover { color: var(--gold2); }
+
 .btn-submit.loading { pointer-events: none; opacity: 0.7; }
 .btn-submit.loading .btn-text { display: none; }
 .btn-submit .btn-spinner { display: none; }
@@ -665,6 +678,10 @@ body {
       <span class="btn-text">Create account <span class="btn-arrow">&#x2192;</span></span>
       <span class="btn-spinner"><span class="spinner-ring"></span></span>
     </button>
+
+    <p class="legal-consent">
+      By creating an account, you agree to our <a href="TermsOfService.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="PrivacyPolicy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+    </p>
   </form>
 
   <div class="trust-row">
@@ -672,6 +689,10 @@ body {
     <div class="trust-item"><span class="trust-icon">&#x26A1;</span><span>Instant access</span></div>
     <div class="trust-item"><span class="trust-icon">&#x1F6E1;&#xFE0F;</span><span>No spam, ever</span></div>
   </div>
+
+  <p class="legal-consent">
+    <a href="TermsOfService.html" target="_blank" rel="noopener">Terms of Service</a> &middot; <a href="PrivacyPolicy.html" target="_blank" rel="noopener">Privacy Policy</a>
+  </p>
 </div>
 
 <script src="config.js"></script>

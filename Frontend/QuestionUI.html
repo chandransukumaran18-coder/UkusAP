@@ -60,7 +60,7 @@ body {
 .exam-top-left .logo-int { color: var(--gold); }
 .exam-top-sub { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
 .exam-top-center { display: flex; justify-content: center; align-items: center; }
-.exam-top-right { display: flex; justify-content: flex-end; }
+.exam-top-right { display: flex; justify-content: flex-end; align-items: center; gap: 0.6rem; }
 .exam-exit {
   color: var(--muted);
   text-decoration: none;
@@ -72,6 +72,17 @@ body {
   transition: all 0.18s;
 }
 .exam-exit:hover { background: #F4F5F7; color: #15171F; border-color: rgba(15,23,42,0.2); }
+.logout-icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.logout-icon-btn:hover { background: #F4F5F7; color: #15171F; border-color: rgba(15,23,42,0.2); }
 
 /* ─── MAIN ─── */
 .exam-main {
@@ -341,6 +352,12 @@ sub { bottom: -0.2em; }
   <div class="exam-top-center"></div>
   <div class="exam-top-right">
     <a href="QuestionBankPage.html" class="exam-exit">Exit practice</a>
+    <button class="logout-icon-btn" id="logoutBtn" type="button" aria-label="Log out" title="Log out">
+      <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+        <path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
   </div>
 </header>
 
@@ -399,6 +416,20 @@ sub { bottom: -0.2em; }
 <script>
 const token = localStorage.getItem('derive_token');
 if (!token) { window.location.href = 'LOGIN.html'; }
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    if (token) {
+      await fetch(`${API_BASE}/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    }
+  } catch (_) {}
+  localStorage.removeItem('derive_token');
+  localStorage.removeItem('derive_name');
+  window.location.href = 'LOGIN.html';
+});
 
 const storedName = localStorage.getItem('derive_name');
 if (storedName) document.getElementById('examUserName').textContent = storedName;

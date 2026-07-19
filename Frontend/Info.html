@@ -39,6 +39,18 @@ html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sy
 .back-link svg { width: 16px; height: 16px; }
 .brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 0.3rem; }
 .brand .logo-int { color: var(--gold); }
+.top-nav-right { display: flex; align-items: center; gap: 1rem; }
+.logout-icon-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.logout-icon-btn:hover { background: var(--bg3); color: var(--text); border-color: rgba(15,23,42,0.2); }
 
 .hero {
   background: linear-gradient(135deg, #131417, #1F2128);
@@ -174,7 +186,15 @@ html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sy
       <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       All Sample Papers
     </a>
-    <span class="brand"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></span>
+    <div class="top-nav-right">
+      <span class="brand"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></span>
+      <button class="logout-icon-btn" id="logoutBtn" type="button" aria-label="Log out" title="Log out">
+        <svg viewBox="0 0 24 24" fill="none" width="16" height="16">
+          <path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          <path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
   </div>
 
   <div class="hero">
@@ -286,10 +306,26 @@ html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sy
   </div>
 </div>
 
+<script src="config.js"></script>
 <script>
-if (!localStorage.getItem('derive_token')) {
+const token = localStorage.getItem('derive_token');
+if (!token) {
   window.location.href = 'LOGIN.html';
 }
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    if (token) {
+      await fetch(`${API_BASE}/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    }
+  } catch (_) {}
+  localStorage.removeItem('derive_token');
+  localStorage.removeItem('derive_name');
+  window.location.href = 'LOGIN.html';
+});
 
 const params = new URLSearchParams(window.location.search);
 const paper = params.get('paper');

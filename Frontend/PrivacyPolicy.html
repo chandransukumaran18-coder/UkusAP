@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #07080F;
+  --bg2:    #0C1120;
+  --bg3:    #111928;
+  --gold:   #F0A012;
+  --gold2:  #FFB830;
+  --teal:   #00C8A4;
+  --teal2:  #00EAC0;
+  --text:   #EEF2FF;
+  --muted:  #67798F;
+  --border: rgba(255,255,255,0.07);
+  --card:   rgba(255,255,255,0.025);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.7;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 3px; }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+.logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  letter-spacing: -0.02em;
+}
+.logo-int { color: var(--gold); }
+.back-link {
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--gold); }
+
+.doc-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3.5rem 1.5rem 6rem;
+}
+
+.doc-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 0.8rem;
+  display: block;
+}
+.doc-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.6rem;
+}
+.doc-updated {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 2.6rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-section { margin-bottom: 2.2rem; }
+.doc-section h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--gold2);
+  margin-bottom: 0.7rem;
+  letter-spacing: -0.01em;
+}
+.doc-section p { color: var(--text); opacity: 0.88; font-size: 0.94rem; margin-bottom: 0.8rem; }
+.doc-section ul { margin: 0 0 0.8rem 1.3rem; color: var(--text); opacity: 0.88; font-size: 0.94rem; }
+.doc-section li { margin-bottom: 0.4rem; }
+.doc-section a { color: var(--teal); text-decoration: none; }
+.doc-section a:hover { color: var(--teal2); }
+.doc-section strong { color: var(--text); opacity: 1; }
+
+.legal-notice {
+  font-size: 0.8rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 2.4rem;
+}
+
+.footer-note {
+  margin-top: 3rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(103,121,143,0.6);
+  line-height: 1.6;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a href="derive-landing.html" class="logo">
+    <span class="logo-int">&#x222B;</span> Ukus<span style="color:#F0A012;">AP</span>
+  </a>
+  <a href="LOGIN.html" class="back-link">&#x2190; Back to sign in</a>
+</div>
+
+<div class="doc-wrap">
+  <span class="doc-eyebrow">Legal</span>
+  <h1 class="doc-title">Privacy Policy</h1>
+  <p class="doc-updated">Last updated: July 19, 2026</p>
+
+  <div class="legal-notice">
+    This policy explains what data UkusAP collects and how it's used. It is written in plain language for a student-focused exam-prep product and does not constitute legal advice.
+  </div>
+
+  <div class="doc-section">
+    <h2>1. Who this policy covers</h2>
+    <p>UkusAP ("we," "us," "our") provides an AP Calculus BC exam-preparation platform, including practice questions, timed quizzes, and exam simulations. This policy applies to anyone who creates an account or otherwise uses UkusAP ("you").</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>2. Information we collect</h2>
+    <p><strong>Account information.</strong> When you register, we collect your name, email address, and a password. Passwords are never stored in plain text — they are hashed using bcrypt before being saved.</p>
+    <p><strong>Google Sign-In.</strong> If you sign in with Google, we receive your name and email address from Google's identity service to create or match your account. We do not receive your Google password.</p>
+    <p><strong>Practice and progress data.</strong> We record which questions you attempt, your answers, scores, and time spent, so we can show your progress and recommend what to practice next.</p>
+    <p><strong>Reported issues.</strong> If you use the "Report" feature on a question, we store the question ID, chapter, reason, and any details you provide.</p>
+    <p><strong>Technical data.</strong> Like most web services, our servers log basic request data (IP address, timestamps, request type) for security and abuse prevention (e.g. rate-limiting login attempts).</p>
+    <p><strong>Local storage.</strong> Your browser stores a session token and display name in <code>localStorage</code> so you stay signed in between visits. This stays on your device and is not accessible to other websites.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>3. How we use your information</h2>
+    <ul>
+      <li>To create and secure your account, and keep you signed in</li>
+      <li>To track your practice history, scores, and progress over time</li>
+      <li>To personalize which questions and chapters we surface to you</li>
+      <li>To investigate reported question issues and improve the question bank</li>
+      <li>To detect and prevent abuse, such as automated login attempts</li>
+      <li>To communicate with you about your account, if needed</li>
+    </ul>
+    <p>We do not use your data for advertising, and we do not sell your personal data to third parties.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>4. Who we share information with</h2>
+    <p>We share information only where necessary to operate UkusAP:</p>
+    <ul>
+      <li><strong>Google</strong>, if you choose to sign in with a Google account (Google's own privacy policy governs that exchange)</li>
+      <li><strong>Hosting and database providers</strong> (such as our cloud infrastructure host) who store data on our behalf under standard hosting agreements</li>
+      <li>Where required by law, regulation, or a valid legal request</li>
+    </ul>
+    <p>We do not share your practice history, scores, or account details with other students, schools, or advertisers.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>5. Data retention</h2>
+    <p>We keep your account and practice data for as long as your account is active, so your progress history remains useful to you. If you'd like your account and associated data deleted, contact us using the details below and we will remove it, save for any minimal records we're required to retain by law.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>6. Security</h2>
+    <p>We use industry-standard measures to protect your data, including password hashing (bcrypt), signed session tokens (JWT) with expiry and revocation, rate limiting on authentication endpoints, and standard web security headers. No system is perfectly secure, but we work to keep your information protected.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>7. Your rights</h2>
+    <p>Depending on where you live, you may have rights to access, correct, or request deletion of your personal data, and to withdraw consent for its processing. To exercise any of these rights, contact us at the email below and we'll respond as quickly as we can.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>8. Children's privacy</h2>
+    <p>UkusAP is intended for students preparing for the AP Calculus BC exam, generally aged 13 and older. We do not knowingly collect personal information from children under 13. If you believe a child under 13 has created an account, please contact us so we can remove it. If you are under 18, we recommend involving a parent or guardian before creating an account.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>9. International data transfers</h2>
+    <p>UkusAP's infrastructure may store and process data in countries other than your own. Wherever your data is processed, we apply the same protections described in this policy.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>10. Changes to this policy</h2>
+    <p>We may update this policy as UkusAP evolves. If we make material changes, we'll update the "Last updated" date above. Continued use of UkusAP after changes take effect means you accept the revised policy.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>11. Governing law</h2>
+    <p>This policy is governed by the laws of Singapore, without regard to conflict-of-law principles.</p>
+  </div>
+
+  <div class="doc-section">
+    <h2>12. Contact us</h2>
+    <p>Questions about this policy or your data? Reach us at <a href="mailto:chandransukumaran18@gmail.com">chandransukumaran18@gmail.com</a>.</p>
+  </div>
+
+  <div class="footer-note">
+    AP&#174; is a registered trademark of the College Board.<br>
+    UkusAP is not affiliated with or endorsed by the College Board.
+  </div>
+</div>
+
+</body>
+</html>
