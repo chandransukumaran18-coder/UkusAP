@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Papers — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #F4F5F7;
+  --bg2:    #FFFFFF;
+  --bg3:    #FAFBFC;
+  --gold:   #F0A012;
+  --gold2:  #D88A0A;
+  --teal:   #00A187;
+  --text:   #15171F;
+  --muted:  #6B7280;
+  --muted2: #9CA3AF;
+  --border: rgba(15,23,42,0.08);
+  --card:   #FFFFFF;
+  --sidebar-w: 264px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.12); border-radius:3px; }
+
+/* ─── SIDEBAR (shared pattern) ─── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.2rem;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.8rem;
+  padding: 0 0.4rem;
+}
+.sidebar-logo .logo-int { color: var(--gold); }
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.4rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+.user-avi {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #FF6B35);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+.user-info { flex: 1; overflow: hidden; }
+.user-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.92rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.user-plan { font-size: 0.74rem; color: var(--muted2); }
+.logout-btn {
+  background: none; border: none;
+  color: var(--muted2); cursor: pointer;
+  padding: 0.3rem; display: flex;
+  border-radius: 6px; transition: all 0.18s; flex-shrink: 0;
+}
+.logout-btn:hover { color: var(--text); background: var(--bg); }
+.nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.25rem; }
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: all 0.18s;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active {
+  background: rgba(240,160,18,0.08);
+  color: var(--gold2);
+  font-weight: 600;
+  border-left-color: var(--gold);
+}
+.nav-item svg { flex-shrink: 0; width: 18px; height: 18px; }
+.nav-formula-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  text-align: center;
+  flex-shrink: 0; line-height: 1;
+}
+
+/* ─── MAIN ─── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 2.4rem 3rem 4rem;
+  max-width: 1040px;
+}
+.main-header { margin-bottom: 0.4rem; }
+.header-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal); display: block; margin-bottom: 0.4rem;
+}
+.header-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em;
+}
+.header-sub { font-size: 0.87rem; color: var(--muted); margin-top: 0.3rem; margin-bottom: 2rem; }
+
+/* ─── EXAM GRID ─── */
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+}
+.exam-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+.exam-card:hover {
+  border-color: rgba(240,160,18,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(15,23,42,0.08);
+}
+.exam-card-top { display: flex; align-items: center; justify-content: space-between; }
+.exam-num-badge {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  background: rgba(240,160,18,0.1);
+  color: var(--gold2);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.05rem;
+}
+.exam-card-arrow {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.exam-card:hover .exam-card-arrow { background: var(--gold); border-color: var(--gold); color: #fff; }
+.exam-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.02rem;
+}
+.exam-card-meta {
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+}
+.exam-meta-pill {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.74rem;
+  color: var(--muted);
+}
+.exam-meta-pill svg { width: 12px; height: 12px; color: var(--teal); flex-shrink: 0; }
+
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .sidebar {
+    position: relative; width: 100%; flex-direction: row;
+    align-items: center; height: auto; border-right: none;
+    border-bottom: 1px solid var(--border); padding: 1rem;
+    overflow-x: auto; gap: 1.2rem;
+  }
+  .sidebar-logo { margin-bottom: 0; }
+  .sidebar-user { border-bottom: none; padding: 0; margin-bottom: 0; }
+  .nav-list { flex-direction: row; }
+  .nav-item { white-space: nowrap; }
+  .main { margin-left: 0; padding: 1.6rem 1.2rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <a href="homepage.html" class="sidebar-logo"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></a>
+
+  <div class="sidebar-user">
+    <div class="user-avi" id="userAvi">S</div>
+    <div class="user-info">
+      <div class="user-name" id="userName">Student</div>
+      <div class="user-plan">Explorer plan</div>
+    </div>
+    <button class="logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    <li><a href="homepage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
+    </a></li>
+    <li><a href="QuestionBankPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Question Bank
+    </a></li>
+    <li><a href="FRQ.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h4l10-10-4-4L4 15v4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.5 5.5l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      FRQ Bank
+    </a></li>
+    <li><a href="SamplePaper.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Sample Papers
+    </a></li>
+    <li><a href="QuizzersPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h2M5 12h2M5 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6h10M9 12h10M9 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Quizzes
+    </a></li>
+    <li><a href="FormulaPage.html" class="nav-item">
+      <span class="nav-formula-icon">dy/dx</span>
+      Important Formulas
+    </a></li>
+    <li><a href="AdvancedCustomizationPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Advanced Customization
+    </a></li>
+  </ul>
+</aside>
+
+<main class="main">
+  <div class="main-header">
+    <span class="header-eyebrow">Full-Length Practice</span>
+    <h1 class="header-title">Sample Papers</h1>
+    <p class="header-sub">Ten full-length AP Calculus BC practice exams — timed, sectioned, and run under real exam conditions. Pick one to begin.</p>
+  </div>
+
+  <div class="exam-grid" id="examGrid"></div>
+</main>
+
+<script src="config.js"></script>
+<script>
+if (!localStorage.getItem('derive_token')) {
+  window.location.href = 'LOGIN.html';
+}
+const storedName = localStorage.getItem('derive_name');
+if (storedName) {
+  document.getElementById('userName').textContent = storedName;
+  document.getElementById('userAvi').textContent = storedName.charAt(0).toUpperCase();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  const token = localStorage.getItem('derive_token');
+  try {
+    if (token) {
+      await fetch(`${API_BASE}/logout`, { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } });
+    }
+  } catch (err) { /* server unreachable, clear session anyway */ }
+  localStorage.removeItem('derive_token');
+  localStorage.removeItem('derive_name');
+  window.location.href = 'LOGIN.html';
+});
+
+const grid = document.getElementById('examGrid');
+for (let n = 1; n <= 10; n++) {
+  const paper = `BC-EXAM${n}`;
+  const card = document.createElement('a');
+  card.className = 'exam-card';
+  card.href = `Info.html?paper=${encodeURIComponent(paper)}`;
+  card.innerHTML = `
+    <div class="exam-card-top">
+      <span class="exam-num-badge">${n}</span>
+      <span class="exam-card-arrow">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M6 3l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </div>
+    <div class="exam-card-title">Practice Exam ${n}</div>
+    <div class="exam-card-meta">
+      <span class="exam-meta-pill">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 6h10M9 12h10M9 18h10M5 6h.01M5 12h.01M5 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        45 MCQ
+      </span>
+      <span class="exam-meta-pill">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        6 FRQ
+      </span>
+      <span class="exam-meta-pill">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        3h 15m
+      </span>
+    </div>
+  `;
+  grid.appendChild(card);
+}
+</script>
+</body>
+</html>

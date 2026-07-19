@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Practice — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
+<style>
+:root {
+  --gold: #F0A012;
+  --teal: #00A187;
+  --border: rgba(15,23,42,0.1);
+  --muted: #6B7280;
+  --green: #15803D;
+  --green-bg: #F0FDF4;
+  --red: #B91C1C;
+  --red-bg: #FEF2F2;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  background: #fff;
+  color: #15171F;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#fff; }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.15); border-radius:3px; }
+
+/* ─── TOP BAR ─── */
+.exam-top {
+  background: #fff;
+  color: #15171F;
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.exam-top-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+.exam-top-left .logo-int { color: var(--gold); }
+.exam-top-sub { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+.exam-top-center { display: flex; justify-content: center; align-items: center; }
+.exam-top-right { display: flex; justify-content: flex-end; }
+.exam-exit {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-family: 'Space Mono', monospace;
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  transition: all 0.18s;
+}
+.exam-exit:hover { background: #F4F5F7; color: #15171F; border-color: rgba(15,23,42,0.2); }
+
+/* ─── MAIN ─── */
+.exam-main {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+}
+
+.exam-pane {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2.4rem 2.8rem;
+}
+
+.exam-pane-left {
+  background: #FAFAF8;
+  border-right: 1px solid var(--border);
+}
+
+.question-prompt {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 1.08rem;
+  line-height: 1.85;
+  color: #1A1A1A;
+  max-width: 560px;
+}
+
+.question-prompt table.q-table {
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+}
+.question-prompt table.q-table th,
+.question-prompt table.q-table td {
+  border: 1px solid #1A1A1A;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+}
+.question-prompt table.q-table th { background: #F0EDE6; font-weight: 700; }
+.question-prompt table.q-table td.q-table-gap { border: none; padding: 0 0.5rem; background: transparent; }
+
+.question-graph {
+  margin-top: 1.4rem;
+  max-width: 100%;
+}
+.question-graph svg { max-width: 100%; height: auto; display: block; }
+
+/* ─── REPORT A PROBLEM ─── */
+.report-line { margin-top: 1.4rem; }
+.report-trigger {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; padding: 0.3rem 0; transition: color 0.15s;
+}
+.report-trigger:hover { color: var(--red); }
+.report-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
+.report-panel {
+  margin-top: 0.6rem; max-width: 480px;
+  background: #FAFAFA; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem;
+}
+.report-panel-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.7rem; }
+.report-options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.8rem; }
+.report-options label { display: flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; cursor: pointer; }
+.report-options input[type=radio] { accent-color: var(--red); cursor: pointer; }
+.report-textarea {
+  width: 100%; min-height: 70px; padding: 0.6rem 0.7rem; border-radius: 8px; border: 1px solid var(--border);
+  font-family: inherit; font-size: 0.82rem; resize: vertical; margin-bottom: 0.8rem; display: none;
+}
+.report-textarea:focus { outline: none; border-color: var(--red); }
+.report-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+.report-btn { font-size: 0.8rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 7px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+.report-btn.cancel { background: none; color: var(--muted); }
+.report-btn.cancel:hover { color: #15171F; }
+.report-btn.send { background: var(--red); color: #fff; }
+.report-btn.send:hover { background: #991B1B; }
+.report-btn.send:disabled { opacity: 0.5; cursor: not-allowed; }
+.report-confirm { font-size: 0.82rem; color: var(--green); font-weight: 600; }
+
+.exam-pane-right { background: #fff; }
+
+.question-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.question-num-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px; height: 26px;
+  background: #131417;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  border-radius: 5px;
+}
+
+.choices-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  max-width: 540px;
+}
+
+.choice-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 0.85rem 1.1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.choice-row:hover { border-color: rgba(15,23,42,0.25); background: #FAFAFA; }
+
+.choice-badge {
+  flex-shrink: 0;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 1.5px solid #9CA3AF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  transition: all 0.15s;
+}
+
+.choice-text { padding-top: 0.1rem; font-size: 0.95rem; }
+
+.choice-row.selected {
+  border-color: var(--teal);
+  background: rgba(0,161,135,0.05);
+}
+.choice-row.selected .choice-badge {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: #fff;
+}
+
+.choice-row.locked { cursor: default; }
+
+.choice-row.correct {
+  border-color: var(--green);
+  background: var(--green-bg);
+}
+.choice-row.correct .choice-badge {
+  border-color: var(--green);
+  background: var(--green);
+  color: #fff;
+}
+.choice-row.incorrect {
+  border-color: var(--red);
+  background: var(--red-bg);
+}
+.choice-row.incorrect .choice-badge {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff;
+}
+
+/* ─── SOLUTION PANEL ─── */
+.solution-panel {
+  margin-top: 1.8rem;
+  max-width: 540px;
+  padding: 1.4rem 1.5rem;
+  background: #FAFBFC;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.solution-result {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.9rem;
+}
+.solution-result.is-correct { color: var(--green); }
+.solution-result.is-incorrect { color: var(--red); }
+
+.solution-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.solution-text {
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: #1A1A1A;
+}
+.solution-text p { margin-bottom: 0.9rem; }
+.solution-text p:last-child { margin-bottom: 0; }
+
+.scroll-hint {
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--muted2, #9CA3AF);
+  margin-top: 1.2rem;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ─── BOTTOM BAR ─── */
+.exam-bottom {
+  background: #fff;
+  border-top: 1px solid var(--border);
+  padding: 0.9rem 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.exam-user-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.exam-action-btn {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.65rem 1.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.exam-action-btn:hover:not(:disabled) { background: #D88A0A; }
+.exam-action-btn:disabled { background: #D1D5DB; cursor: not-allowed; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 860px) {
+  .exam-main { flex-direction: column; overflow-y: auto; }
+  .exam-pane { overflow-y: visible; }
+  .exam-pane-left { border-right: none; border-bottom: 1px solid var(--border); }
+}
+sup, sub { font-size: 0.72em; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.2em; }
+</style>
+</head>
+<body>
+
+<header class="exam-top">
+  <div class="exam-top-left">
+    <span class="logo-int">∫</span>
+    <span id="examLabel">AP Calculus BC</span>
+    <span class="exam-top-sub" id="examSub"></span>
+  </div>
+  <div class="exam-top-center"></div>
+  <div class="exam-top-right">
+    <a href="QuestionBankPage.html" class="exam-exit">Exit practice</a>
+  </div>
+</header>
+
+<main class="exam-main">
+  <section class="exam-pane exam-pane-left">
+    <div class="question-prompt" id="questionPrompt">Loading question…</div>
+    <div class="question-graph" id="stimulusGraph" style="display:none"></div>
+
+    <div class="report-line">
+      <button class="report-trigger" id="reportTrigger" type="button">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Report a problem with this question
+      </button>
+      <div class="report-panel" id="reportPanel" style="display:none">
+        <div class="report-panel-title">What's wrong with this question?</div>
+        <div class="report-options">
+          <label><input type="radio" name="reportReason" value="Question is wrong"> The question itself is wrong</label>
+          <label><input type="radio" name="reportReason" value="All the options are wrong"> All the options are wrong</label>
+          <label><input type="radio" name="reportReason" value="Question leaks the answer"> The question leaks the answer</label>
+          <label><input type="radio" name="reportReason" value="Other"> Other</label>
+        </div>
+        <textarea class="report-textarea" id="reportDetails" placeholder="Describe the issue…"></textarea>
+        <div class="report-actions">
+          <button class="report-btn cancel" id="reportCancelBtn" type="button">Cancel</button>
+          <button class="report-btn send" id="reportSendBtn" type="button" disabled>Send Report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="exam-pane exam-pane-right">
+    <div class="question-header-row">
+      <span class="question-num-badge" id="qNumBadge">1</span>
+    </div>
+
+    <div class="choices-list" id="choicesList"></div>
+
+    <div class="solution-panel" id="solutionPanel" style="display:none">
+      <div class="solution-result" id="solutionResult"></div>
+      <div class="solution-title">Solution</div>
+      <div class="solution-text" id="solutionText"></div>
+      <div class="question-graph" id="questionGraph"></div>
+      <div class="scroll-hint" id="scrollHint" style="display:none">↑ scroll up to pick a different answer next time</div>
+    </div>
+  </section>
+</main>
+
+<footer class="exam-bottom">
+  <span class="exam-user-name" id="examUserName">Student</span>
+  <button class="exam-action-btn" id="actionBtn" disabled>Submit</button>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/auto-render.min.js"></script>
+<script src="config.js"></script>
+<script>
+const token = localStorage.getItem('derive_token');
+if (!token) { window.location.href = 'LOGIN.html'; }
+
+const storedName = localStorage.getItem('derive_name');
+if (storedName) document.getElementById('examUserName').textContent = storedName;
+
+const params  = new URLSearchParams(window.location.search);
+const chapter = params.get('chapter');
+const grade   = params.get('grade');
+
+if (!chapter) { window.location.href = 'QuestionBankPage.html'; }
+
+document.getElementById('examSub').textContent = '— ' + chapter + (grade ? ` · Grade ${grade}` : '');
+
+const questionPrompt = document.getElementById('questionPrompt');
+const choicesList     = document.getElementById('choicesList');
+const solutionPanel   = document.getElementById('solutionPanel');
+const solutionResult  = document.getElementById('solutionResult');
+const solutionText    = document.getElementById('solutionText');
+const scrollHint      = document.getElementById('scrollHint');
+const qNumBadge       = document.getElementById('qNumBadge');
+const actionBtn       = document.getElementById('actionBtn');
+
+let currentQuestion = null;
+let selectedChoice  = null;
+let answered        = false;
+let questionCount   = 0;
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+
+/* The bank writes limits as plain "lim(x→2)" instead of LaTeX. Convert that
+   specific pattern into a properly stacked \lim_{x \to 2}. */
+function convertLimNotation(text) {
+  return text.replace(
+    /lim\(([a-zA-Z]+)\s*(?:→|->)\s*([^()]+)\)/g,
+    '\\(\\displaystyle\\lim_{$1 \\to $2}\\)'
+  );
+}
+
+/* Some questions embed a plain-text table of values, e.g.
+     x:     1.9    1.99   1.999  |  2.001  2.01   2.1
+     f(x): 11.41  11.94  11.994 |  12.006  12.06  12.61
+   Detect runs of 2+ consecutive "label: val val val | val val" lines and
+   turn them into a real bordered <table> instead of squished plain text. */
+/* Values must be numeric-ish (numbers, signs, DNE, ∞) so prose lines that
+   contain a colon (e.g. "Claim 1: ...") are never mistaken for table rows. */
+function looksLikeTableValues(rest) {
+  const tokens = rest.split('|').join(' ').trim().split(/\s+/);
+  if (tokens.length < 2) return false;
+  return tokens.every(t =>
+    /^(?:[+\-−–]?(?:\d+(?:\.\d+)?|\.\d+|\d+\/\d+|∞)|[+\-−–0]|DNE|undef(?:ined)?)$/i.test(t)
+  );
+}
+
+function convertTables(text) {
+  const lines = text.split('\n');
+  const rowPattern = /^\s*([^:\n]{1,40}?):\s+(\S.*)$/;
+  const out = [];
+  let i = 0;
+  while (i < lines.length) {
+    let j = i;
+    const rows = [];
+    while (j < lines.length) {
+      const m = lines[j].match(rowPattern);
+      if (!m || !looksLikeTableValues(m[2])) break;
+      rows.push({ label: m[1], rest: m[2] });
+      j++;
+    }
+    if (rows.length >= 2) {
+      out.push(buildTableHtml(rows));
+      i = j;
+    } else {
+      out.push(lines[i]);
+      i++;
+    }
+  }
+  return out.join('\n');
+}
+
+function buildTableHtml(rows) {
+  let html = '<table class="q-table">';
+  rows.forEach(row => {
+    const groups = row.rest.split('|').map(g => g.trim().split(/\s+/).filter(Boolean));
+    html += '<tr><th>' + row.label + '</th>';
+    groups.forEach((group, gi) => {
+      group.forEach(val => { html += '<td>' + val + '</td>'; });
+      if (gi < groups.length - 1) html += '<td class="q-table-gap"></td>';
+    });
+    html += '</tr>';
+  });
+  html += '</table>';
+  return html;
+}
+
+/* The question bank stores math wrapped in plain ( ... ) instead of \( ... \).
+   Convert only the parenthesised groups that actually contain LaTeX (a
+   backslash command, or ^ / _) into \( ... \) so KaTeX's auto-render can
+   find them, while leaving ordinary English parentheses untouched. */
+function prepMath(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '[' && text[i - 1] === '\\') {
+      // Already a proper \[ ... \] display delimiter - copy verbatim, don't re-wrap.
+      let close = text.indexOf('\\]', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(' && text[i - 1] === '\\') {
+      // Already a proper \( ... \) delimiter (e.g. from convertLimNotation) - copy verbatim, don't re-wrap.
+      let close = text.indexOf('\\)', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(') {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const inner = text.slice(i + 1, j - 1);
+      if (/\\[a-zA-Z]+|[\^_]/.test(inner)) {
+        out += '\\(' + inner + '\\)';
+      } else {
+        out += text.slice(i, j);
+      }
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+
+function renderMathInto(el) {
+  renderMathInElement(el, {
+    delimiters: [
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true }
+    ],
+    throwOnError: false
+  });
+}
+
+/* Converts inline slash fractions like "(x-5)/x" or "(x^2-9)/(x-3)" into a
+   proper stacked \frac{...}{...}. Skips cases where the "(" belongs to a
+   preceding function name (e.g. sin(3x)/x), to avoid mis-rendering those. */
+function convertSlashFractions(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '(' && !/[a-zA-Z]/.test(text[i - 1] || '')) {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const numerator = text.slice(i + 1, j - 1);
+      if (text[j] === '/') {
+        const k = j + 1;
+        let denominator = null;
+        let afterDenom = k;
+        if (text[k] === '(') {
+          let d2 = 1, m = k + 1;
+          while (m < text.length && d2 > 0) {
+            if (text[m] === '(') d2++;
+            else if (text[m] === ')') d2--;
+            m++;
+          }
+          denominator = text.slice(k + 1, m - 1);
+          afterDenom = m;
+        } else {
+          const match = text.slice(k).match(/^[^\s()/?.,;:!]+/);
+          if (match) {
+            denominator = match[0];
+            afterDenom = k + match[0].length;
+          }
+        }
+        if (denominator) {
+          out += '\\(\\frac{' + numerator + '}{' + denominator + '}\\)';
+          i = afterDenom;
+          continue;
+        }
+      }
+      out += text.slice(i, j);
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+
+function convertUnicodeSuperSub(text) {
+  const supMap = {'²':'2','³':'3','¹':'1','⁰':'0','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  return text
+    .replace(/[²³¹⁰⁴⁵⁶⁷⁸⁹⁻⁺]/g, c => `<sup>${supMap[c]}</sup>`)
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]/g, c => `<sub>${subMap[c]}</sub>`);
+}
+
+/* Questions store a mix of plain text and real LaTeX — either wrapped in
+   \( \) / \[ \] or as bare commands like \displaystyle\lim_{x \to 1}.
+   Math segments must never pass through the plain-text helpers
+   (slash fractions, <sup>/<sub> injection) or the LaTeX breaks. */
+const MATH_SEGMENT = /(\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])/;
+
+/* Wraps bare LaTeX command runs in \( \) so KaTeX picks them up. */
+function wrapBareLatex(text) {
+  const braceGroup = '\\{(?:[^{}]|\\{[^{}]*\\})*\\}';
+  const cmdRun = new RegExp(
+    '\\\\[a-zA-Z]+(?:\\s*(?:\\\\[a-zA-Z]+|[_^]\\s*(?:' + braceGroup + '|[A-Za-z0-9+\\-])|' + braceGroup + '))*',
+    'g'
+  );
+  return text.split(MATH_SEGMENT).map((part, k) => {
+    if (k % 2 === 1) return part;
+    return part.replace(cmdRun, m => '\\(' + m + '\\)');
+  }).join('');
+}
+
+/* Cleans the inside of one \(...\) / \[...\] segment: removes stray nested
+   delimiters (a KaTeX parse error — the red text) and converts unicode
+   math symbols to LaTeX equivalents. */
+function normalizeLatexSegment(seg) {
+  const supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  const open = seg.slice(0, 2), close = seg.slice(-2);
+  const inner = seg.slice(2, -2)
+    .replace(/\\[()[\]]/g, '')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, r => '^{' + r.split('').map(c => supMap[c]).join('') + '}')
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]+/g, r => '_{' + r.split('').map(c => subMap[c]).join('') + '}')
+    .replace(/[−–]/g, '-')
+    .replace(/→/g, '\\to ')
+    .replace(/≠/g, '\\ne ')
+    .replace(/≤/g, '\\le ')
+    .replace(/≥/g, '\\ge ')
+    .replace(/∞/g, '\\infty ')
+    .replace(/π/g, '\\pi ')
+    .replace(/[·⋅]/g, '\\cdot ')
+    .replace(/×/g, '\\times ');
+  return open + inner + close;
+}
+
+/* Plain text: slash fractions may create new \( \) segments, so re-split
+   before applying the HTML sup/sub conversion. */
+function processPlainSegment(seg) {
+  return convertSlashFractions(seg).split(MATH_SEGMENT).map((s, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(s));
+    return convertUnicodeSuperSub(escapeHtml(s));
+  }).join('');
+}
+
+function setMathHtml(el, rawText, asParagraphs) {
+  let text = convertLimNotation(rawText == null ? '' : String(rawText));
+  text = wrapBareLatex(text);
+  const processed = text.split(MATH_SEGMENT).map((seg, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(seg));
+    return processPlainSegment(seg);
+  }).join('');
+  const withTables = convertTables(processed);
+  const withBreaks = asParagraphs
+    ? withTables.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')
+    : withTables.replace(/\n/g, '<br>');
+  el.innerHTML = prepMath(withBreaks);
+  renderMathInto(el);
+}
+
+/* ── STIMULUS GRAPHS ──
+   Many Graph SVGs double as answer explanations (annotations like "→ DNE ✓").
+   When the question text references its graph, show it while answering with
+   those answer-revealing <text> labels stripped; the full annotated version
+   still appears with the solution. Neutral labels (e.g. "slope = 3") stay. */
+const GRAPH_REF = /graph|figure|table|diagram|curve|plot|shown/i;
+const GRAPH_SPOILER = /[✓✗→⇒≠≈]|\bapparent\b|\bDNE\b|\bnot\b|\bcorrect\b|\bconfirm|\bfalse\b|\btrue\b(?!\s*:)|\bvalid\b|\bwrong\b|\bmin\b|\bmax\b|\bjump\b|\bcusp\b|\bcorner\b|\bhole\b|\bremovable\b|\bLHL\b|\bRHL\b|\blim\s*=|\bexact\b|\bbest\b|\buse|\bavg\b|\bratio\b|both sides|\bset\b|squeeze|horizontal tangent|=[^=,]*=|\([^()]*\)\s*\/\s*\([^()]*\)\s*=/i;
+
+function sanitizeGraph(svg) {
+  try {
+    const doc = new DOMParser().parseFromString(svg, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svg;
+    doc.querySelectorAll('text').forEach(t => {
+      if (GRAPH_SPOILER.test(t.textContent)) t.remove();
+    });
+    return new XMLSerializer().serializeToString(doc.documentElement);
+  } catch (e) { return svg; }
+}
+function stimulusGraphHtml(q) {
+  return (q.Graph && GRAPH_REF.test(q.Question || '')) ? sanitizeGraph(q.Graph) : '';
+}
+
+async function loadQuestion() {
+  answered = false;
+  selectedChoice = null;
+  questionCount += 1;
+  qNumBadge.textContent = questionCount;
+  actionBtn.textContent = 'Submit';
+  actionBtn.disabled = true;
+  solutionPanel.style.display = 'none';
+  scrollHint.style.display = 'none';
+  resetReportPanel();
+  questionPrompt.textContent = 'Loading question…';
+  document.getElementById('questionGraph').innerHTML = '';
+  document.getElementById('questionGraph').style.display = 'none';
+  document.getElementById('stimulusGraph').innerHTML = '';
+  document.getElementById('stimulusGraph').style.display = 'none';
+  choicesList.innerHTML = '';
+
+  let url = `${API_BASE}/generateQuestion?chapter=${encodeURIComponent(chapter)}`;
+  if (grade) url += `&grade=${encodeURIComponent(grade)}`;
+
+  try {
+    const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (!res.ok) {
+      setMathHtml(questionPrompt, 'Could not load a question for this chapter/grade combination.', false);
+      return;
+    }
+    currentQuestion = await res.json();
+    renderQuestion(currentQuestion);
+  } catch (err) {
+    setMathHtml(questionPrompt, 'Could not reach the server. Is the backend running?', false);
+  }
+}
+
+function renderQuestion(q) {
+  setMathHtml(questionPrompt, q.Question, false);
+  const stimulusEl = document.getElementById('stimulusGraph');
+  const stimulus = stimulusGraphHtml(q);
+  stimulusEl.innerHTML = stimulus;
+  stimulusEl.style.display = stimulus ? 'block' : 'none';
+  choicesList.innerHTML = '';
+  ['option1', 'option2', 'option3', 'option4'].forEach((key, idx) => {
+    const letter = ['A', 'B', 'C', 'D'][idx];
+    const row = document.createElement('div');
+    row.className = 'choice-row';
+    row.dataset.value = q[key];
+    row.innerHTML = `<span class="choice-badge">${letter}</span><span class="choice-text"></span>`;
+    row.addEventListener('click', () => selectChoice(row));
+    choicesList.appendChild(row);
+    setMathHtml(row.querySelector('.choice-text'), q[key], false);
+  });
+}
+
+function selectChoice(row) {
+  if (answered) return;
+  document.querySelectorAll('.choice-row').forEach(r => r.classList.remove('selected'));
+  row.classList.add('selected');
+  selectedChoice = row.dataset.value;
+  actionBtn.disabled = false;
+}
+
+actionBtn.addEventListener('click', async () => {
+  if (!answered) {
+    if (!selectedChoice || !currentQuestion) return;
+    actionBtn.disabled = true;
+    try {
+      const res = await fetch(`${API_BASE}/answerQuestion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ ID: currentQuestion.ID, Answer: selectedChoice })
+      });
+      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      const result = await res.json();
+      answered = true;
+
+      document.querySelectorAll('.choice-row').forEach(row => {
+        row.classList.add('locked');
+        if (row.dataset.value === result.CorrectAnswer) {
+          row.classList.add('correct');
+        } else if (row.classList.contains('selected')) {
+          row.classList.add('incorrect');
+        }
+      });
+
+      solutionResult.textContent = result.Correct ? 'Correct' : 'Not quite';
+      solutionResult.className = 'solution-result ' + (result.Correct ? 'is-correct' : 'is-incorrect');
+      setMathHtml(solutionText, result.Solution || 'No solution available for this question.', true);
+      const graphEl = document.getElementById('questionGraph');
+      if (currentQuestion.Graph) {
+        graphEl.innerHTML = currentQuestion.Graph;
+        graphEl.style.display = 'block';
+      } else {
+        graphEl.style.display = 'none';
+      }
+      solutionPanel.style.display = 'block';
+      scrollHint.style.display = 'block';
+
+      actionBtn.textContent = 'Next Question';
+      actionBtn.disabled = false;
+    } catch (err) {
+      actionBtn.disabled = false;
+    }
+  } else {
+    loadQuestion();
+  }
+});
+
+/* ─── REPORT A PROBLEM ─── */
+const reportTrigger = document.getElementById('reportTrigger');
+const reportPanel   = document.getElementById('reportPanel');
+
+function resetReportPanel() {
+  reportPanel.innerHTML = `
+    <div class="report-panel-title">What's wrong with this question?</div>
+    <div class="report-options">
+      <label><input type="radio" name="reportReason" value="Question is wrong"> The question itself is wrong</label>
+      <label><input type="radio" name="reportReason" value="All the options are wrong"> All the options are wrong</label>
+      <label><input type="radio" name="reportReason" value="Question leaks the answer"> The question leaks the answer</label>
+      <label><input type="radio" name="reportReason" value="Other"> Other</label>
+    </div>
+    <textarea class="report-textarea" id="reportDetails" placeholder="Describe the issue…"></textarea>
+    <div class="report-actions">
+      <button class="report-btn cancel" id="reportCancelBtn" type="button">Cancel</button>
+      <button class="report-btn send" id="reportSendBtn" type="button" disabled>Send Report</button>
+    </div>
+  `;
+  reportPanel.style.display = 'none';
+  reportTrigger.style.display = 'inline-flex';
+  bindReportPanelEvents();
+}
+
+function bindReportPanelEvents() {
+  const details = document.getElementById('reportDetails');
+  const sendBtn = document.getElementById('reportSendBtn');
+  const cancelBtn = document.getElementById('reportCancelBtn');
+
+  document.querySelectorAll('input[name="reportReason"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isOther = radio.value === 'Other' && radio.checked;
+      details.style.display = isOther ? 'block' : 'none';
+      sendBtn.disabled = isOther ? !details.value.trim() : false;
+    });
+  });
+  details.addEventListener('input', () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    if (selected && selected.value === 'Other') sendBtn.disabled = !details.value.trim();
+  });
+  cancelBtn.addEventListener('click', () => {
+    reportPanel.style.display = 'none';
+    reportTrigger.style.display = 'inline-flex';
+  });
+  sendBtn.addEventListener('click', async () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    if (!selected || !currentQuestion) return;
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch(`${API_BASE}/ReportQuestion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          QuestionID: currentQuestion.ID,
+          Chapter: currentQuestion.Chapter,
+          Reason: selected.value,
+          Details: details.value.trim()
+        })
+      });
+      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (!res.ok) throw new Error('failed');
+      reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
+    } catch (err) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Report';
+      alert('Could not send the report. Please try again.');
+    }
+  });
+}
+
+reportTrigger.addEventListener('click', () => {
+  reportTrigger.style.display = 'none';
+  reportPanel.style.display = 'block';
+});
+bindReportPanelEvents();
+
+loadQuestion();
+</script>
+</body>
+</html>

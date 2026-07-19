@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quizzes — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #F4F5F7;
+  --bg2:    #FFFFFF;
+  --bg3:    #FAFBFC;
+  --gold:   #F0A012;
+  --gold2:  #D88A0A;
+  --teal:   #00A187;
+  --teal2:  #00C8A4;
+  --text:   #15171F;
+  --muted:  #6B7280;
+  --muted2: #9CA3AF;
+  --border: rgba(15,23,42,0.08);
+  --card:   #FFFFFF;
+  --sidebar-w: 264px;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.12); border-radius:3px; }
+
+/* ─── SIDEBAR (shared pattern with homepage.html) ─── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.2rem;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+}
+
+.sidebar-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.8rem;
+  padding: 0 0.4rem;
+}
+.sidebar-logo .logo-int { color: var(--gold); }
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.4rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+
+.user-avi {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #FF6B35);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.user-info { flex: 1; overflow: hidden; }
+.user-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.user-plan { font-size: 0.74rem; color: var(--muted2); }
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: var(--muted2);
+  cursor: pointer;
+  padding: 0.3rem;
+  display: flex;
+  border-radius: 6px;
+  transition: all 0.18s;
+  flex-shrink: 0;
+}
+.logout-btn:hover { color: var(--text); background: var(--bg); }
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: all 0.18s;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active {
+  background: rgba(240,160,18,0.08);
+  color: var(--gold2);
+  font-weight: 600;
+  border-left-color: var(--gold);
+}
+.nav-item svg { flex-shrink:0; width:18px; height:18px; }
+
+.nav-formula-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+/* ─── MAIN ─── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 2.4rem 3rem 4rem;
+  max-width: 760px;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.2rem;
+}
+
+.header-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+/* ─── SETUP CARD ─── */
+.setup-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 2.2rem;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+
+.setup-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.setup-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.setup-sub {
+  color: var(--muted);
+  font-size: 0.86rem;
+  margin-bottom: 1.8rem;
+  line-height: 1.6;
+}
+
+.field-group { margin-bottom: 1.4rem; }
+
+.field-label {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 0.55rem;
+}
+
+.select-wrap { position: relative; }
+.field-select {
+  width: 100%;
+  padding: 0.82rem 2.6rem 0.82rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-family: 'Inter', sans-serif;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.field-select:focus {
+  outline: none;
+  border-color: rgba(240,160,18,0.5);
+  box-shadow: 0 0 0 3px rgba(240,160,18,0.1);
+}
+.select-wrap svg {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 16px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.field-error {
+  font-size: 0.78rem;
+  color: #DC2626;
+  margin-top: 0.45rem;
+  display: none;
+}
+.field-error.visible { display: block; }
+
+.quiz-meta-row {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 1.6rem;
+  flex-wrap: wrap;
+}
+.quiz-meta-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.quiz-meta-pill svg { width: 14px; height: 14px; color: var(--teal); flex-shrink: 0; }
+
+.start-btn {
+  width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.95rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--gold);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.start-btn:hover {
+  background: var(--gold2);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(240,160,18,0.3);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .sidebar {
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    overflow-x: auto;
+    gap: 1.2rem;
+  }
+  .sidebar-logo { margin-bottom: 0; }
+  .sidebar-user { border-bottom: none; padding: 0; margin-bottom: 0; }
+  .nav-list { flex-direction: row; }
+  .nav-item { white-space: nowrap; }
+  .main { margin-left: 0; padding: 1.6rem 1.2rem 3rem; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <a href="homepage.html" class="sidebar-logo"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></a>
+
+  <div class="sidebar-user">
+    <div class="user-avi" id="userAvi">S</div>
+    <div class="user-info">
+      <div class="user-name" id="userName">Student</div>
+      <div class="user-plan">Explorer plan</div>
+    </div>
+    <button class="logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    <li><a href="homepage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
+    </a></li>
+    <li><a href="QuestionBankPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Question Bank
+    </a></li>
+    <li><a href="FRQ.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h4l10-10-4-4L4 15v4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.5 5.5l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      FRQ Bank
+    </a></li>
+    <li><a href="SamplePaper.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Sample Papers
+    </a></li>
+    <li><a href="QuizzersPage.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h2M5 12h2M5 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6h10M9 12h10M9 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Quizzes
+    </a></li>
+    <li><a href="FormulaPage.html" class="nav-item">
+      <span class="nav-formula-icon">dy/dx</span>
+      Important Formulas
+    </a></li>
+    <li><a href="AdvancedCustomizationPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Advanced Customization
+    </a></li>
+  </ul>
+</aside>
+
+<main class="main">
+  <div class="main-header">
+    <h1 class="header-title">AP Calculus BC</h1>
+  </div>
+
+  <div class="setup-card">
+    <span class="setup-eyebrow">Timed Quiz</span>
+    <div class="setup-title">Choose a chapter to be quizzed on</div>
+    <p class="setup-sub">A full, timed practice quiz mixing calculator and non-calculator questions — just like the real exam.</p>
+
+    <div class="quiz-meta-row">
+      <span class="quiz-meta-pill">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        35 minutes
+      </span>
+      <span class="quiz-meta-pill">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 6h10M9 12h10M9 18h10M5 6h.01M5 12h.01M5 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        15 questions
+      </span>
+    </div>
+
+    <div class="field-group">
+      <label class="field-label" for="chapterSelect">Chapter</label>
+      <div class="select-wrap">
+        <select class="field-select" id="chapterSelect">
+          <option value="" disabled selected>Select a chapter</option>
+          <option value="Differentiation">Differentiation</option>
+          <option value="Applications of Differentiation">Applications of Differentiation</option>
+          <option value="Indefinite Integrals">Indefinite Integrals</option>
+          <option value="Definite Integrals">Definite Integrals</option>
+          <option value="Applications of Integration">Applications of Integration</option>
+          <option value="Differential Equations">Differential Equations</option>
+          <option value="Sequence & Series">Sequence & Series</option>
+          <option value="Functions">Functions</option>
+          <option value="Limits and Continuity">Limits and Continuity</option>
+        </select>
+        <svg viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="field-error" id="chapterError">Please select a chapter to continue.</span>
+    </div>
+
+    <button class="start-btn" id="startBtn">
+      Start
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l6 5-6 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</main>
+
+<script src="config.js"></script>
+<script>
+if (!localStorage.getItem('derive_token')) {
+  window.location.href = 'LOGIN.html';
+}
+
+const storedName = localStorage.getItem('derive_name');
+if (storedName) {
+  document.getElementById('userName').textContent = storedName;
+  document.getElementById('userAvi').textContent = storedName.charAt(0).toUpperCase();
+}
+
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  const token = localStorage.getItem('derive_token');
+  try {
+    if (token) {
+      await fetch(`${API_BASE}/logout`, { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } });
+    }
+  } catch (err) { /* server unreachable, clear session anyway */ }
+  localStorage.removeItem('derive_token');
+  localStorage.removeItem('derive_name');
+  window.location.href = 'LOGIN.html';
+});
+
+document.getElementById('startBtn').addEventListener('click', () => {
+  const chapter = document.getElementById('chapterSelect').value;
+  const chapterError = document.getElementById('chapterError');
+
+  if (!chapter) {
+    chapterError.classList.add('visible');
+    return;
+  }
+  chapterError.classList.remove('visible');
+
+  window.location.href = `QuizQuestionUI.html?chapter=${encodeURIComponent(chapter)}`;
+});
+</script>
+</body>
+</html>

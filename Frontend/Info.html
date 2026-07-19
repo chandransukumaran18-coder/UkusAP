@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exam Information — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #F4F5F7;
+  --bg2:    #FFFFFF;
+  --bg3:    #FAFBFC;
+  --gold:   #F0A012;
+  --gold2:  #D88A0A;
+  --teal:   #00A187;
+  --text:   #15171F;
+  --muted:  #6B7280;
+  --muted2: #9CA3AF;
+  --border: rgba(15,23,42,0.08);
+  --card:   #FFFFFF;
+  --red:    #B91C1C;
+  --red-bg: #FEF2F2;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; }
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.12); border-radius:3px; }
+
+.page { max-width: 860px; margin: 0 auto; padding: 2.4rem 1.6rem 5rem; }
+
+.top-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.8rem; }
+.back-link {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: var(--muted); text-decoration: none; font-size: 0.86rem; font-weight: 600;
+  transition: color 0.15s;
+}
+.back-link:hover { color: var(--text); }
+.back-link svg { width: 16px; height: 16px; }
+.brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; display: flex; align-items: center; gap: 0.3rem; }
+.brand .logo-int { color: var(--gold); }
+
+.hero {
+  background: linear-gradient(135deg, #131417, #1F2128);
+  color: #fff;
+  border-radius: 20px;
+  padding: 2.4rem 2.2rem;
+  margin-bottom: 1.6rem;
+}
+.hero-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold); display: block; margin-bottom: 0.6rem;
+}
+.hero-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.7rem; }
+.hero-desc { color: rgba(255,255,255,0.75); font-size: 0.92rem; max-width: 620px; }
+.hero-stats { display: flex; gap: 0.7rem; margin-top: 1.4rem; flex-wrap: wrap; }
+.hero-stat {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 100px;
+  padding: 0.4rem 0.95rem;
+  font-size: 0.8rem;
+  display: flex; align-items: center; gap: 0.45rem;
+}
+.hero-stat svg { width: 14px; height: 14px; color: var(--gold); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem; font-weight: 700;
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.card-title svg { width: 19px; height: 19px; color: var(--teal); flex-shrink: 0; }
+
+.section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.section-block {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+}
+.section-block-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.92rem; margin-bottom: 0.2rem; }
+.section-block-weight { font-size: 0.76rem; color: var(--gold2); font-weight: 600; margin-bottom: 0.9rem; }
+.part-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 0.55rem 0;
+  border-top: 1px dashed var(--border);
+  font-size: 0.82rem;
+}
+.part-row:first-of-type { border-top: none; }
+.part-label { font-weight: 600; color: var(--text); }
+.part-meta { color: var(--muted); text-align: right; }
+.calc-tag {
+  display: inline-block; margin-left: 0.4rem;
+  font-family: 'Space Mono', monospace; font-size: 0.62rem;
+  padding: 0.1rem 0.4rem; border-radius: 5px;
+  vertical-align: middle;
+}
+.calc-tag.yes { background: rgba(0,161,135,0.12); color: var(--teal); }
+.calc-tag.no { background: var(--red-bg); color: var(--red); }
+.section-footnote { font-size: 0.78rem; color: var(--muted); margin-top: 1rem; line-height: 1.6; }
+
+.info-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+.info-list li { display: flex; gap: 0.7rem; font-size: 0.89rem; }
+.info-list .bullet-dot { flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); margin-top: 0.55rem; }
+
+.steps-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; counter-reset: step; }
+.steps-list li { display: flex; gap: 0.9rem; font-size: 0.89rem; }
+.step-num {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 50%;
+  background: #131417; color: #fff;
+  font-family: 'Space Mono', monospace; font-size: 0.74rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.step-body strong { font-weight: 700; }
+
+.practice-note {
+  background: rgba(0,161,135,0.06);
+  border: 1px solid rgba(0,161,135,0.25);
+}
+.practice-note .card-title svg { color: var(--teal); }
+.practice-note .info-list .bullet-dot { background: var(--teal); }
+
+.begin-bar {
+  position: sticky; bottom: 1.2rem;
+  margin-top: 1.6rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.2rem 1.6rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 10px 32px rgba(15,23,42,0.14);
+}
+.begin-bar-text { font-size: 0.84rem; color: var(--muted); }
+.begin-bar-text strong { color: var(--text); }
+.begin-btn {
+  flex-shrink: 0;
+  padding: 0.9rem 1.6rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--gold);
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem; font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: all 0.2s;
+}
+.begin-btn:hover { background: var(--gold2); transform: translateY(-1px); box-shadow: 0 10px 28px rgba(240,160,18,0.3); }
+.begin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+@media (max-width: 720px) {
+  .section-grid { grid-template-columns: 1fr; }
+  .begin-bar { flex-direction: column; align-items: stretch; text-align: center; }
+  .begin-btn { justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="top-nav">
+    <a href="SamplePaper.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Sample Papers
+    </a>
+    <span class="brand"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></span>
+  </div>
+
+  <div class="hero">
+    <span class="hero-eyebrow">Before You Begin</span>
+    <h1 class="hero-title" id="examTitle">AP Calculus BC — Practice Exam</h1>
+    <p class="hero-desc">The AP Calculus BC exam is a 3 hr 15 min hybrid digital test with two equal-weight sections, split into calculator-allowed and calculator-restricted parts.</p>
+    <div class="hero-stats">
+      <span class="hero-stat"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 hr 15 min total</span>
+      <span class="hero-stat"><svg viewBox="0 0 24 24" fill="none"><path d="M9 6h10M9 12h10M9 18h10M5 6h.01M5 12h.01M5 18h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 45 multiple choice</span>
+      <span class="hero-stat"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg> 6 free response</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Section Breakdown
+    </div>
+    <div class="section-grid">
+      <div class="section-block">
+        <div class="section-block-title">Section I — Multiple Choice</div>
+        <div class="section-block-weight">50% of score · 45 questions · 1 hr 45 min</div>
+        <div class="part-row">
+          <span class="part-label">Part A</span>
+          <span class="part-meta">33 questions · 62 min<span class="calc-tag no">No Calc</span></span>
+        </div>
+        <div class="part-row">
+          <span class="part-label">Part B</span>
+          <span class="part-meta">12 questions · 38 min<span class="calc-tag yes">Calculator</span></span>
+        </div>
+      </div>
+      <div class="section-block">
+        <div class="section-block-title">Section II — Free Response</div>
+        <div class="section-block-weight">50% of score · 6 questions · 1 hr 30 min</div>
+        <div class="part-row">
+          <span class="part-label">Part A</span>
+          <span class="part-meta">2 questions · 30 min<span class="calc-tag yes">Calculator</span></span>
+        </div>
+        <div class="part-row">
+          <span class="part-label">Part B</span>
+          <span class="part-meta">4 questions · 60 min<span class="calc-tag no">No Calc</span></span>
+        </div>
+      </div>
+    </div>
+    <p class="section-footnote">All FRQs include at least two with real-world contexts. Each free-response question is worth 9 points total.</p>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h3M13 12h3M8 16h3M13 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      Calculator Policy
+    </div>
+    <ul class="info-list">
+      <li><span class="bullet-dot"></span>Only College Board-approved graphing calculators are allowed in calculator-permitted parts.</li>
+      <li><span class="bullet-dot"></span>No calculators of any kind in the non-calculator parts.</li>
+      <li><span class="bullet-dot"></span>Check the official AP Exams Calculator Policy before test day.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 12h4l3 8 4-16 3 8h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Test-Day Procedures
+    </div>
+    <ol class="steps-list">
+      <li><span class="step-num">1</span><span class="step-body"><strong>Arrival:</strong> Be at your test center early; ID and AP Student ID required.</span></li>
+      <li><span class="step-num">2</span><span class="step-body"><strong>Check-in:</strong> Sign in to Bluebook; receive a paper free-response booklet.</span></li>
+      <li><span class="step-num">3</span><span class="step-body"><strong>Multiple Choice:</strong> Complete in Bluebook; no paper work unless permitted.</span></li>
+      <li><span class="step-num">4</span><span class="step-body"><strong>Free Response:</strong> View prompts in Bluebook, write answers by hand in the booklet.</span></li>
+      <li><span class="step-num">5</span><span class="step-body"><strong>Break:</strong> Scheduled between sections; follow center rules.</span></li>
+      <li><span class="step-num">6</span><span class="step-body"><strong>Submission:</strong> Booklet collected for scoring; no personal copies allowed.</span></li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.6 10.8c.4.3.6.8.6 1.3V16h6v-.9c0-.5.2-1 .6-1.3A6 6 0 0012 3z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Key Tips for Test Day
+    </div>
+    <ul class="info-list">
+      <li><span class="bullet-dot"></span>Bring your approved calculator if the part allows it.</li>
+      <li><span class="bullet-dot"></span><strong>Manage time</strong> — each section is timed; plan your answers to fit.</li>
+      <li><span class="bullet-dot"></span><strong>Follow notation</strong> — show work clearly for partial credit.</li>
+      <li><span class="bullet-dot"></span><strong>Use real-world context</strong> — read carefully to avoid misinterpretation.</li>
+      <li><span class="bullet-dot"></span>No personal items in the testing area; follow all center rules.</li>
+    </ul>
+  </div>
+
+  <div class="card practice-note">
+    <div class="card-title">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a5 5 0 00-5 5v3.5c0 .7-.3 1.4-.8 1.9L5 15h14l-1.2-1.6c-.5-.5-.8-1.2-.8-1.9V8a5 5 0 00-5-5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9.5 18a2.5 2.5 0 005 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      How This Practice Exam Works
+    </div>
+    <ul class="info-list">
+      <li><span class="bullet-dot"></span>Multiple-choice questions are graded automatically as soon as you submit.</li>
+      <li><span class="bullet-dot"></span>Free-response questions are <strong>self-graded</strong>: you'll answer on paper, then click <strong>Reveal Answer</strong> to see the model solution and rubric, and enter how many of the 9 points you earned.</li>
+      <li><span class="bullet-dot"></span>Each FRQ's 9 points break down as <strong>Part (a): 2, Part (b): 2, Part (c): 2, Part (d): 3</strong>.</li>
+      <li><span class="bullet-dot"></span>You'll get a 1-minute break after Part B of each section, plus a 10-minute break between Section I and Section II — just like the real exam.</li>
+      <li><span class="bullet-dot"></span>Once a part's timer runs out, you'll be moved on automatically with whatever you've answered so far.</li>
+    </ul>
+  </div>
+
+  <div class="begin-bar">
+    <span class="begin-bar-text">Ready when you are — <strong id="examTitleShort">this exam</strong> takes about 3 hr 15 min uninterrupted.</span>
+    <button class="begin-btn" id="beginBtn" disabled>
+      Begin Exam
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l6 5-6 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+if (!localStorage.getItem('derive_token')) {
+  window.location.href = 'LOGIN.html';
+}
+
+const params = new URLSearchParams(window.location.search);
+const paper = params.get('paper');
+if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) {
+  window.location.href = 'SamplePaper.html';
+} else {
+  const num = paper.replace('BC-EXAM', '');
+  document.getElementById('examTitle').textContent = `AP Calculus BC — Practice Exam ${num}`;
+  document.getElementById('examTitleShort').textContent = `Practice Exam ${num}`;
+  const beginBtn = document.getElementById('beginBtn');
+  beginBtn.disabled = false;
+  beginBtn.addEventListener('click', () => {
+    window.location.href = `SamplePaperExam.html?paper=${encodeURIComponent(paper)}`;
+  });
+}
+</script>
+</body>
+</html>

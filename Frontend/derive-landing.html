@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UkusAP — Master AP Calculus BC</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #07080F;
+  --bg2:    #0C1120;
+  --bg3:    #111928;
+  --gold:   #F0A012;
+  --gold2:  #FFB830;
+  --teal:   #00C8A4;
+  --teal2:  #00EAC0;
+  --text:   #EEF2FF;
+  --muted:  #67798F;
+  --border: rgba(255,255,255,0.07);
+  --card:   rgba(255,255,255,0.025);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:3px; }
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 200;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 1.1rem 5%;
+  background: rgba(7,8,15,0.82);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s;
+}
+
+.logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  justify-self: start;
+}
+
+.logo-int { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: 9rem 5% 5rem;
+}
+
+/* Graph-paper grid */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,164,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,164,0.035) 1px, transparent 1px);
+  background-size: 58px 58px;
+  pointer-events: none;
+}
+
+/* Glow orbs */
+.hero-orb1, .hero-orb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+.hero-orb1 {
+  width: 560px; height: 560px;
+  background: radial-gradient(circle, rgba(240,160,18,0.12) 0%, transparent 70%);
+  top: 10%; right: 5%;
+}
+.hero-orb2 {
+  width: 380px; height: 380px;
+  background: radial-gradient(circle, rgba(0,200,164,0.09) 0%, transparent 70%);
+  bottom: 10%; left: 2%;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(240,160,18,0.1);
+  border: 1px solid rgba(240,160,18,0.25);
+  color: var(--gold);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.38rem 0.9rem;
+  border-radius: 100px;
+  margin-bottom: 1.8rem;
+}
+
+.badge-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--gold);
+}
+.hero h1 .accent-teal { color: var(--teal); }
+
+.hero-sub {
+  font-size: 1.08rem;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 490px;
+  margin-bottom: 2.6rem;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: var(--gold);
+  color: #07080F;
+  padding: 0.88rem 2rem;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 0.97rem;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-primary:hover {
+  background: var(--gold2);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(240,160,18,0.38);
+}
+.btn-primary svg { flex-shrink:0; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.88rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.97rem;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+.btn-ghost:hover {
+  border-color: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-trust {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.trust-avatars {
+  display: flex;
+}
+.trust-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  margin-left: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+.trust-avatar:first-child { margin-left:0; }
+.ta1 { background: linear-gradient(135deg, #F0A012, #FF6B35); color:#07080F; }
+.ta2 { background: linear-gradient(135deg, #00C8A4, #007AFF); color:#fff; }
+.ta3 { background: linear-gradient(135deg, #A855F7, #EC4899); color:#fff; }
+.ta4 { background: linear-gradient(135deg, #10B981, #3B82F6); color:#fff; }
+
+.stars { color: #F0A012; font-size: 0.8rem; letter-spacing: -1px; }
+
+/* ─── HERO GRAPH SVG ─── */
+.hero-visual {
+  position: absolute;
+  right: 4%;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  width: 46%;
+  max-width: 680px;
+  animation: floatGraph 5s ease-in-out infinite;
+}
+@keyframes floatGraph {
+  0%,100% { transform: translateY(-50%); }
+  50%      { transform: translateY(calc(-50% - 14px)); }
+}
+
+.hero-visual svg { width:100%; height:auto; }
+
+.curve-main {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: draw 2.8s cubic-bezier(0.4,0,0.2,1) 0.6s forwards;
+}
+.curve-tangent {
+  stroke-dasharray: 250;
+  stroke-dashoffset: 250;
+  animation: draw 0.8s ease 3s forwards;
+}
+.area-fill {
+  opacity: 0;
+  animation: fadein 0.9s ease 1.9s forwards;
+}
+.dot-appear {
+  opacity: 0;
+  animation: fadein 0.5s ease 2.8s forwards;
+}
+@keyframes draw   { to { stroke-dashoffset: 0; } }
+@keyframes fadein { to { opacity: 1; } }
+
+/* ─── TICKER ─── */
+.ticker-wrap {
+  overflow: hidden;
+  background: rgba(0,200,164,0.03);
+  border-top: 1px solid rgba(0,200,164,0.12);
+  border-bottom: 1px solid rgba(0,200,164,0.12);
+  padding: 0.75rem 0;
+}
+
+.ticker-inner {
+  display: flex;
+  gap: 0;
+  width: max-content;
+  animation: scroll 35s linear infinite;
+}
+@keyframes scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.tick-item {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0 1.4rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--teal);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.tick-item::after {
+  content: '·';
+  color: rgba(0,200,164,0.25);
+  font-size: 1.2rem;
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 5%;
+  display: flex;
+  justify-content: center;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+
+.stat-item { text-align: center; }
+
+.stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 0.83rem;
+}
+
+/* ─── SHARED SECTION ─── */
+.section { padding: 6rem 5%; }
+
+.section-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.section-sub {
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 520px;
+  line-height: 1.75;
+}
+
+/* ─── FEATURES ─── */
+.features-section {
+  background: var(--bg);
+}
+
+.features-header {
+  margin-bottom: 3.5rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+}
+
+.feat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.7rem 1.5rem;
+  transition: border-color 0.28s, transform 0.28s, box-shadow 0.28s;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+}
+
+.feat-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(240,160,18,0.07) 0%, transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.feat-card:hover {
+  border-color: rgba(240,160,18,0.22);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+}
+.feat-card:hover::after { opacity: 1; }
+
+.feat-card.teal-hover:hover { border-color: rgba(0,200,164,0.22); }
+.feat-card.teal-hover::after {
+  background: radial-gradient(circle at 50% 0%, rgba(0,200,164,0.06) 0%, transparent 65%);
+}
+
+.feat-icon {
+  font-size: 1.7rem;
+  display: block;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+.feat-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.97rem;
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+  color: var(--text);
+}
+
+.feat-desc {
+  color: var(--muted);
+  font-size: 0.83rem;
+  line-height: 1.65;
+}
+
+/* ─── EXAM PREVIEW ─── */
+.exam-section {
+  background: var(--bg2);
+}
+
+.exam-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+}
+
+.exam-text .section-sub { max-width: 420px; }
+
+.exam-perks {
+  list-style: none;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.exam-perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+
+.perk-icon {
+  color: var(--teal);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.exam-mockup {
+  background: #080E1C;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+
+.exam-topbar {
+  background: #0B1526;
+  padding: 0.7rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.exam-topbar-left {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.exam-topbar-left strong { color: var(--text); }
+
+.exam-timer-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0,200,164,0.1);
+  border: 1px solid rgba(0,200,164,0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--teal);
+}
+
+.timer-dot {
+  width: 6px; height: 6px;
+  background: var(--teal);
+  border-radius: 50%;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+.exam-body { padding: 1.6rem; }
+
+.exam-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.exam-qnum {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+.exam-diff {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  background: rgba(240,160,18,0.1);
+  color: var(--gold);
+  border: 1px solid rgba(240,160,18,0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.exam-question {
+  font-size: 0.875rem;
+  line-height: 1.72;
+  color: var(--text);
+  margin-bottom: 1.4rem;
+}
+
+.math-expr {
+  font-family: 'Space Mono', monospace;
+  color: var(--gold);
+  background: rgba(240,160,18,0.08);
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  display: block;
+  text-align: center;
+  margin: 0.6rem 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.exam-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.exam-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.83rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--muted);
+}
+
+.exam-choice:hover {
+  border-color: rgba(255,255,255,0.15);
+  color: var(--text);
+}
+
+.exam-choice.selected {
+  border-color: var(--teal);
+  background: rgba(0,200,164,0.06);
+  color: var(--teal);
+}
+
+.choice-key {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: inherit;
+  width: 1.1rem;
+  flex-shrink: 0;
+}
+
+.exam-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.4rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--border);
+}
+
+.exam-nav { display: flex; gap: 0.5rem; }
+
+.exam-btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.exam-btn:hover { border-color: rgba(255,255,255,0.18); color: var(--text); }
+.exam-btn.btn-submit {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #07080F;
+  font-weight: 700;
+}
+.exam-btn.btn-submit:hover { background: var(--gold2); }
+
+.exam-progress {
+  display: flex;
+  gap: 0.2rem;
+  flex-wrap: wrap;
+  max-width: 160px;
+}
+
+.prog-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.prog-dot.done  { background: rgba(0,200,164,0.6); }
+.prog-dot.curr  { background: var(--gold); }
+
+/* ─── HOW IT WORKS ─── */
+.how-section {
+  background: var(--bg);
+}
+
+.steps-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3.5rem;
+  position: relative;
+}
+
+.steps-row::before {
+  content: '';
+  position: absolute;
+  top: 1.9rem;
+  left: calc(16.67% + 1rem);
+  right: calc(16.67% + 1rem);
+  height: 1px;
+  background: linear-gradient(90deg, rgba(240,160,18,0.25), rgba(240,160,18,0.05));
+}
+
+.step-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+}
+
+.step-circle {
+  width: 3.8rem; height: 3.8rem;
+  border-radius: 50%;
+  background: rgba(240,160,18,0.07);
+  border: 1px solid rgba(240,160,18,0.22);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--gold);
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.step-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.08rem;
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+}
+
+.step-desc {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* ─── TESTIMONIALS ─── */
+.testimonials-section {
+  background: var(--bg2);
+}
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin-top: 3.5rem;
+}
+
+.testi-card {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.testi-card:hover {
+  border-color: rgba(240,160,18,0.18);
+  transform: translateY(-3px);
+}
+
+.quote-glyph {
+  position: absolute;
+  top: 1rem; right: 1.2rem;
+  font-family: Georgia, serif;
+  font-size: 5rem;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.12;
+  pointer-events: none;
+  user-select: none;
+}
+
+.testi-text {
+  font-size: 0.9rem;
+  line-height: 1.78;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.author-avi {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #07080F;
+  flex-shrink: 0;
+}
+.avi-a { background: linear-gradient(135deg, #F0A012, #FF6B35); }
+.avi-b { background: linear-gradient(135deg, #00C8A4, #0070F3); color: #fff; }
+.avi-c { background: linear-gradient(135deg, #A855F7, #EC4899); color: #fff; }
+
+.author-info { flex: 1; }
+
+.author-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  display: block;
+}
+
+.author-meta { font-size: 0.78rem; color: var(--muted); }
+
+.score-chip {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--teal);
+  background: rgba(0,200,164,0.08);
+  border: 1px solid rgba(0,200,164,0.2);
+  padding: 0.22rem 0.6rem;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+/* ─── TOOLS BAR ─── */
+.tools-section {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 3rem 5%;
+}
+
+.tools-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tool-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.82rem;
+  color: var(--muted);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.tool-pill:hover {
+  border-color: rgba(240,160,18,0.2);
+  color: var(--text);
+}
+
+.tool-pill .pill-icon { font-size: 1rem; }
+
+/* ─── FINAL CTA ─── */
+.final-cta-section {
+  background: var(--bg);
+  text-align: center;
+  padding: 7rem 5%;
+  position: relative;
+  overflow: hidden;
+}
+
+.final-cta-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(240,160,18,0.08) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+.final-cta-section .section-title {
+  margin: 0 auto 1rem;
+  max-width: 620px;
+}
+
+.cta-sub {
+  color: var(--muted);
+  font-size: 1.05rem;
+  margin-bottom: 2.5rem;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.cta-btns {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.ap-notice {
+  margin-top: 2rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  padding: 2rem 5%;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  background: var(--bg);
+}
+
+.footer-copy { color: var(--muted); font-size: 0.82rem; }
+
+.footer-links {
+  display: flex;
+  gap: 1.8rem;
+  list-style: none;
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.82rem;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--text); }
+
+/* ─── REVEAL ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1100px) {
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-visual   { width: 50%; }
+}
+
+@media (max-width: 900px) {
+  .hero-visual   { display: none; }
+  .exam-layout   { grid-template-columns: 1fr; gap: 3rem; }
+  .steps-row     { grid-template-columns: 1fr; }
+  .steps-row::before { display: none; }
+  .testi-grid    { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 680px) {
+  .features-grid { grid-template-columns: 1fr; }
+  .nav-links     { display: none; }
+  .stats-bar     { gap: 2.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a href="#" class="logo"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#exam">Exam Sim</a></li>
+    <li><a href="LOGIN.html">Sign In</a></li>
+  </ul>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+
+  <div class="hero-content">
+    <h1>From <em>Limits</em><br>to <span class="accent-teal">5s.</span></h1>
+
+    <p class="hero-sub">
+      An AP Calculus BC prep platform built around how students actually learn — large question bank, a real exam environment, and every tool you need to walk in confident.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="LOGIN.html" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1v14M1 8h14" stroke="#07080F" stroke-width="2" stroke-linecap="round"/></svg>
+        Start Practicing Free
+      </a>
+      <a href="#exam" class="btn-ghost">
+        See Exam Simulator →
+      </a>
+    </div>
+  </div>
+
+  <!-- Animated SVG Graph -->
+  <div class="hero-visual">
+    <svg viewBox="0 0 580 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Grid lines vertical -->
+      <line x1="110" y1="20" x2="110" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="180" y1="20" x2="180" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="250" y1="20" x2="250" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="320" y1="20" x2="320" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="390" y1="20" x2="390" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="460" y1="20" x2="460" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="530" y1="20" x2="530" y2="390" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <!-- Grid lines horizontal -->
+      <line x1="40" y1="60"  x2="555" y2="60"  stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="40" y1="130" x2="555" y2="130" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="40" y1="200" x2="555" y2="200" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="40" y1="270" x2="555" y2="270" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <line x1="40" y1="340" x2="555" y2="340" stroke="rgba(0,200,164,0.08)" stroke-width="1"/>
+      <!-- Axes -->
+      <line x1="50" y1="390" x2="558" y2="390" stroke="rgba(238,242,255,0.25)" stroke-width="1.5"/>
+      <line x1="50" y1="390" x2="50"  y2="18"  stroke="rgba(238,242,255,0.25)" stroke-width="1.5"/>
+      <!-- Arrowheads -->
+      <polygon points="558,385 568,390 558,395" fill="rgba(238,242,255,0.25)"/>
+      <polygon points="45,18 50,8 55,18" fill="rgba(238,242,255,0.25)"/>
+      <!-- Labels -->
+      <text x="570" y="395" fill="rgba(238,242,255,0.4)" font-family="Space Mono" font-size="13">x</text>
+      <text x="38"  y="13"  fill="rgba(238,242,255,0.4)" font-family="Space Mono" font-size="13">y</text>
+
+      <!-- Shaded integral area -->
+      <path class="area-fill"
+        d="M 210,108 C 248,92 272,260 338,228 L 338,390 L 210,390 Z"
+        fill="rgba(240,160,18,0.07)"/>
+
+      <!-- Integral bounds tick marks -->
+      <line class="area-fill" x1="210" y1="390" x2="210" y2="402" stroke="rgba(240,160,18,0.5)" stroke-width="1.5"/>
+      <line class="area-fill" x1="338" y1="390" x2="338" y2="402" stroke="rgba(240,160,18,0.5)" stroke-width="1.5"/>
+      <text class="area-fill" x="204" y="416" fill="rgba(240,160,18,0.7)" font-family="Space Mono" font-size="11">a</text>
+      <text class="area-fill" x="332" y="416" fill="rgba(240,160,18,0.7)" font-family="Space Mono" font-size="11">b</text>
+
+      <!-- Big integral symbol (decorative bg) -->
+      <text x="250" y="340" fill="rgba(240,160,18,0.06)" font-size="120" font-family="Times New Roman, serif">∫</text>
+
+      <!-- Main curve (gold, animated) -->
+      <path class="curve-main"
+        d="M 55,315 C 100,300 148,95 210,90 C 255,86 272,255 338,228 C 400,202 450,65 545,42"
+        stroke="#F0A012" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+
+      <!-- Tangent line at local max (dashed teal) -->
+      <line class="curve-tangent" x1="140" y1="106" x2="280" y2="74"
+        stroke="rgba(0,200,164,0.75)" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+      <!-- Critical point dots -->
+      <circle class="dot-appear" cx="210" cy="90"  r="5" fill="#F0A012"/>
+      <circle class="dot-appear" cx="338" cy="228" r="5" fill="#F0A012"/>
+
+      <!-- Annotation labels -->
+      <g class="dot-appear">
+        <text x="216" y="78"  fill="rgba(240,160,18,0.9)"  font-family="Space Mono" font-size="11">local max</text>
+        <text x="344" y="244" fill="rgba(240,160,18,0.9)"  font-family="Space Mono" font-size="11">local min</text>
+      </g>
+      <text class="curve-tangent" x="147" y="97"  fill="rgba(0,200,164,0.8)" font-family="Space Mono" font-size="10.5">f ′(x) = 0</text>
+
+      <!-- f(x) label -->
+      <text x="490" y="38"  fill="rgba(238,242,255,0.55)" font-family="Space Mono" font-size="13">f(x)</text>
+    </svg>
+  </div>
+</section>
+
+<!-- ─── TOPICS TICKER ─── -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <div class="tick-item">Limits & Continuity</div>
+    <div class="tick-item">L'Hôpital's Rule</div>
+    <div class="tick-item">Derivatives</div>
+    <div class="tick-item">Chain Rule</div>
+    <div class="tick-item">Related Rates</div>
+    <div class="tick-item">Implicit Differentiation</div>
+    <div class="tick-item">MVT</div>
+    <div class="tick-item">Riemann Sums</div>
+    <div class="tick-item">Integration by Parts</div>
+    <div class="tick-item">FTC I & II</div>
+    <div class="tick-item">Differential Equations</div>
+    <div class="tick-item">Taylor & Maclaurin Series</div>
+    <div class="tick-item">Parametric Equations</div>
+    <div class="tick-item">Polar Coordinates</div>
+    <div class="tick-item">Convergence Tests</div>
+    <div class="tick-item">Euler's Method</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="tick-item">Limits & Continuity</div>
+    <div class="tick-item">L'Hôpital's Rule</div>
+    <div class="tick-item">Derivatives</div>
+    <div class="tick-item">Chain Rule</div>
+    <div class="tick-item">Related Rates</div>
+    <div class="tick-item">Implicit Differentiation</div>
+    <div class="tick-item">MVT</div>
+    <div class="tick-item">Riemann Sums</div>
+    <div class="tick-item">Integration by Parts</div>
+    <div class="tick-item">FTC I & II</div>
+    <div class="tick-item">Differential Equations</div>
+    <div class="tick-item">Taylor & Maclaurin Series</div>
+    <div class="tick-item">Parametric Equations</div>
+    <div class="tick-item">Polar Coordinates</div>
+    <div class="tick-item">Convergence Tests</div>
+    <div class="tick-item">Euler's Method</div>
+  </div>
+</div>
+
+<!-- ─── STATS BAR ─── -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="2500" data-suffix="+">0</span>
+    <span class="stat-label">Practice Questions</span>
+  </div>
+  <div class="stat-item reveal">
+    <span class="stat-num" data-target="9" data-suffix=" units">0</span>
+    <span class="stat-label">Complete AP Topics</span>
+  </div>
+</div>
+
+<!-- ─── FEATURES ─── -->
+<section class="section features-section" id="features">
+  <div class="features-header reveal">
+    <span class="section-eyebrow">Everything You Need</span>
+    <h2 class="section-title">Built for the exam.<br>Designed for you.</h2>
+    <p class="section-sub">Every tool and feature your AP Calculus BC prep needs — no textbooks required.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <span class="feat-icon">🎯</span>
+      <div class="feat-title">Large Question Bank</div>
+      <p class="feat-desc">Thousands of expertly curated MCQ and FRQ questions across every AP topic. Never run out of practice.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">📚</span>
+      <div class="feat-title">Chapter Selection</div>
+      <p class="feat-desc">Zero in on exactly what you need. Practice by chapter, drill one concept, or mix them all.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🎚️</span>
+      <div class="feat-title">Difficulty Control</div>
+      <p class="feat-desc">Start easy, build confidence, then push into AB/BC-level challenge questions. You set the pace.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">🗂️</span>
+      <div class="feat-title">Topic Selection</div>
+      <p class="feat-desc">Limits, derivatives, integrals, series — pick any topic and get laser-focused practice instantly.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">🧮</span>
+      <div class="feat-title">Calculator / No-Calc Mode</div>
+      <p class="feat-desc">Mirrors real AP exam conditions. Toggle between calculator-permitted and non-calculator sections.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">✍️</span>
+      <div class="feat-title">MCQ & FRQ</div>
+      <p class="feat-desc">Multiple choice with instant feedback, or full free-response questions with step-by-step solutions.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">📝</span>
+      <div class="feat-title">Many Practice Papers</div>
+      <p class="feat-desc">Generate a fresh, full-length practice exam any time. No two papers are exactly alike.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">🖥️</span>
+      <div class="feat-title">Real Exam UI</div>
+      <p class="feat-desc">Pixel-perfect replica of the AP exam interface so test day feels like familiar territory.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">📐</span>
+      <div class="feat-title">Desmos Calculator</div>
+      <p class="feat-desc">Built-in Desmos graphing calculator, exactly as allowed on the AP exam. No setup needed.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">📋</span>
+      <div class="feat-title">Formula Sheet</div>
+      <p class="feat-desc">Complete AP Calculus BC formula reference, available during any practice session with one click.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-icon">⏱️</span>
+      <div class="feat-title">Timed Practice</div>
+      <p class="feat-desc">Simulate exam pressure with configurable timers. Build the pacing discipline that earns 5s.</p>
+    </div>
+    <div class="feat-card teal-hover reveal">
+      <span class="feat-icon">⚡</span>
+      <div class="feat-title">15-Question Quizzes</div>
+      <p class="feat-desc">Short, sharp 15-question timed quizzes — perfect for daily practice between study sessions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOOLS BAR ─── -->
+<div class="tools-section">
+  <div class="tools-inner">
+    <span style="font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-right:0.5rem;">Includes</span>
+    <div class="tool-pill"><span class="pill-icon">📊</span> Desmos Graphing</div>
+    <div class="tool-pill"><span class="pill-icon">📋</span> AP Formula Sheet</div>
+    <div class="tool-pill"><span class="pill-icon">📈</span> Progress Analytics</div>
+    <div class="tool-pill"><span class="pill-icon">🕒</span> Exam Timer</div>
+    <div class="tool-pill"><span class="pill-icon">🗃️</span> Full History</div>
+    <div class="tool-pill"><span class="pill-icon">🔢</span> Step-by-Step Solutions</div>
+  </div>
+</div>
+
+<!-- ─── EXAM PREVIEW ─── -->
+<section class="section exam-section" id="exam">
+  <div class="exam-layout">
+    <div class="exam-text reveal">
+      <span class="section-eyebrow">Real Exam Simulator</span>
+      <h2 class="section-title">Test day will feel like<br>old news.</h2>
+      <p class="section-sub">Our exam interface is modeled on the actual AP test experience — so when the real thing arrives, you've already been there dozens of times.</p>
+
+      <ul class="exam-perks">
+        <li><span class="perk-icon">✓</span> Authentic AP exam layout and navigation</li>
+        <li><span class="perk-icon">✓</span> Real countdown timer with section breaks</li>
+        <li><span class="perk-icon">✓</span> Integrated Desmos calculator on permitted sections</li>
+        <li><span class="perk-icon">✓</span> Formula sheet accessible in one click</li>
+        <li><span class="perk-icon">✓</span> Full paper scoring with detailed breakdowns</li>
+      </ul>
+    </div>
+
+    <!-- Exam UI Mockup -->
+    <div class="exam-mockup reveal">
+      <div class="exam-topbar">
+        <div class="exam-topbar-left">
+          <strong>AP Calculus BC</strong> &nbsp;·&nbsp; Section I Part A
+        </div>
+        <div class="exam-timer-box">
+          <div class="timer-dot"></div>
+          <span>01 : 45 : 23</span>
+        </div>
+      </div>
+
+      <div class="exam-body">
+        <div class="exam-meta">
+          <span class="exam-qnum">Question 7 of 30</span>
+          <span class="exam-diff">MEDIUM</span>
+        </div>
+
+        <div class="exam-question">
+          Let <em>f</em> be defined by the integral below. Find <em>f</em>′(<em>x</em>).
+          <span class="math-expr">f(x) = ∫₀ˣ (t² − 3t + 2) dt</span>
+          Using the Fundamental Theorem of Calculus, evaluate the derivative.
+        </div>
+
+        <div class="exam-choices">
+          <div class="exam-choice">
+            <span class="choice-key">A</span>
+            <span style="font-family:'Space Mono',monospace;font-size:0.82rem;">x³/3 − 3x²/2 + 2x + C</span>
+          </div>
+          <div class="exam-choice">
+            <span class="choice-key">B</span>
+            <span style="font-family:'Space Mono',monospace;font-size:0.82rem;">2x − 3</span>
+          </div>
+          <div class="exam-choice selected">
+            <span class="choice-key">C</span>
+            <span style="font-family:'Space Mono',monospace;font-size:0.82rem;">x² − 3x + 2</span>
+          </div>
+          <div class="exam-choice">
+            <span class="choice-key">D</span>
+            <span style="font-family:'Space Mono',monospace;font-size:0.82rem;">0</span>
+          </div>
+        </div>
+
+        <div class="exam-footer">
+          <div class="exam-progress">
+            <div class="prog-dot done"></div><div class="prog-dot done"></div>
+            <div class="prog-dot done"></div><div class="prog-dot done"></div>
+            <div class="prog-dot done"></div><div class="prog-dot done"></div>
+            <div class="prog-dot curr"></div><div class="prog-dot"></div>
+            <div class="prog-dot"></div><div class="prog-dot"></div>
+            <div class="prog-dot"></div><div class="prog-dot"></div>
+            <div class="prog-dot"></div><div class="prog-dot"></div>
+            <div class="prog-dot"></div>
+          </div>
+          <div class="exam-nav">
+            <button class="exam-btn">← Back</button>
+            <button class="exam-btn">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="section how-section" id="how-it-works">
+  <div class="reveal">
+    <span class="section-eyebrow">How It Works</span>
+    <h2 class="section-title">From sign-up to 5 in three steps.</h2>
+  </div>
+
+  <div class="steps-row">
+    <div class="step-card reveal">
+      <div class="step-circle">01</div>
+      <h3 class="step-title">Choose Your Focus</h3>
+      <p class="step-desc">Select a chapter, topic, or difficulty. Or let Ukus<span style="color:#F0A012;">AP</span> build a balanced session for you based on your weak areas and exam date.</p>
+    </div>
+    <div class="step-card reveal" style="transition-delay:0.1s">
+      <div class="step-circle">02</div>
+      <h3 class="step-title">Practice With Purpose</h3>
+      <p class="step-desc">Work through MCQ and FRQ questions in a real exam environment — timed or relaxed — with the same tools you'll have on test day.</p>
+    </div>
+    <div class="step-card reveal" style="transition-delay:0.2s">
+      <div class="step-circle">03</div>
+      <h3 class="step-title">Track Your Growth</h3>
+      <p class="step-desc">Your history and stats update after every session. See exactly where you're improving and where to spend your next hour.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="section testimonials-section" id="testimonials">
+  <div class="reveal">
+    <span class="section-eyebrow">Student Stories</span>
+    <h2 class="section-title">They put in the reps.<br>The 5 followed.</h2>
+  </div>
+
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="quote-glyph">"</div>
+      <p class="testi-text">I used to dread series and sequences. After two weeks of targeted UkusAP practice, they're my strongest topic. The unlimited questions meant I could drill exactly what I needed, not what a textbook chapter decided.</p>
+      <div class="testi-author">
+        <div class="author-avi avi-a">I</div>
+        <div class="author-info">
+          <span class="author-name">Iira K.</span>
+          <span class="author-meta">Grade 12 · Yishun Innova Junior college</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal" style="transition-delay:0.1s">
+      <div class="quote-glyph">"</div>
+      <p class="testi-text">The real exam UI is the difference maker. By the time I sat the actual AP test, the interface felt so familiar I could just focus on the math. The timed quizzes also fixed my pacing — I finished Section I with 12 minutes to spare.</p>
+      <div class="testi-author">
+        <div class="author-avi avi-b">S</div>
+        <div class="author-info">
+          <span class="author-name">Shriya G.</span>
+          <span class="author-meta">Grade 12 ·Knowledgeum Academy </span>
+        </div>
+        <div class="score-chip"></div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal" style="transition-delay:0.2s">
+      <div class="quote-glyph">"</div>
+      <p class="testi-text"> I used UkusAP every day for 6 weeks — the stats dashboard showed my weak spots week by week.  being able to see that progress was incredibly reassuring.I used to be a struggling student but now I can ace all of my math test just from using UkusAP everyday</p>
+      <div class="testi-author">
+        <div class="author-avi avi-c">S</div>
+        <div class="author-info">
+          <span class="author-name">Sai Charan.</span>
+          <span class="author-meta"></span>
+        </div>
+        <div class="score-chip"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ─── -->
+<section class="final-cta-section">
+  <span class="section-eyebrow">Ready?</span>
+  <h2 class="section-title reveal">Your 5 is waiting.</h2>
+  <p class="cta-sub reveal">Join thousands of students who stopped hoping and started scoring.</p>
+  <div class="cta-btns reveal">
+    <a href="LOGIN.html" class="btn-primary" style="font-size:1.05rem;padding:1rem 2.4rem;">
+      Start Practicing Free →
+    </a>
+    <a href="#exam" class="btn-ghost" style="font-size:1.05rem;padding:1rem 2.4rem;">
+      See the Simulator
+    </a>
+  </div>
+  <p class="ap-notice reveal">
+    AP® is a registered trademark of the College Board. Ukus<span style="color:#F0A012;">AP</span> is not affiliated with or endorsed by the College Board.
+  </p>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-copy">© 2025 UkusAP. Built for the 5.</div>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+// ─── SCROLL REVEAL ───
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1 });
+reveals.forEach(el => observer.observe(el));
+
+// ─── COUNTER ANIMATION ───
+function animateCounter(el) {
+  const target = parseInt(el.dataset.target, 10);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2000;
+  const start = performance.now();
+  function update(now) {
+    const elapsed = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - elapsed, 3);
+    const value = Math.floor(ease * target);
+    el.textContent = value.toLocaleString() + suffix;
+    if (elapsed < 1) requestAnimationFrame(update);
+    else el.textContent = target.toLocaleString() + suffix;
+  }
+  requestAnimationFrame(update);
+}
+
+const statNums = document.querySelectorAll('.stat-num[data-target]');
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      animateCounter(entry.target);
+      statsObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+statNums.forEach(el => statsObserver.observe(el));
+
+// ─── EXAM CHOICE INTERACTION ───
+document.querySelectorAll('.exam-choice').forEach(choice => {
+  choice.addEventListener('click', () => {
+    choice.closest('.exam-choices').querySelectorAll('.exam-choice').forEach(c => c.classList.remove('selected'));
+    choice.classList.add('selected');
+  });
+});
+
+// ─── NAV SCROLL STYLE ───
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 60) {
+    nav.style.background = 'rgba(7,8,15,0.97)';
+  } else {
+    nav.style.background = 'rgba(7,8,15,0.82)';
+  }
+});
+</script>
+</body>
+</html>

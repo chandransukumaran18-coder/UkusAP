@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Paper Exam — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
+<style>
+:root {
+  --bg:     #F4F5F7;
+  --bg2:    #FFFFFF;
+  --bg3:    #FAFBFC;
+  --gold: #F0A012;
+  --gold2: #D88A0A;
+  --teal: #00A187;
+  --border: rgba(15,23,42,0.1);
+  --text: #15171F;
+  --muted: #6B7280;
+  --muted2: #9CA3AF;
+  --green: #15803D;
+  --green-bg: #F0FDF4;
+  --red: #B91C1C;
+  --red-bg: #FEF2F2;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height: 100%; background: #fff; color: #15171F; font-family: 'Inter', system-ui, sans-serif; line-height: 1.6; }
+body { display: flex; flex-direction: column; min-height: 100vh; }
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#fff; }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.15); border-radius:3px; }
+
+/* ─── TOP BAR ─── */
+.exam-top {
+  background: var(--bg2);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.exam-top-left { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; font-weight: 600; }
+.exam-top-left .logo-int { color: var(--gold); }
+.exam-top-sub { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+.exam-top-center { display: flex; justify-content: center; align-items: center; gap: 0.8rem; }
+.exam-top-right { display: flex; justify-content: flex-end; }
+
+.calc-badge {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem; font-weight: 700;
+  padding: 0.35rem 0.8rem;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.calc-badge.allowed { background: rgba(0,161,135,0.1); color: var(--teal); }
+.calc-badge.forbidden { background: var(--red-bg); color: var(--red); }
+.calc-badge svg { width: 13px; height: 13px; flex-shrink: 0; }
+
+/* ─── LOADING ─── */
+#loadingScreen {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1rem; color: var(--muted); font-size: 0.92rem;
+}
+.spinner {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 3px solid var(--border); border-top-color: var(--gold);
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── TIMER ─── */
+.timer-box {
+  display: flex; align-items: center; gap: 0.55rem;
+  background: #1A1A2E; border: none;
+  padding: 0.55rem 1.1rem; border-radius: 9px;
+}
+.timer-clock-icon { width: 15px; height: 15px; color: #fff; flex-shrink: 0; }
+.timer-box.danger { background: #7F1D1D; }
+.timer-display { font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700; min-width: 52px; color: #fff; }
+.timer-box.danger .timer-display { color: #FCA5A5; }
+.timer-hide-btn {
+  background: none; border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Space Mono', monospace; font-size: 0.68rem;
+  cursor: pointer; padding: 0.1rem 0.5rem; border-radius: 4px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+}
+.timer-hide-btn:hover { color: #fff; }
+.timer-hide-btn:disabled { color: rgba(255,255,255,0.25); cursor: not-allowed; }
+
+/* ─── QUESTION NAV POPUP ─── */
+.q-nav-popup {
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  background: #fff; border: 1.5px solid var(--border); border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(15,23,42,0.13); padding: 1rem; display: none; z-index: 100; min-width: 220px;
+}
+.q-nav-popup.open { display: block; }
+.q-nav-popup-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4rem; }
+.q-grid-btn {
+  width: 34px; height: 34px; border-radius: 7px; border: 1.5px solid #D1D5DB; background: #fff;
+  color: var(--muted); font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; position: relative; transition: all 0.15s;
+}
+.q-grid-btn:hover { border-color: #9CA3AF; }
+.q-grid-btn.answered { background: rgba(0,161,135,0.1); border-color: var(--teal); color: var(--teal); }
+.q-grid-btn.current { border-color: var(--gold); border-width: 2px; color: var(--gold2); }
+.q-grid-btn.marked::after {
+  content: ''; position: absolute; top: -3px; right: -3px; width: 8px; height: 8px;
+  border-radius: 50%; background: var(--gold); border: 1.5px solid #fff;
+}
+
+/* ─── MCQ SCREEN (two-pane, matches QuizQuestionUI) ─── */
+#mcqScreen { display: none; flex: 1; flex-direction: column; }
+.exam-main { flex: 1; display: flex; overflow: hidden; }
+.exam-pane { flex: 1; overflow-y: auto; padding: 2.2rem 2.6rem; }
+.exam-pane-left { background: #FAFAF8; border-right: 1px solid var(--border); }
+.question-prompt { font-family: Georgia, 'Times New Roman', serif; font-size: 1.06rem; line-height: 1.85; color: #1A1A1A; max-width: 540px; }
+.question-graph { margin-top: 1.4rem; max-width: 540px; }
+.question-graph svg { max-width: 100%; height: auto; display: block; }
+
+/* ─── REPORT A PROBLEM ─── */
+.report-line { margin-top: 1.4rem; }
+.report-trigger {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; padding: 0.3rem 0; transition: color 0.15s;
+}
+.report-trigger:hover { color: var(--red); }
+.report-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
+.report-panel {
+  margin-top: 0.6rem; max-width: 480px;
+  background: #FAFAFA; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem;
+}
+.report-panel-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.7rem; }
+.report-options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.8rem; }
+.report-options label { display: flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; cursor: pointer; }
+.report-options input[type=radio] { accent-color: var(--red); cursor: pointer; }
+.report-textarea {
+  width: 100%; min-height: 70px; padding: 0.6rem 0.7rem; border-radius: 8px; border: 1px solid var(--border);
+  font-family: inherit; font-size: 0.82rem; resize: vertical; margin-bottom: 0.8rem; display: none;
+}
+.report-textarea:focus { outline: none; border-color: var(--red); }
+.report-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+.report-btn { font-size: 0.8rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 7px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+.report-btn.cancel { background: none; color: var(--muted); }
+.report-btn.cancel:hover { color: #15171F; }
+.report-btn.send { background: var(--red); color: #fff; }
+.report-btn.send:hover { background: #991B1B; }
+.report-btn.send:disabled { opacity: 0.5; cursor: not-allowed; }
+.report-confirm { font-size: 0.82rem; color: var(--green); font-weight: 600; }
+
+.exam-pane-right { background: #fff; }
+
+table.q-table { border-collapse: collapse; margin: 1.2rem 0; font-family: 'Space Mono', monospace; font-size: 0.85rem; }
+table.q-table th, table.q-table td { border: 1px solid #1A1A1A; padding: 0.4rem 0.8rem; text-align: center; }
+table.q-table th { background: #F0EDE6; font-weight: 700; }
+table.q-table td.q-table-gap { border: none; padding: 0 0.5rem; background: transparent; }
+
+.question-header-row {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border);
+}
+.question-num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; background: #131417; color: #fff;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; border-radius: 5px;
+}
+.mark-review { display: flex; align-items: center; gap: 0.5rem; font-size: 0.84rem; color: var(--muted); cursor: pointer; user-select: none; }
+.mark-review-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.mark-review-box {
+  flex-shrink: 0; width: 16px; height: 16px;
+  border: 1.5px solid #9CA3AF; border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.mark-review-check { width: 11px; height: 11px; opacity: 0; transition: opacity 0.1s; }
+.mark-review.marked .mark-review-box { background: var(--gold); border-color: var(--gold); }
+.mark-review.marked .mark-review-check { opacity: 1; }
+.mark-review > svg { width: 15px; height: 15px; }
+.mark-review.marked { color: var(--gold); font-weight: 600; }
+
+.choices-list { display: flex; flex-direction: column; gap: 0.65rem; max-width: 520px; }
+.choice-row {
+  display: flex; align-items: flex-start; gap: 0.85rem; padding: 0.8rem 1.05rem;
+  border: 1.5px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.15s;
+}
+.choice-row:hover { border-color: rgba(15,23,42,0.25); background: #FAFAFA; }
+.choice-badge {
+  flex-shrink: 0; width: 25px; height: 25px; border-radius: 50%; border: 1.5px solid #9CA3AF;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 700; color: var(--muted); transition: all 0.15s;
+}
+.choice-text { padding-top: 0.08rem; font-size: 0.93rem; }
+.choice-row.selected { border-color: var(--teal); background: rgba(0,161,135,0.05); }
+.choice-row.selected .choice-badge { border-color: var(--teal); background: var(--teal); color: #fff; }
+
+/* ─── BOTTOM NAV BAR ─── */
+.exam-bottom {
+  background: #fff; border-top: 1px solid var(--border);
+  padding: 0.9rem 1.6rem; display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; gap: 1rem; position: relative;
+}
+.exam-btn {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.88rem;
+  padding: 0.6rem 1.3rem; border-radius: 8px; cursor: pointer; transition: all 0.18s; border: none;
+}
+.exam-btn.ghost { background: #fff; border: 1.5px solid var(--border); color: #15171F; }
+.exam-btn.ghost:hover { border-color: rgba(15,23,42,0.25); }
+.exam-btn.ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+.exam-btn.primary { background: var(--gold); color: #fff; }
+.exam-btn.primary:hover { background: #D88A0A; }
+.exam-btn.primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+.q-nav-btn {
+  background: #131417; color: #fff; border: none; border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.86rem;
+  padding: 0.55rem 1.4rem; cursor: pointer; transition: background 0.18s; white-space: nowrap;
+}
+.q-nav-btn:hover { background: #2D2F36; }
+.bottom-right { display: flex; gap: 0.6rem; align-items: center; }
+
+/* ─── FRQ SCREEN ─── */
+#frqScreen { display: none; flex: 1; flex-direction: column; }
+.frq-body { flex: 1; overflow-y: auto; background: var(--bg); padding: 2.2rem 1.6rem 3rem; }
+.frq-wrap { max-width: 700px; margin: 0 auto; }
+.frq-meta-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.2rem; }
+.frq-meta-left { display: flex; align-items: center; gap: 0.7rem; }
+.frq-num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; background: #131417; color: #fff;
+  font-family: 'Space Mono', monospace; font-size: 0.82rem; font-weight: 700; border-radius: 7px; flex-shrink: 0;
+}
+.frq-topic { font-size: 0.86rem; color: var(--muted); }
+.frq-topic strong { color: var(--text); }
+.frq-points-pill {
+  font-family: 'Space Mono', monospace; font-size: 0.7rem; font-weight: 700;
+  background: rgba(240,160,18,0.1); color: var(--gold2);
+  padding: 0.3rem 0.7rem; border-radius: 100px; white-space: nowrap;
+}
+
+.frq-graph { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1rem; margin-bottom: 1.4rem; text-align: center; }
+.frq-graph svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+.frq-part-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.3rem 1.5rem; margin-bottom: 1rem;
+}
+.frq-part-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
+.frq-part-letter {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.94rem; color: var(--text);
+}
+.frq-part-worth { font-family: 'Space Mono', monospace; font-size: 0.66rem; color: var(--muted2); text-transform: uppercase; letter-spacing: 0.04em; }
+.frq-part-prompt { font-family: Georgia, 'Times New Roman', serif; font-size: 1rem; line-height: 1.75; color: #1A1A1A; }
+
+.frq-answer-box {
+  margin-top: 1rem; padding-top: 1rem; border-top: 1px dashed var(--border);
+  display: none;
+}
+.frq-answer-box.visible { display: block; }
+.frq-answer-label {
+  font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase;
+  letter-spacing: 0.05em; color: var(--teal); font-weight: 700; margin-bottom: 0.5rem; display: block;
+}
+.frq-answer-text { font-size: 0.92rem; line-height: 1.75; color: var(--text); background: var(--green-bg); border-radius: 10px; padding: 0.9rem 1.05rem; }
+.frq-answer-text p { margin-bottom: 0.6rem; }
+.frq-answer-text p:last-child { margin-bottom: 0; }
+
+.frq-reveal-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  background: #fff; border: 1px solid var(--border); border-radius: 14px;
+  padding: 1.2rem 1.5rem; margin-bottom: 1rem;
+}
+.frq-reveal-text { font-size: 0.86rem; color: var(--muted); }
+.reveal-btn {
+  flex-shrink: 0; padding: 0.7rem 1.3rem; border-radius: 9px; border: none;
+  background: var(--teal); color: #fff; font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.86rem; cursor: pointer; transition: all 0.18s;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.reveal-btn:hover { background: #00876F; }
+.reveal-btn:disabled { opacity: 0.6; cursor: default; }
+
+.frq-score-card {
+  background: #fff; border: 1.5px solid rgba(240,160,18,0.35); border-radius: 14px;
+  padding: 1.3rem 1.5rem; margin-bottom: 1rem; display: none;
+}
+.frq-score-card.visible { display: block; }
+.frq-score-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.92rem; margin-bottom: 0.3rem; }
+.frq-score-sub { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+.frq-score-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; margin-bottom: 1rem; }
+.frq-score-field { display: flex; flex-direction: column; gap: 0.4rem; align-items: center; }
+.frq-score-field label { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--muted); }
+.frq-score-field input {
+  width: 100%; text-align: center; padding: 0.55rem; border-radius: 8px;
+  border: 1.5px solid var(--border); font-family: 'Space Mono', monospace; font-size: 1rem; font-weight: 700;
+}
+.frq-score-field input:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(240,160,18,0.12); }
+.frq-score-total { text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--gold2); }
+
+/* ─── BREAK SCREEN ─── */
+#breakScreen {
+  display: none; flex: 1; flex-direction: column; align-items: center; justify-content: center;
+  background: #0B0C10; color: #fff; padding: 2rem; text-align: center;
+}
+.break-icon {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(240,160,18,0.12); color: var(--gold);
+  display: flex; align-items: center; justify-content: center; margin-bottom: 1.6rem;
+}
+.break-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.6rem; }
+.break-sub { color: rgba(255,255,255,0.55); font-size: 0.92rem; margin-bottom: 2.2rem; max-width: 420px; }
+.break-timer {
+  font-family: 'Space Mono', monospace; font-size: 3.4rem; font-weight: 700;
+  color: var(--gold); margin-bottom: 2.2rem; letter-spacing: 0.02em;
+}
+.break-tips {
+  list-style: none; display: flex; flex-direction: column; gap: 0.7rem;
+  max-width: 380px; margin-bottom: 2.2rem; text-align: left;
+}
+.break-tips li { display: flex; gap: 0.7rem; font-size: 0.86rem; color: rgba(255,255,255,0.75); }
+.break-tips svg { width: 15px; height: 15px; color: var(--teal); flex-shrink: 0; margin-top: 0.2rem; }
+.break-continue {
+  padding: 0.85rem 1.8rem; border-radius: 10px; border: none;
+  background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.4);
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: not-allowed;
+  transition: all 0.2s;
+}
+.break-continue.ready { background: var(--gold); color: #fff; cursor: pointer; }
+.break-continue.ready:hover { background: var(--gold2); }
+
+/* ─── RESULTS SCREEN ─── */
+#resultsScreen { display: none; flex: 1; padding: 2.4rem 1.6rem 4rem; background: var(--bg); }
+.results-wrap { max-width: 780px; margin: 0 auto; width: 100%; }
+.results-header { text-align: center; margin-bottom: 1.8rem; }
+.results-header h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
+.results-header p { color: var(--muted); font-size: 0.88rem; }
+
+.results-score-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+.results-score-card {
+  background: #fff; border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.6rem 1rem; text-align: center;
+}
+.results-score-card.combined { background: #131417; color: #fff; border-color: #131417; }
+.results-score-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--gold2); }
+.results-score-card.combined .results-score-num { color: var(--gold); }
+.results-score-label { color: var(--muted); font-size: 0.78rem; margin-top: 0.4rem; }
+.results-score-card.combined .results-score-label { color: rgba(255,255,255,0.6); }
+
+.results-section-title {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem;
+  margin: 1.6rem 0 0.8rem;
+}
+
+.review-item { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.7rem; overflow: hidden; background: #fff; }
+.review-item-header { display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.1rem; cursor: pointer; background: #FAFBFC; transition: background 0.15s; }
+.review-item-header:hover { background: #F4F5F7; }
+.review-status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.review-status-dot.correct { background: var(--green); }
+.review-status-dot.incorrect { background: var(--red); }
+.review-item-title { flex: 1; font-size: 0.86rem; font-weight: 600; }
+.review-item-chevron { width: 16px; height: 16px; color: var(--muted); transition: transform 0.2s; }
+.review-item.open .review-item-chevron { transform: rotate(180deg); }
+.review-item-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); }
+.review-item.open .review-item-body { display: block; }
+.review-item-body p { margin-bottom: 0.7rem; }
+.review-label { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em; }
+.review-graph:not(:empty) { margin-top: 1rem; }
+.review-score-badge {
+  font-family: 'Space Mono', monospace; font-size: 0.72rem; font-weight: 700;
+  padding: 0.15rem 0.55rem; border-radius: 100px; background: rgba(240,160,18,0.12); color: var(--gold2);
+}
+
+.results-actions { display: flex; gap: 0.8rem; margin-top: 1.8rem; }
+.results-actions a { flex: 1; text-align: center; padding: 0.85rem; border-radius: 10px; text-decoration: none; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.18s; }
+.results-actions .primary { background: var(--gold); color: #fff; }
+.results-actions .primary:hover { background: #D88A0A; }
+.results-actions .ghost { background: #fff; border: 1.5px solid var(--border); color: #15171F; }
+.results-actions .ghost:hover { border-color: rgba(15,23,42,0.25); }
+
+@media (max-width: 860px) {
+  .exam-main { flex-direction: column; overflow-y: auto; }
+  .exam-pane { overflow-y: visible; }
+  .exam-pane-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .results-score-grid { grid-template-columns: 1fr; }
+  .frq-score-grid { grid-template-columns: repeat(2, 1fr); }
+}
+sup, sub { font-size: 0.72em; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.2em; }
+</style>
+</head>
+<body>
+
+<header class="exam-top" id="examTop" style="display:none">
+  <div class="exam-top-left">
+    <span class="logo-int">∫</span>
+    <span id="examLabel">AP Calculus BC</span>
+    <span class="exam-top-sub" id="examSub"></span>
+  </div>
+  <div class="exam-top-center">
+    <span class="calc-badge" id="calcBadge"></span>
+    <div class="timer-box" id="timerBox">
+      <svg class="timer-clock-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span class="timer-display" id="timerDisplay">--:--</span>
+      <button class="timer-hide-btn" id="timerHideBtn">Hide</button>
+    </div>
+  </div>
+  <div class="exam-top-right"></div>
+</header>
+
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <span>Loading your exam…</span>
+</div>
+
+<!-- ─── MCQ SCREEN ─── -->
+<div id="mcqScreen">
+  <main class="exam-main">
+    <section class="exam-pane exam-pane-left">
+      <div class="question-prompt" id="questionPrompt">Loading question…</div>
+      <div class="question-graph" id="stimulusGraph" style="display:none"></div>
+
+      <div class="report-line">
+        <button class="report-trigger" id="reportTrigger" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Report a problem with this question
+        </button>
+        <div class="report-panel" id="reportPanel" style="display:none"></div>
+      </div>
+    </section>
+    <section class="exam-pane exam-pane-right">
+      <div class="question-header-row">
+        <span class="question-num-badge" id="qNumBadge">1</span>
+        <label class="mark-review" id="markReviewLabel">
+          <input type="checkbox" id="markReview" class="mark-review-input">
+          <span class="mark-review-box">
+            <svg class="mark-review-check" viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4.5 4.5L19 7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 3v18M5 4h12l-3 4 3 4H5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Mark for Review
+        </label>
+      </div>
+      <div class="choices-list" id="choicesList"></div>
+    </section>
+  </main>
+  <footer class="exam-bottom">
+    <div id="qNavPopup" class="q-nav-popup"></div>
+    <button class="exam-btn ghost" id="backBtn">← Back</button>
+    <button class="q-nav-btn" id="qNavBtn">Question 1 of 1 ↑</button>
+    <div class="bottom-right">
+      <button class="exam-btn primary" id="nextBtn">Next →</button>
+    </div>
+  </footer>
+</div>
+
+<!-- ─── FRQ SCREEN ─── -->
+<div id="frqScreen">
+  <div class="frq-body">
+    <div class="frq-wrap" id="frqWrap"></div>
+  </div>
+  <footer class="exam-bottom">
+    <div id="frqNavPopup" class="q-nav-popup"></div>
+    <button class="exam-btn ghost" id="frqBackBtn">← Back</button>
+    <button class="q-nav-btn" id="frqNavBtn">FRQ 1 of 1 ↑</button>
+    <div class="bottom-right">
+      <button class="exam-btn primary" id="frqNextBtn" disabled>Reveal the answer to continue →</button>
+    </div>
+  </footer>
+</div>
+
+<!-- ─── BREAK SCREEN ─── -->
+<div id="breakScreen">
+  <div class="break-icon">
+    <svg viewBox="0 0 24 24" fill="none" width="30" height="30"><path d="M8 21h8M12 17v4M6 3h12l-1 6a5 5 0 01-10 0L6 3z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="break-title" id="breakTitle">Break Time</div>
+  <div class="break-sub" id="breakSub"></div>
+  <div class="break-timer" id="breakTimer">01:00</div>
+  <ul class="break-tips" id="breakTips"></ul>
+  <button class="break-continue ready" id="breakContinueBtn">Continue →</button>
+</div>
+
+<!-- ─── RESULTS SCREEN ─── -->
+<div id="resultsScreen">
+  <div class="results-wrap">
+    <div class="results-header">
+      <h1>Exam Complete</h1>
+      <p id="resultsSub">Here's how you did.</p>
+    </div>
+
+    <div class="results-score-grid">
+      <div class="results-score-card">
+        <div class="results-score-num" id="mcqScoreNum">0/45</div>
+        <div class="results-score-label">Section I — Multiple Choice</div>
+      </div>
+      <div class="results-score-card">
+        <div class="results-score-num" id="frqScoreNum">0/54</div>
+        <div class="results-score-label">Section II — Free Response (self-graded)</div>
+      </div>
+      <div class="results-score-card combined">
+        <div class="results-score-num" id="combinedScoreNum">0%</div>
+        <div class="results-score-label">Combined Estimated Score</div>
+      </div>
+    </div>
+
+    <div class="results-section-title">Section I Review</div>
+    <div id="mcqReviewList"></div>
+
+    <div class="results-section-title">Section II Self-Scores</div>
+    <div id="frqReviewList"></div>
+
+    <div class="results-actions">
+      <a href="SamplePaper.html" class="ghost">Take Another Paper</a>
+      <a href="homepage.html" class="primary">Back to Dashboard</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/auto-render.min.js"></script>
+<script src="config.js"></script>
+<script>
+const token = localStorage.getItem('derive_token');
+if (!token) { window.location.href = 'LOGIN.html'; }
+
+const params = new URLSearchParams(window.location.search);
+const paper  = params.get('paper');
+if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) { window.location.href = 'SamplePaper.html'; }
+const paperNum = paper ? paper.replace('BC-EXAM', '') : '';
+
+/* ─── MATH RENDERING HELPERS (same approach as QuizQuestionUI.html) ─── */
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+function convertLimNotation(text) {
+  return text.replace(/lim\(([a-zA-Z]+)\s*(?:→|->)\s*([^()]+)\)/g, '\\(\\displaystyle\\lim_{$1 \\to $2}\\)');
+}
+function buildTableHtml(tableLines) {
+  const rows = tableLines.map(line => {
+    const colonIdx = line.indexOf(':');
+    const label = line.slice(0, colonIdx).trim();
+    const rest = line.slice(colonIdx + 1).trim();
+    const groups = rest.split('|').map(group => group.trim().split(/\s+/).filter(Boolean));
+    return { label, groups };
+  });
+  let html = '<table class="q-table">';
+  rows.forEach(row => {
+    html += '<tr><th>' + escapeHtml(row.label) + '</th>';
+    row.groups.forEach((group, gi) => {
+      group.forEach(val => { html += '<td>' + escapeHtml(val) + '</td>'; });
+      if (gi < row.groups.length - 1) html += '<td class="q-table-gap"></td>';
+    });
+    html += '</tr>';
+  });
+  html += '</table>';
+  return html;
+}
+function looksLikeTableValues(rest) {
+  const tokens = rest.split('|').join(' ').trim().split(/\s+/);
+  if (tokens.length < 2) return false;
+  return tokens.every(t =>
+    /^(?:[+\-−–]?(?:\d+(?:\.\d+)?|\.\d+|\d+\/\d+|∞)|[+\-−–0]|DNE|undef(?:ined)?)$/i.test(t)
+  );
+}
+function isTableRowLine(line) {
+  const m = line.match(/^\s*([^:\n]{1,40}?):\s+(\S.*)$/);
+  return !!m && looksLikeTableValues(m[2]);
+}
+function convertTables(text) {
+  const lines = text.split('\n');
+  const result = [];
+  let i = 0;
+  while (i < lines.length) {
+    let j = i;
+    const tableLines = [];
+    while (j < lines.length && isTableRowLine(lines[j])) {
+      tableLines.push(lines[j]);
+      j++;
+    }
+    if (tableLines.length >= 2) {
+      result.push(buildTableHtml(tableLines));
+      i = j;
+    } else {
+      result.push(lines[i]);
+      i++;
+    }
+  }
+  return result.join('\n');
+}
+function prepMath(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '[' && text[i - 1] === '\\') {
+      let close = text.indexOf('\\]', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(' && text[i - 1] === '\\') {
+      let close = text.indexOf('\\)', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(') {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const inner = text.slice(i + 1, j - 1);
+      if (/\\[a-zA-Z]+|[\^_]/.test(inner)) {
+        out += '\\(' + inner + '\\)';
+      } else {
+        out += text.slice(i, j);
+      }
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+function renderMathInto(el) {
+  renderMathInElement(el, {
+    delimiters: [
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true }
+    ],
+    throwOnError: false
+  });
+}
+function convertSlashFractions(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '(' && !/[a-zA-Z]/.test(text[i - 1] || '')) {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const numerator = text.slice(i + 1, j - 1);
+      if (text[j] === '/') {
+        const k = j + 1;
+        let denominator = null;
+        let afterDenom = k;
+        if (text[k] === '(') {
+          let d2 = 1, m = k + 1;
+          while (m < text.length && d2 > 0) {
+            if (text[m] === '(') d2++;
+            else if (text[m] === ')') d2--;
+            m++;
+          }
+          denominator = text.slice(k + 1, m - 1);
+          afterDenom = m;
+        } else {
+          const match = text.slice(k).match(/^[^\s()/?.,;:!]+/);
+          if (match) {
+            denominator = match[0];
+            afterDenom = k + match[0].length;
+          }
+        }
+        if (denominator) {
+          out += '\\(\\frac{' + numerator + '}{' + denominator + '}\\)';
+          i = afterDenom;
+          continue;
+        }
+      }
+      out += text.slice(i, j);
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+function convertUnicodeSuperSub(text) {
+  const supMap = {'²':'2','³':'3','¹':'1','⁰':'0','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  return text
+    .replace(/[²³¹⁰⁴⁵⁶⁷⁸⁹⁻⁺]/g, c => `<sup>${supMap[c]}</sup>`)
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]/g, c => `<sub>${subMap[c]}</sub>`);
+}
+const MATH_SEGMENT = /(\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])/;
+function wrapBareLatex(text) {
+  const braceGroup = '\\{(?:[^{}]|\\{[^{}]*\\})*\\}';
+  const cmdRun = new RegExp(
+    '\\\\[a-zA-Z]+(?:\\s*(?:\\\\[a-zA-Z]+|[_^]\\s*(?:' + braceGroup + '|[A-Za-z0-9+\\-])|' + braceGroup + '))*',
+    'g'
+  );
+  return text.split(MATH_SEGMENT).map((part, k) => {
+    if (k % 2 === 1) return part;
+    return part.replace(cmdRun, m => '\\(' + m + '\\)');
+  }).join('');
+}
+function normalizeLatexSegment(seg) {
+  const supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  const open = seg.slice(0, 2), close = seg.slice(-2);
+  const inner = seg.slice(2, -2)
+    .replace(/\\[()[\]]/g, '')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, r => '^{' + r.split('').map(c => supMap[c]).join('') + '}')
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]+/g, r => '_{' + r.split('').map(c => subMap[c]).join('') + '}')
+    .replace(/[−–]/g, '-')
+    .replace(/→/g, '\\to ')
+    .replace(/≠/g, '\\ne ')
+    .replace(/≤/g, '\\le ')
+    .replace(/≥/g, '\\ge ')
+    .replace(/∞/g, '\\infty ')
+    .replace(/π/g, '\\pi ')
+    .replace(/[·⋅]/g, '\\cdot ')
+    .replace(/×/g, '\\times ');
+  return open + inner + close;
+}
+function processPlainSegment(seg) {
+  return convertSlashFractions(seg).split(MATH_SEGMENT).map((s, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(s));
+    return convertUnicodeSuperSub(escapeHtml(s));
+  }).join('');
+}
+function setMathHtml(el, rawText, asParagraphs) {
+  let text = convertLimNotation(rawText == null ? '' : String(rawText));
+  text = wrapBareLatex(text);
+  const processed = text.split(MATH_SEGMENT).map((seg, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(seg));
+    return processPlainSegment(seg);
+  }).join('');
+  const withTables = convertTables(processed);
+  const withBreaks = asParagraphs
+    ? withTables.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')
+    : withTables.replace(/\n/g, '<br>');
+  el.innerHTML = prepMath(withBreaks);
+  renderMathInto(el);
+}
+const GRAPH_REF = /graph|figure|table|diagram|curve|plot|shown/i;
+const GRAPH_SPOILER = /[✓✗→⇒≠≈]|\bapparent\b|\bDNE\b|\bnot\b|\bcorrect\b|\bconfirm|\bfalse\b|\btrue\b(?!\s*:)|\bvalid\b|\bwrong\b|\bmin\b|\bmax\b|\bjump\b|\bcusp\b|\bcorner\b|\bhole\b|\bremovable\b|\bLHL\b|\bRHL\b|\blim\s*=|\bexact\b|\bbest\b|\buse|\bavg\b|\bratio\b|both sides|\bset\b|squeeze|horizontal tangent|=[^=,]*=|\([^()]*\)\s*\/\s*\([^()]*\)\s*=/i;
+function sanitizeGraph(svg) {
+  try {
+    const doc = new DOMParser().parseFromString(svg, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svg;
+    doc.querySelectorAll('text').forEach(t => {
+      if (GRAPH_SPOILER.test(t.textContent)) t.remove();
+    });
+    return new XMLSerializer().serializeToString(doc.documentElement);
+  } catch (e) { return svg; }
+}
+function stimulusGraphHtml(q) {
+  return (q.Graph && GRAPH_REF.test(q.Question || '')) ? sanitizeGraph(q.Graph) : '';
+}
+
+/* ─── EXAM STATE ─── */
+let partA_mcq = [], partB_mcq = [], partA_frq = [], partB_frq = [];
+let allMcq = [], allFrq = [];
+const PHASES = ['s1a', 'break_s1', 's1b', 'break10', 's2a', 'break_s2', 's2b', 'results'];
+let phaseIdx = -1;
+
+let userAnswers = {};
+let markedForReview = {};
+let frqScores = {};
+let frqRevealed = {};
+let frqAnswerCache = {};
+
+let currentMcqList = [];
+let currentMcqIndex = 0;
+let currentFrqList = [];
+let currentFrqIndex = 0;
+
+let timerInterval = null;
+let secondsLeft = 0;
+
+/* ─── LOAD EXAM DATA ─── */
+async function loadExam() {
+  try {
+    const res = await fetch(`${API_BASE}/SamplePaper?p=${encodeURIComponent(paper)}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (!res.ok) {
+      document.getElementById('loadingScreen').innerHTML = '<span>Could not load this sample paper. Is the backend running?</span>';
+      return;
+    }
+    const data = await res.json();
+    allMcq = data.mcq;
+    allFrq = data.frq;
+    partA_mcq = allMcq.filter(q => q.Type === 'Non-Calculator-Section');
+    partB_mcq = allMcq.filter(q => q.Type === 'Calculator-Section');
+    partA_frq = allFrq.filter(f => f.Type === 'Calculator-Section');
+    partB_frq = allFrq.filter(f => f.Type === 'Non-Calculator-Section');
+
+    document.getElementById('loadingScreen').style.display = 'none';
+    document.getElementById('examTop').style.display = 'grid';
+    document.getElementById('examSub').textContent = `— Practice Exam ${paperNum}`;
+    advancePhase();
+  } catch (err) {
+    document.getElementById('loadingScreen').innerHTML = '<span>Could not reach the server. Is the backend running?</span>';
+  }
+}
+
+/* ─── PHASE MACHINE ─── */
+function hideAllScreens() {
+  document.getElementById('mcqScreen').style.display = 'none';
+  document.getElementById('frqScreen').style.display = 'none';
+  document.getElementById('breakScreen').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'none';
+}
+function advancePhase() {
+  phaseIdx++;
+  if (phaseIdx >= PHASES.length) return;
+  enterPhase(PHASES[phaseIdx]);
+}
+function enterPhase(key) {
+  clearInterval(timerInterval);
+  hideAllScreens();
+  if (key === 's1a') {
+    document.getElementById('examTop').style.display = 'grid';
+    document.getElementById('examLabel').textContent = 'Section I — Part A';
+    startMcqPart(partA_mcq, 62 * 60, false);
+  } else if (key === 'break_s1') {
+    document.getElementById('examTop').style.display = 'none';
+    startBreak(60, 'Part A Complete', 'Take a short breather before Part B begins.', [
+      'Stand up and stretch — you have one minute.',
+      'Do not discuss exam content with anyone.',
+      'Section I — Part B (calculator allowed) starts automatically when this break ends.'
+    ]);
+  } else if (key === 's1b') {
+    document.getElementById('examTop').style.display = 'grid';
+    document.getElementById('examLabel').textContent = 'Section I — Part B';
+    startMcqPart(partB_mcq, 38 * 60, true);
+  } else if (key === 'break10') {
+    document.getElementById('examTop').style.display = 'none';
+    startBreak(600, 'Break — Between Sections', 'A longer break before Free Response begins.', [
+      'You may leave your seat, but follow your test center\'s rules.',
+      'No discussing exam content or using notes/devices.',
+      'Be back and ready — the break ends automatically.'
+    ]);
+  } else if (key === 's2a') {
+    document.getElementById('examTop').style.display = 'grid';
+    document.getElementById('examLabel').textContent = 'Section II — Part A';
+    startFrqPart(partA_frq, 30 * 60, true);
+  } else if (key === 'break_s2') {
+    document.getElementById('examTop').style.display = 'none';
+    startBreak(60, 'Part A Complete', 'Take a short breather before Part B begins.', [
+      'Stand up and stretch — you have one minute.',
+      'Do not discuss exam content with anyone.',
+      'Section II — Part B (no calculator) starts automatically when this break ends.'
+    ]);
+  } else if (key === 's2b') {
+    document.getElementById('examTop').style.display = 'grid';
+    document.getElementById('examLabel').textContent = 'Section II — Part B';
+    startFrqPart(partB_frq, 60 * 60, false);
+  } else if (key === 'results') {
+    document.getElementById('examTop').style.display = 'none';
+    submitAndShowResults();
+  }
+}
+
+/* ─── CALC BADGE ─── */
+function setCalcBadge(allowed) {
+  const badge = document.getElementById('calcBadge');
+  badge.className = 'calc-badge ' + (allowed ? 'allowed' : 'forbidden');
+  badge.innerHTML = allowed
+    ? '<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M8 8h8M8 12h3M13 12h3M8 16h3M13 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg> Calculator Allowed'
+    : '<svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M6 6l12 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> No Calculator';
+}
+
+/* ─── PART TIMER (shared by MCQ + FRQ parts) ─── */
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2, '0')}`;
+}
+let timerHidden = false;
+function startPartTimer(seconds, onExpire) {
+  secondsLeft = seconds;
+  timerHidden = false;
+  const timerBox = document.getElementById('timerBox');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const hideBtn = document.getElementById('timerHideBtn');
+  timerBox.classList.remove('danger');
+  hideBtn.disabled = false;
+  hideBtn.textContent = 'Hide';
+  timerDisplay.textContent = formatTime(secondsLeft);
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    if (secondsLeft <= 300 && !timerBox.classList.contains('danger')) {
+      timerBox.classList.add('danger');
+      hideBtn.disabled = true;
+      timerHidden = false;
+      hideBtn.textContent = 'Hide';
+    }
+    timerDisplay.textContent = timerHidden ? 'Hidden' : formatTime(Math.max(secondsLeft, 0));
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      onExpire();
+    }
+  }, 1000);
+}
+document.getElementById('timerHideBtn').addEventListener('click', () => {
+  const hideBtn = document.getElementById('timerHideBtn');
+  if (hideBtn.disabled) return;
+  timerHidden = !timerHidden;
+  hideBtn.textContent = timerHidden ? 'Show' : 'Hide';
+  document.getElementById('timerDisplay').textContent = timerHidden ? 'Hidden' : formatTime(secondsLeft);
+});
+
+/* ══════════════ MCQ PART ══════════════ */
+function startMcqPart(questions, seconds, calcAllowed) {
+  currentMcqList = questions;
+  currentMcqIndex = 0;
+  setCalcBadge(calcAllowed);
+  document.getElementById('mcqScreen').style.display = 'flex';
+  buildMcqNavigator();
+  renderMcqQuestion(0);
+  startPartTimer(seconds, () => advancePhase());
+}
+function buildMcqNavigator() {
+  const popup = document.getElementById('qNavPopup');
+  popup.innerHTML = '';
+  const grid = document.createElement('div');
+  grid.className = 'q-nav-popup-grid';
+  popup.appendChild(grid);
+  currentMcqList.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-grid-btn';
+    btn.textContent = idx + 1;
+    btn.id = `mcqnavdot-${idx}`;
+    btn.addEventListener('click', () => { renderMcqQuestion(idx); popup.classList.remove('open'); });
+    grid.appendChild(btn);
+  });
+  refreshMcqNavigator();
+}
+function refreshMcqNavigator() {
+  const total = currentMcqList.length;
+  document.getElementById('qNavBtn').textContent = `Question ${currentMcqIndex + 1} of ${total} ↑`;
+  currentMcqList.forEach((q, idx) => {
+    const btn = document.getElementById(`mcqnavdot-${idx}`);
+    if (!btn) return;
+    btn.classList.toggle('answered', !!userAnswers[q.ID]);
+    btn.classList.toggle('marked', !!markedForReview[q.ID]);
+    btn.classList.toggle('current', idx === currentMcqIndex);
+  });
+}
+document.getElementById('qNavBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('qNavPopup').classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+  const popup = document.getElementById('qNavPopup');
+  if (popup && !popup.contains(e.target) && e.target !== document.getElementById('qNavBtn')) {
+    popup.classList.remove('open');
+  }
+  const fpopup = document.getElementById('frqNavPopup');
+  if (fpopup && !fpopup.contains(e.target) && e.target !== document.getElementById('frqNavBtn')) {
+    fpopup.classList.remove('open');
+  }
+});
+
+function renderMcqQuestion(idx) {
+  currentMcqIndex = idx;
+  const q = currentMcqList[idx];
+  document.getElementById('qNumBadge').textContent = idx + 1;
+
+  resetReportPanel();
+  setMathHtml(document.getElementById('questionPrompt'), q.Question, false);
+  const stimulusEl = document.getElementById('stimulusGraph');
+  const stimulus = stimulusGraphHtml(q);
+  stimulusEl.innerHTML = stimulus;
+  stimulusEl.style.display = stimulus ? 'block' : 'none';
+
+  const markReview = document.getElementById('markReview');
+  const markReviewLabel = document.getElementById('markReviewLabel');
+  markReview.checked = !!markedForReview[q.ID];
+  markReviewLabel.classList.toggle('marked', markReview.checked);
+
+  const choicesList = document.getElementById('choicesList');
+  choicesList.innerHTML = '';
+  ['option1', 'option2', 'option3', 'option4'].forEach((key, i) => {
+    const letter = ['A', 'B', 'C', 'D'][i];
+    const row = document.createElement('div');
+    row.className = 'choice-row';
+    row.dataset.value = q[key];
+    if (userAnswers[q.ID] === q[key]) row.classList.add('selected');
+    row.innerHTML = `<span class="choice-badge">${letter}</span><span class="choice-text"></span>`;
+    row.addEventListener('click', () => selectMcqChoice(row, q.ID));
+    choicesList.appendChild(row);
+    setMathHtml(row.querySelector('.choice-text'), q[key], false);
+  });
+
+  document.getElementById('backBtn').disabled = idx === 0;
+  const isLast = idx === currentMcqList.length - 1;
+  document.getElementById('nextBtn').textContent = isLast ? 'Continue →' : 'Next →';
+  refreshMcqNavigator();
+}
+function selectMcqChoice(row, questionID) {
+  document.querySelectorAll('#choicesList .choice-row').forEach(r => r.classList.remove('selected'));
+  row.classList.add('selected');
+  userAnswers[questionID] = row.dataset.value;
+  refreshMcqNavigator();
+}
+document.getElementById('markReviewLabel').addEventListener('click', (e) => {
+  e.preventDefault();
+  const q = currentMcqList[currentMcqIndex];
+  markedForReview[q.ID] = !markedForReview[q.ID];
+  document.getElementById('markReview').checked = markedForReview[q.ID];
+  document.getElementById('markReviewLabel').classList.toggle('marked', markedForReview[q.ID]);
+  refreshMcqNavigator();
+});
+document.getElementById('backBtn').addEventListener('click', () => {
+  if (currentMcqIndex > 0) renderMcqQuestion(currentMcqIndex - 1);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (currentMcqIndex < currentMcqList.length - 1) {
+    renderMcqQuestion(currentMcqIndex + 1);
+  } else {
+    advancePhase();
+  }
+});
+
+/* ══════════════ FRQ PART ══════════════ */
+function startFrqPart(frqs, seconds, calcAllowed) {
+  currentFrqList = frqs;
+  currentFrqIndex = 0;
+  setCalcBadge(calcAllowed);
+  document.getElementById('frqScreen').style.display = 'flex';
+  buildFrqNavigator();
+  renderFrq(0);
+  startPartTimer(seconds, () => advancePhase());
+}
+function buildFrqNavigator() {
+  const popup = document.getElementById('frqNavPopup');
+  popup.innerHTML = '';
+  const grid = document.createElement('div');
+  grid.className = 'q-nav-popup-grid';
+  popup.appendChild(grid);
+  currentFrqList.forEach((f, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-grid-btn';
+    btn.textContent = idx + 1;
+    btn.id = `frqnavdot-${idx}`;
+    btn.addEventListener('click', () => { renderFrq(idx); popup.classList.remove('open'); });
+    grid.appendChild(btn);
+  });
+  refreshFrqNavigator();
+}
+function refreshFrqNavigator() {
+  const total = currentFrqList.length;
+  document.getElementById('frqNavBtn').textContent = `FRQ ${currentFrqIndex + 1} of ${total} ↑`;
+  currentFrqList.forEach((f, idx) => {
+    const btn = document.getElementById(`frqnavdot-${idx}`);
+    if (!btn) return;
+    btn.classList.toggle('answered', !!frqRevealed[f.ID]);
+    btn.classList.toggle('current', idx === currentFrqIndex);
+  });
+}
+document.getElementById('frqNavBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('frqNavPopup').classList.toggle('open');
+});
+
+const FRQ_PART_POINTS = { a: 2, b: 2, c: 2, d: 3 };
+
+function renderFrq(idx) {
+  currentFrqIndex = idx;
+  const f = currentFrqList[idx];
+  const wrap = document.getElementById('frqWrap');
+  wrap.innerHTML = '';
+
+  const meta = document.createElement('div');
+  meta.className = 'frq-meta-row';
+  meta.innerHTML = `
+    <div class="frq-meta-left">
+      <span class="frq-num-badge">${idx + 1}</span>
+      <span class="frq-topic"><strong>${escapeHtml(f.Chapter)}</strong> — ${escapeHtml(f.Topic)}</span>
+    </div>
+    <span class="frq-points-pill">9 points total</span>
+  `;
+  wrap.appendChild(meta);
+
+  if (f.Graph) {
+    const g = document.createElement('div');
+    g.className = 'frq-graph';
+    g.innerHTML = f.Graph;
+    wrap.appendChild(g);
+  }
+
+  const partKeys = [['a', 'PartA', 'AnswerPartA'], ['b', 'PartB', 'AnswerPartB'], ['c', 'PartC', 'AnswerPartC'], ['d', 'PartD', 'AnswerPartD']];
+  partKeys.forEach(([letter, promptKey, answerKey]) => {
+    const card = document.createElement('div');
+    card.className = 'frq-part-card';
+    card.innerHTML = `
+      <div class="frq-part-head">
+        <span class="frq-part-letter">Part (${letter})</span>
+        <span class="frq-part-worth">${FRQ_PART_POINTS[letter]} point${FRQ_PART_POINTS[letter] > 1 ? 's' : ''}</span>
+      </div>
+      <div class="frq-part-prompt"></div>
+      <div class="frq-answer-box" id="frqAnswerBox-${letter}">
+        <span class="frq-answer-label">Model Solution</span>
+        <div class="frq-answer-text" id="frqAnswerText-${letter}"></div>
+      </div>
+    `;
+    wrap.appendChild(card);
+    setMathHtml(card.querySelector('.frq-part-prompt'), f[promptKey], false);
+  });
+
+  const revealBar = document.createElement('div');
+  revealBar.className = 'frq-reveal-bar';
+  const alreadyRevealed = !!frqRevealed[f.ID];
+  revealBar.innerHTML = `
+    <span class="frq-reveal-text">Answer this on paper first, then reveal the model solution and rubric to self-grade.</span>
+    <button class="reveal-btn" id="revealBtn" ${alreadyRevealed ? 'disabled' : ''}>
+      ${alreadyRevealed ? 'Answer Revealed' : 'Reveal Answer'}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" stroke="#fff" stroke-width="1.8"/></svg>
+    </button>
+  `;
+  wrap.appendChild(revealBar);
+
+  const scoreCard = document.createElement('div');
+  scoreCard.className = 'frq-score-card' + (alreadyRevealed ? ' visible' : '');
+  scoreCard.id = 'frqScoreCard';
+  scoreCard.innerHTML = `
+    <div class="frq-score-title">Self-Grade This FRQ</div>
+    <div class="frq-score-sub">Compare your work to the rubric above and enter how many points you earned for each part.</div>
+    <div class="frq-score-grid">
+      <div class="frq-score-field"><label>Part (a) / 2</label><input type="number" min="0" max="2" id="scoreA"></div>
+      <div class="frq-score-field"><label>Part (b) / 2</label><input type="number" min="0" max="2" id="scoreB"></div>
+      <div class="frq-score-field"><label>Part (c) / 2</label><input type="number" min="0" max="2" id="scoreC"></div>
+      <div class="frq-score-field"><label>Part (d) / 3</label><input type="number" min="0" max="3" id="scoreD"></div>
+    </div>
+    <div class="frq-score-total" id="scoreTotal">Total: 0 / 9</div>
+  `;
+  wrap.appendChild(scoreCard);
+
+  if (alreadyRevealed) {
+    const cached = frqAnswerCache[f.ID];
+    if (cached) partKeys.forEach(([letter, , answerKey]) => {
+      document.getElementById(`frqAnswerBox-${letter}`).classList.add('visible');
+      setMathHtml(document.getElementById(`frqAnswerText-${letter}`), cached[answerKey], true);
+    });
+    const saved = frqScores[f.ID + '_parts'] || { a: 0, b: 0, c: 0, d: 0 };
+    document.getElementById('scoreA').value = saved.a;
+    document.getElementById('scoreB').value = saved.b;
+    document.getElementById('scoreC').value = saved.c;
+    document.getElementById('scoreD').value = saved.d;
+    updateFrqTotal(f.ID);
+  }
+
+  ['A', 'B', 'C', 'D'].forEach(L => {
+    document.getElementById(`score${L}`).addEventListener('input', () => updateFrqTotal(f.ID));
+  });
+
+  document.getElementById('revealBtn').addEventListener('click', () => revealFrqAnswer(f, partKeys));
+
+  document.getElementById('frqBackBtn').disabled = idx === 0;
+  const isLast = idx === currentFrqList.length - 1;
+  document.getElementById('frqNextBtn').textContent = isLast ? 'Continue →' : 'Next FRQ →';
+  document.getElementById('frqNextBtn').disabled = !alreadyRevealed;
+  refreshFrqNavigator();
+}
+
+function updateFrqTotal(frqID) {
+  const clamp = (v, max) => Math.max(0, Math.min(max, parseInt(v, 10) || 0));
+  const a = clamp(document.getElementById('scoreA').value, 2);
+  const b = clamp(document.getElementById('scoreB').value, 2);
+  const c = clamp(document.getElementById('scoreC').value, 2);
+  const d = clamp(document.getElementById('scoreD').value, 3);
+  const total = a + b + c + d;
+  document.getElementById('scoreTotal').textContent = `Total: ${total} / 9`;
+  frqScores[frqID + '_parts'] = { a, b, c, d };
+  frqScores[frqID] = total;
+}
+
+async function revealFrqAnswer(f, partKeys) {
+  const btn = document.getElementById('revealBtn');
+  btn.disabled = true;
+  btn.textContent = 'Loading…';
+  try {
+    let answerData = frqAnswerCache[f.ID];
+    if (!answerData) {
+      const res = await fetch(`${API_BASE}/SamplePaperFRQAnswer?id=${encodeURIComponent(f.ID)}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (!res.ok) throw new Error('Could not load the answer.');
+      answerData = await res.json();
+      frqAnswerCache[f.ID] = answerData;
+    }
+    frqRevealed[f.ID] = true;
+    partKeys.forEach(([letter, , answerKey]) => {
+      document.getElementById(`frqAnswerBox-${letter}`).classList.add('visible');
+      setMathHtml(document.getElementById(`frqAnswerText-${letter}`), answerData[answerKey], true);
+    });
+    btn.textContent = 'Answer Revealed';
+    document.getElementById('frqScoreCard').classList.add('visible');
+    updateFrqTotal(f.ID);
+    document.getElementById('frqNextBtn').disabled = false;
+    refreshFrqNavigator();
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'Reveal Answer';
+    alert('Could not load the model answer. Please try again.');
+  }
+}
+
+document.getElementById('frqBackBtn').addEventListener('click', () => {
+  if (currentFrqIndex > 0) renderFrq(currentFrqIndex - 1);
+});
+document.getElementById('frqNextBtn').addEventListener('click', () => {
+  if (currentFrqIndex < currentFrqList.length - 1) {
+    renderFrq(currentFrqIndex + 1);
+  } else {
+    advancePhase();
+  }
+});
+
+/* ══════════════ BREAK SCREEN ══════════════ */
+let breakInterval = null;
+function startBreak(seconds, title, sub, tips) {
+  document.getElementById('breakScreen').style.display = 'flex';
+  document.getElementById('breakTitle').textContent = title;
+  document.getElementById('breakSub').textContent = sub;
+  const tipsEl = document.getElementById('breakTips');
+  tipsEl.innerHTML = tips.map(t => `<li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>${escapeHtml(t)}</li>`).join('');
+
+  let advanced = false;
+  const goNext = () => {
+    if (advanced) return;
+    advanced = true;
+    clearInterval(breakInterval);
+    advancePhase();
+  };
+
+  const continueBtn = document.getElementById('breakContinueBtn');
+  continueBtn.classList.add('ready');
+  continueBtn.textContent = 'Continue →';
+  continueBtn.onclick = goNext;
+
+  let left = seconds;
+  const timerEl = document.getElementById('breakTimer');
+  timerEl.textContent = formatTime(left);
+  clearInterval(breakInterval);
+  breakInterval = setInterval(() => {
+    left--;
+    timerEl.textContent = formatTime(Math.max(left, 0));
+    if (left <= 0) {
+      goNext();
+    }
+  }, 1000);
+}
+
+/* ══════════════ RESULTS ══════════════ */
+async function submitAndShowResults() {
+  document.getElementById('resultsScreen').style.display = 'flex';
+  document.getElementById('resultsSub').textContent = 'Submitting your answers…';
+
+  const mcqPayload = allMcq.map(q => ({ ID: q.ID, Answer: userAnswers[q.ID] || '' }));
+  const frqPayload = allFrq.map(f => ({ ID: f.ID, Score: frqScores[f.ID] != null ? frqScores[f.ID] : 0 }));
+
+  try {
+    const res = await fetch(`${API_BASE}/AnswerSamplePaper`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({ mcq: mcqPayload, frq: frqPayload })
+    });
+    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    const result = await res.json();
+    renderResults(result);
+  } catch (err) {
+    document.getElementById('resultsSub').textContent = 'Could not submit your answers — the server may be unreachable.';
+  }
+}
+
+function renderResults(result) {
+  const mcqDetails = result['MCQ Details'] || [];
+  const mcqCorrect = mcqDetails.filter(d => d.Correct).length;
+  const mcqTotal = allMcq.length;
+  document.getElementById('mcqScoreNum').textContent = `${mcqCorrect}/${mcqTotal}`;
+
+  const frqSelf = result['FRQ Self-Scores'] || [];
+  const frqTotalEarned = frqSelf.reduce((sum, r) => sum + r.Score, 0);
+  const frqMax = allFrq.length * 9;
+  document.getElementById('frqScoreNum').textContent = `${frqTotalEarned}/${frqMax}`;
+
+  const mcqPct = mcqTotal ? (mcqCorrect / mcqTotal) * 100 : 0;
+  const frqPct = frqMax ? (frqTotalEarned / frqMax) * 100 : 0;
+  const combined = Math.round((mcqPct + frqPct) / 2);
+  document.getElementById('combinedScoreNum').textContent = `${combined}%`;
+  document.getElementById('resultsSub').textContent = `Practice Exam ${paperNum} — Section I (50%) + Section II (50%, self-graded)`;
+
+  const detailsByID = {};
+  mcqDetails.forEach(d => { detailsByID[d.ID] = d; });
+  const mcqReviewList = document.getElementById('mcqReviewList');
+  mcqReviewList.innerHTML = '';
+  allMcq.forEach((q, idx) => {
+    const d = detailsByID[q.ID];
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    item.innerHTML = `
+      <div class="review-item-header">
+        <span class="review-status-dot ${d && d.Correct ? 'correct' : 'incorrect'}"></span>
+        <span class="review-item-title">Question ${idx + 1} — ${q.ID}</span>
+        <svg class="review-item-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="review-item-body">
+        <div class="review-question"></div>
+        <p><span class="review-label">Your answer: </span><span class="review-your-answer"></span></p>
+        <p><span class="review-label">Correct answer: </span><span class="review-correct-answer"></span></p>
+        <p><span class="review-label">Solution</span></p>
+        <div class="review-solution"></div>
+        <div class="review-graph"></div>
+      </div>
+    `;
+    mcqReviewList.appendChild(item);
+    item.querySelector('.review-item-header').addEventListener('click', () => item.classList.toggle('open'));
+    setMathHtml(item.querySelector('.review-question'), q.Question, false);
+    setMathHtml(item.querySelector('.review-your-answer'), userAnswers[q.ID] || '(no answer)', false);
+    setMathHtml(item.querySelector('.review-correct-answer'), d ? d.CorrectAnswer : '', false);
+    setMathHtml(item.querySelector('.review-solution'), d ? d.Solution : '', true);
+    if (q.Graph) item.querySelector('.review-graph').innerHTML = q.Graph;
+  });
+
+  const frqReviewList = document.getElementById('frqReviewList');
+  frqReviewList.innerHTML = '';
+  allFrq.forEach((f, idx) => {
+    const scoreEntry = frqSelf.find(r => r.ID === f.ID);
+    const score = scoreEntry ? scoreEntry.Score : 0;
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    item.innerHTML = `
+      <div class="review-item-header">
+        <span class="review-status-dot ${score >= 5 ? 'correct' : 'incorrect'}"></span>
+        <span class="review-item-title">FRQ ${idx + 1} — ${escapeHtml(f.Topic)}</span>
+        <span class="review-score-badge">${score}/9</span>
+        <svg class="review-item-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="review-item-body">
+        <p><span class="review-label">Chapter</span></p>
+        <p>${escapeHtml(f.Chapter)}</p>
+      </div>
+    `;
+    frqReviewList.appendChild(item);
+    item.querySelector('.review-item-header').addEventListener('click', () => item.classList.toggle('open'));
+  });
+}
+
+/* ─── REPORT A PROBLEM ─── */
+const reportTrigger = document.getElementById('reportTrigger');
+const reportPanel   = document.getElementById('reportPanel');
+
+function resetReportPanel() {
+  reportPanel.innerHTML = `
+    <div class="report-panel-title">What's wrong with this question?</div>
+    <div class="report-options">
+      <label><input type="radio" name="reportReason" value="Question is wrong"> The question itself is wrong</label>
+      <label><input type="radio" name="reportReason" value="All the options are wrong"> All the options are wrong</label>
+      <label><input type="radio" name="reportReason" value="Question leaks the answer"> The question leaks the answer</label>
+      <label><input type="radio" name="reportReason" value="Other"> Other</label>
+    </div>
+    <textarea class="report-textarea" id="reportDetails" placeholder="Describe the issue…"></textarea>
+    <div class="report-actions">
+      <button class="report-btn cancel" id="reportCancelBtn" type="button">Cancel</button>
+      <button class="report-btn send" id="reportSendBtn" type="button" disabled>Send Report</button>
+    </div>
+  `;
+  reportPanel.style.display = 'none';
+  reportTrigger.style.display = 'inline-flex';
+  bindReportPanelEvents();
+}
+
+function bindReportPanelEvents() {
+  const details = document.getElementById('reportDetails');
+  const sendBtn = document.getElementById('reportSendBtn');
+  const cancelBtn = document.getElementById('reportCancelBtn');
+
+  document.querySelectorAll('input[name="reportReason"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isOther = radio.value === 'Other' && radio.checked;
+      details.style.display = isOther ? 'block' : 'none';
+      sendBtn.disabled = isOther ? !details.value.trim() : false;
+    });
+  });
+  details.addEventListener('input', () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    if (selected && selected.value === 'Other') sendBtn.disabled = !details.value.trim();
+  });
+  cancelBtn.addEventListener('click', () => {
+    reportPanel.style.display = 'none';
+    reportTrigger.style.display = 'inline-flex';
+  });
+  sendBtn.addEventListener('click', async () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    const q = currentMcqList[currentMcqIndex];
+    if (!selected || !q) return;
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch(`${API_BASE}/ReportQuestion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          QuestionID: q.ID,
+          Chapter: q.Chapter,
+          Reason: selected.value,
+          Details: details.value.trim()
+        })
+      });
+      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (!res.ok) throw new Error('failed');
+      reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
+    } catch (err) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Report';
+      alert('Could not send the report. Please try again.');
+    }
+  });
+}
+
+reportTrigger.addEventListener('click', () => {
+  reportTrigger.style.display = 'none';
+  reportPanel.style.display = 'block';
+});
+resetReportPanel();
+
+loadExam();
+</script>
+</body>
+</html>

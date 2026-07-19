@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulas — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
+<style>
+:root {
+  --bg: #F4F5F7;
+  --bg2: #FFFFFF;
+  --bg3: #FAFBFC;
+  --gold: #F0A012;
+  --gold2: #D88A0A;
+  --teal: #00A187;
+  --text: #15171F;
+  --muted: #6B7280;
+  --muted2: #9CA3AF;
+  --border: rgba(15,23,42,0.08);
+  --card: #FFFFFF;
+  --sidebar-w: 264px;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem 1.2rem;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 1.8rem;
+  padding: 0 0.4rem;
+}
+.sidebar-logo .logo-int { color: var(--gold); }
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.6rem 0.4rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.2rem;
+}
+
+.user-avi {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #FF6B35);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.user-info { flex: 1; overflow: hidden; }
+.user-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600; font-size: 0.92rem;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.user-plan { font-size: 0.74rem; color: var(--muted2); }
+
+.logout-btn {
+  background: none; border: none;
+  color: var(--muted2); cursor: pointer;
+  padding: 0.3rem; display: flex;
+  border-radius: 6px; transition: all 0.18s; flex-shrink: 0;
+}
+.logout-btn:hover { color: var(--text); background: var(--bg); }
+
+.nav-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 10px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.88rem; font-weight: 500;
+  transition: all 0.18s;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active {
+  background: rgba(240,160,18,0.08);
+  color: var(--gold2);
+  font-weight: 600;
+  border-left-color: var(--gold);
+}
+.nav-item svg { flex-shrink: 0; width: 18px; height: 18px; }
+.nav-formula-icon {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; font-weight: 700;
+  text-align: center;
+  flex-shrink: 0; line-height: 1;
+}
+
+/* ── Main ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 2.4rem 3rem 4rem;
+  max-width: 940px;
+}
+
+/* ── Page header ── */
+.main-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 1.6rem;
+}
+.header-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal); display: block; margin-bottom: 0.4rem;
+}
+.header-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em;
+}
+.header-sub {
+  font-size: 0.87rem; color: var(--muted); margin-top: 0.3rem;
+}
+
+/* ── Chapter tabs ── */
+.chapter-tabs {
+  display: flex; gap: 0.45rem;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+}
+
+.ctab {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem; font-weight: 600;
+  padding: 0.48rem 1.15rem;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: var(--bg2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.ctab:hover { border-color: rgba(15,23,42,0.2); color: var(--text); }
+.ctab.active { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+.soon-badge {
+  font-size: 0.62rem;
+  font-family: 'Space Mono', monospace;
+  background: var(--bg);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  padding: 0.05rem 0.4rem;
+  border-radius: 100px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.ctab.active .soon-badge { background: rgba(255,255,255,0.25); color: #fff; border-color: transparent; }
+
+/* ── Formula groups ── */
+.fgroup {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.04);
+}
+
+.fgroup-header {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.9rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.fgroup-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.fgroup-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.93rem;
+  flex: 1;
+}
+.fgroup-count {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; color: var(--muted2);
+  background: var(--bg3);
+  padding: 0.18rem 0.55rem;
+  border-radius: 100px;
+}
+
+/* ── Formula entries ── */
+.fentry {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 0.9rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s;
+}
+.fentry:last-child { border-bottom: none; }
+.fentry:hover { background: var(--bg3); }
+
+.fnum {
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem; font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 0.6rem;
+}
+
+.fmath-wrap { flex: 1; min-width: 0; }
+
+.fmath { font-size: 1rem; }
+.fmath .katex-display { margin: 0.3rem 0 0.1rem; text-align: left; }
+
+.fdesc {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--muted2);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* ── Series/Sequence test cards ── */
+.stest-entry {
+  padding: 1rem 1.4rem 1.1rem;
+  border-bottom: 1px solid var(--border);
+}
+.stest-entry:last-child { border-bottom: none; }
+.stest-entry:hover { background: var(--bg3); }
+
+.stest-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.92rem;
+  margin-bottom: 0.6rem;
+  display: block;
+}
+
+.stest-grid {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  row-gap: 0.4rem;
+  column-gap: 0.9rem;
+  margin-bottom: 0.55rem;
+}
+.stest-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  padding-top: 0.15rem;
+}
+.stest-math { font-size: 0.95rem; }
+.stest-math .katex-display { margin: 0.2rem 0; text-align: left; }
+
+.stest-comment {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.55;
+  padding-top: 0.3rem;
+  border-top: 1px dashed var(--border);
+}
+
+/* ── Coming soon ── */
+.coming-soon {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 0.75rem;
+  padding: 3.5rem 1rem;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.04);
+}
+.coming-icon {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: rgba(240,160,18,0.1);
+  color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+}
+.coming-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.1rem;
+}
+.coming-sub {
+  font-size: 0.86rem; color: var(--muted);
+  max-width: 320px; line-height: 1.65;
+}
+
+/* ── Animations ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.5s ease forwards;
+}
+@keyframes fadeUp { to { opacity: 1; transform: none; } }
+.fade-up:nth-child(2) { animation-delay: 0.06s; }
+.fade-up:nth-child(3) { animation-delay: 0.12s; }
+</style>
+</head>
+<body>
+
+<!-- ───────────── SIDEBAR ───────────── -->
+<aside class="sidebar">
+  <a href="homepage.html" class="sidebar-logo">
+    <span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span>
+  </a>
+
+  <div class="sidebar-user">
+    <div class="user-avi" id="userAvi">S</div>
+    <div class="user-info">
+      <div class="user-name" id="userName">Student</div>
+      <div class="user-plan">Explorer plan</div>
+    </div>
+    <button class="logout-btn" id="logoutBtn" aria-label="Log out" title="Log out">
+      <svg viewBox="0 0 24 24" fill="none" width="18" height="18">
+        <path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <ul class="nav-list">
+    <li><a href="homepage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M3 11l9-8 9 8M5 10v9a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1v-9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Home
+    </a></li>
+    <li><a href="QuestionBankPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5 9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 12l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 16l9 5 9-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      Question Bank
+    </a></li>
+    <li><a href="FRQ.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M4 19h4l10-10-4-4L4 15v4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M13.5 5.5l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      FRQ Bank
+    </a></li>
+    <li><a href="SamplePaper.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M7 3h7l4 4v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v4h4" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h6M9 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Sample Papers
+    </a></li>
+    <li><a href="QuizzersPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M5 6h2M5 12h2M5 18h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M9 6h10M9 12h10M9 18h10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Quizzes
+    </a></li>
+    <li><a href="FormulaPage.html" class="nav-item active">
+      <span class="nav-formula-icon">dy/dx</span>
+      Important Formulas
+    </a></li>
+    <li><a href="AdvancedCustomizationPage.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Advanced Customization
+    </a></li>
+  </ul>
+</aside>
+
+<!-- ───────────── MAIN ───────────── -->
+<main class="main">
+
+  <div class="main-header fade-up">
+    <div>
+      <span class="header-eyebrow">Reference Sheet</span>
+      <h1 class="header-title">Important Formulas</h1>
+      <p class="header-sub">Select a chapter to view its formula sheet.</p>
+    </div>
+  </div>
+
+  <div class="chapter-tabs fade-up" id="chapterTabs">
+    <button class="ctab active" data-ch="limits">Limits &amp; Continuity</button>
+    <button class="ctab" data-ch="diff">Differentiation</button>
+    <button class="ctab" data-ch="int">Integrals</button>
+    <button class="ctab" data-ch="series">Sequences &amp; Series</button>
+  </div>
+
+  <div id="formulaContent" class="fade-up"></div>
+
+</main>
+
+<!-- ───────────── SCRIPTS ───────────── -->
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/auto-render.min.js"></script>
+<script src="config.js"></script>
+<script>
+const token = localStorage.getItem('derive_token');
+if (!token) { window.location.href = 'LOGIN.html'; }
+
+const storedName = localStorage.getItem('derive_name');
+if (storedName) {
+  document.getElementById('userName').textContent = storedName;
+  document.getElementById('userAvi').textContent = storedName.charAt(0).toUpperCase();
+}
+
+// ── Formula data ──────────────────────────────────────────────────────────────
+const GROUPS = [
+  {
+    name: 'Limit Laws',
+    color: '#00A187',
+    bg: 'rgba(0,161,135,0.1)',
+    entries: [
+      {
+        num: 'I',
+        desc: 'Sum & Difference Rule',
+        tex: '\\lim_{x\\to a}\\,[f(x) \\pm g(x)] = \\lim_{x\\to a}f(x) \\pm \\lim_{x\\to a}g(x)'
+      },
+      {
+        num: 'II',
+        desc: 'Constant Multiple Rule',
+        tex: '\\lim_{x\\to a}P \\cdot f(x) = P \\cdot \\lim_{x\\to a}f(x), \\quad P = \\text{Constant}'
+      },
+      {
+        num: 'III',
+        desc: 'Product Rule',
+        tex: '\\lim_{x\\to a}[f(x) \\cdot g(x)] = \\lim_{x\\to a}f(x) \\cdot \\lim_{x\\to a}g(x)'
+      },
+      {
+        num: 'IV',
+        desc: 'Quotient Rule',
+        tex: '\\lim_{x\\to a}\\frac{f(x)}{g(x)} = \\dfrac{\\displaystyle\\lim_{x\\to a}f(x)}{\\displaystyle\\lim_{x\\to a}g(x)}'
+      }
+    ]
+  },
+  {
+    name: 'Trigonometric Standard Limits',
+    color: '#F0A012',
+    bg: 'rgba(240,160,18,0.1)',
+    entries: [
+      {
+        num: 'V',
+        desc: 'Continuity of sin',
+        tex: '\\lim_{x\\to a}\\sin x = \\sin\\!\\left[\\lim_{x\\to a}x\\right] = \\sin a'
+      },
+      {
+        num: 'VI',
+        desc: 'Power–Difference Limit',
+        tex: '\\lim_{x\\to a}\\frac{x^n - a^n}{x - a} = n\\,a^{n-1}'
+      },
+      {
+        num: 'VII',
+        desc: 'Tangent Sinc Limits',
+        tex: '\\lim_{x\\to 0}\\frac{\\tan x}{x} = \\lim_{x\\to 0}\\frac{x}{\\tan x} = 1'
+      },
+      {
+        num: 'VIII',
+        desc: 'Sine Sinc Limits',
+        tex: '\\lim_{x\\to 0}\\frac{\\sin x}{x} = 1 = \\lim_{x\\to 0}\\frac{x}{\\sin x}'
+      },
+      {
+        num: 'XI',
+        desc: 'Cosine at Zero',
+        tex: '\\lim_{x\\to 0}\\cos x = 1'
+      },
+      {
+        num: 'XII',
+        desc: 'Shifted Sinc Limit',
+        tex: '\\lim_{x\\to a}\\frac{\\sin(x - a)}{(x - a)} = 1'
+      }
+    ]
+  },
+  {
+    name: 'Inverse Trigonometric Limits',
+    color: '#7C3AED',
+    bg: 'rgba(124,58,237,0.1)',
+    entries: [
+      {
+        num: 'IX',
+        desc: 'Inverse-sine Sinc',
+        tex: '\\lim_{x\\to 0}\\frac{\\sin^{-1} x}{x} = 1 = \\lim_{x\\to 0}\\frac{x}{\\sin^{-1} x}'
+      },
+      {
+        num: 'X',
+        desc: 'Inverse-tangent Sinc',
+        tex: '\\lim_{x\\to 0}\\frac{\\tan^{-1} x}{x} = 1 = \\lim_{x\\to 0}\\frac{x}{\\tan^{-1} x}'
+      },
+      {
+        num: 'XIII',
+        desc: 'Continuity of sin⁻¹',
+        tex: '\\lim_{x\\to a}\\sin^{-1} x = \\sin^{-1} a, \\quad |a| \\leq 1'
+      },
+      {
+        num: 'XIV',
+        desc: 'Continuity of cos⁻¹',
+        tex: '\\lim_{x\\to a}\\cos^{-1} x = \\cos^{-1} a, \\quad |a| \\leq 1'
+      },
+      {
+        num: 'XV',
+        desc: 'Continuity of tan⁻¹',
+        tex: '\\lim_{x\\to a}\\tan^{-1} x = \\tan^{-1} a, \\quad a \\in \\mathbb{R}'
+      }
+    ]
+  },
+  {
+    name: 'Exponential & Logarithmic Limits',
+    color: '#2563EB',
+    bg: 'rgba(37,99,235,0.1)',
+    entries: [
+      {
+        num: 'XVI',
+        desc: 'Binomial Limit',
+        tex: '\\lim_{x\\to 0}\\frac{(1+x)^n - 1}{x} = n'
+      },
+      {
+        num: 'XVII',
+        desc: 'Natural Log Limit',
+        tex: '\\lim_{x\\to 0}\\frac{1}{x}\\log(1+x) = 1'
+      },
+      {
+        num: 'XVIII',
+        desc: 'Exponential Limit',
+        tex: '\\lim_{x\\to 0}\\frac{a^x - 1}{x} = \\log_e a'
+      }
+    ]
+  }
+];
+
+// ── Differentiation formula data ──────────────────────────────────────────────
+const DIFF_GROUPS = [
+  {
+    name: 'Fundamental Rules',
+    color: '#00A187',
+    bg: 'rgba(0,161,135,0.1)',
+    entries: [
+      { num: '1', desc: 'Constant & Constant Multiple',
+        tex: '\\frac{d}{dx}(c) = 0 \\quad\\Big|\\quad \\frac{d}{dx}(cu) = C\\,\\frac{du}{dx}' },
+      { num: '2', desc: 'Linear Rule',
+        tex: '\\frac{d}{dx}(mx + b) = m' },
+      { num: '3', desc: 'Power Rule',
+        tex: '\\frac{d}{dx}(x^n) = nx^{n-1}' },
+      { num: '4', desc: 'Coefficient Power Rule',
+        tex: '\\frac{d}{dx}(kx^n) = nkx^{n-1}' }
+    ]
+  },
+  {
+    name: 'Combination Rules',
+    color: '#F0A012',
+    bg: 'rgba(240,160,18,0.1)',
+    entries: [
+      { num: '5', desc: 'Sum & Difference Rule',
+        tex: '\\frac{d}{dx}[f(x) \\pm g(x)] = \\frac{d}{dx}\\,f(x) \\pm \\frac{d}{dx}\\,g(x)' },
+      { num: '6', desc: 'Product Rule',
+        tex: "\\frac{d}{dx}[f(x)\\cdot g(x)] = f'(x)\\cdot g(x) + f(x)\\cdot g'(x)" },
+      { num: '7', desc: 'Quotient Rule',
+        tex: "\\frac{d}{dx}\\!\\left[\\frac{f(x)}{g(x)}\\right] = \\frac{f'(x)\\,g(x) - f(x)\\,g'(x)}{[g(x)]^2}" },
+      { num: '8', desc: 'Chain Power Rule',
+        tex: "\\frac{d}{dx}[f(x)]^n = n\\cdot[f(x)]^{n-1}\\cdot f'(x)" }
+    ]
+  },
+  {
+    name: 'Exponential & Logarithmic',
+    color: '#2563EB',
+    bg: 'rgba(37,99,235,0.1)',
+    entries: [
+      { num: '9', desc: 'General Exponential',
+        tex: '\\frac{d}{dx}(a^x) = a^x \\cdot \\ln(a)' },
+      { num: '10', desc: 'Natural Logarithm',
+        tex: '\\frac{d}{dx}(\\ln x) = \\frac{1}{x} \\quad\\Big|\\quad \\frac{d}{dx}(\\ln u) = \\frac{1}{u}\\cdot\\frac{du}{dx}' },
+      { num: '11', desc: 'Natural Exponential',
+        tex: '\\frac{d}{dx}(e^x) = e^x \\quad\\Big|\\quad \\frac{d}{dx}(e^u) = e^u\\cdot\\frac{du}{dx} \\quad\\Big|\\quad \\frac{d}{dx}(ke^u) = ke^u\\cdot\\frac{du}{dx}' }
+    ]
+  },
+  {
+    name: 'Trigonometric Derivatives',
+    color: '#7C3AED',
+    bg: 'rgba(124,58,237,0.1)',
+    entries: [
+      { num: 'a', desc: 'Sine',
+        tex: '\\frac{d}{dx}(\\sin x) = \\cos x \\quad\\Big|\\quad \\frac{d}{dx}(\\sin u) = \\cos u\\,\\frac{du}{dx}' },
+      { num: 'b', desc: 'Cosine',
+        tex: '\\frac{d}{dx}(\\cos x) = -\\sin x \\quad\\Big|\\quad \\frac{d}{dx}(\\cos u) = -\\sin u\\,\\frac{du}{dx}' },
+      { num: 'c', desc: 'Tangent',
+        tex: '\\frac{d}{dx}(\\tan x) = \\sec^2 x \\quad\\Big|\\quad \\frac{d}{dx}(\\tan u) = \\sec^2 u\\,\\frac{du}{dx}' },
+      { num: 'd', desc: 'Cosecant',
+        tex: '\\frac{d}{dx}(\\csc x) = -\\csc x\\cot x \\quad\\Big|\\quad \\frac{d}{dx}(\\csc u) = -\\csc u\\cot u\\,\\frac{du}{dx}' },
+      { num: 'e', desc: 'Secant',
+        tex: '\\frac{d}{dx}(\\sec x) = \\sec x\\tan x \\quad\\Big|\\quad \\frac{d}{dx}(\\sec u) = \\sec u\\tan u\\,\\frac{du}{dx}' },
+      { num: 'f', desc: 'Cotangent',
+        tex: '\\frac{d}{dx}(\\cot x) = -\\csc^2 x \\quad\\Big|\\quad \\frac{d}{dx}(\\cot u) = -\\csc^2 u\\,\\frac{du}{dx}' }
+    ]
+  },
+  {
+    name: 'Inverse Trigonometric Derivatives',
+    color: '#DB2777',
+    bg: 'rgba(219,39,119,0.1)',
+    entries: [
+      { num: 'a', desc: 'Inverse Sine',
+        tex: '\\frac{d}{dx}(\\sin^{-1}x) = \\frac{1}{\\sqrt{1-x^2}}' },
+      { num: 'b', desc: 'Inverse Cosine',
+        tex: '\\frac{d}{dx}(\\cos^{-1}x) = -\\frac{1}{\\sqrt{1-x^2}}' },
+      { num: 'c', desc: 'Inverse Tangent',
+        tex: '\\frac{d}{dx}(\\tan^{-1}x) = \\frac{1}{1+x^2}' },
+      { num: 'd', desc: 'Inverse Secant',
+        tex: '\\frac{d}{dx}(\\sec^{-1}x) = \\frac{1}{|x|\\sqrt{x^2-1}}' },
+      { num: 'e', desc: 'Inverse Cosecant',
+        tex: '\\frac{d}{dx}(\\csc^{-1}x) = -\\frac{1}{|x|\\sqrt{x^2-1}}' },
+      { num: 'f', desc: 'Inverse Cotangent',
+        tex: '\\frac{d}{dx}(\\cot^{-1}x) = -\\frac{1}{1+x^2}' }
+    ]
+  }
+];
+
+// ── Integration formula data ──────────────────────────────────────────────────
+const INT_GROUPS = [
+  {
+    name: 'Basic Power & Exponential',
+    color: '#00A187',
+    bg: 'rgba(0,161,135,0.1)',
+    entries: [
+      { num: '1', desc: 'Power Rule',
+        tex: '\\int x^n\\,dx = \\dfrac{x^{n+1}}{n+1} + C \\quad (n \\neq -1)' },
+      { num: '2', desc: 'Reciprocal',
+        tex: '\\int \\dfrac{1}{x}\\,dx = \\ln|x| + C' },
+      { num: '3', desc: 'Natural Exponential',
+        tex: '\\int e^x\\,dx = e^x + C' },
+      { num: '4', desc: 'General Exponential',
+        tex: '\\int a^x\\,dx = \\dfrac{a^x}{\\ln a} + C' }
+    ]
+  },
+  {
+    name: 'Trigonometric Integrals',
+    color: '#F0A012',
+    bg: 'rgba(240,160,18,0.1)',
+    entries: [
+      { num: '5',  desc: 'Sine',
+        tex: '\\int \\sin x\\,dx = -\\cos x + C' },
+      { num: '6',  desc: 'Cosine',
+        tex: '\\int \\cos x\\,dx = \\sin x + C' },
+      { num: '7',  desc: 'Secant Squared',
+        tex: '\\int \\sec^2 x\\,dx = \\tan x + C' },
+      { num: '8',  desc: 'Cosecant Squared',
+        tex: '\\int \\csc^2 x\\,dx = -\\cot x + C' },
+      { num: '9',  desc: 'Secant × Tangent',
+        tex: '\\int \\sec x\\tan x\\,dx = \\sec x + C' },
+      { num: '10', desc: 'Cosecant × Cotangent',
+        tex: '\\int \\csc x\\cot x\\,dx = -\\csc x + C' },
+      { num: '11', desc: 'Tangent',
+        tex: '\\int \\tan x\\,dx = \\ln|\\sec x| + C' },
+      { num: '12', desc: 'Cotangent',
+        tex: '\\int \\cot x\\,dx = \\ln|\\sin x| + C' },
+      { num: '13', desc: 'Secant',
+        tex: '\\int \\sec x\\,dx = \\ln|\\sec x + \\tan x| + C' },
+      { num: '14', desc: 'Cosecant',
+        tex: '\\int \\csc x\\,dx = \\ln|\\csc x - \\cot x| + C' }
+    ]
+  },
+  {
+    name: 'Inverse Trigonometric Forms',
+    color: '#7C3AED',
+    bg: 'rgba(124,58,237,0.1)',
+    entries: [
+      { num: '15', desc: 'Inverse Sine Form',
+        tex: '\\int \\dfrac{dx}{\\sqrt{a^2 - x^2}} = \\sin^{-1}\\!\\left(\\dfrac{x}{a}\\right) + C' },
+      { num: '16', desc: 'Inverse Tangent Form',
+        tex: '\\int \\dfrac{dx}{x^2 + a^2} = \\dfrac{1}{a}\\tan^{-1}\\!\\left(\\dfrac{x}{a}\\right) + C' },
+      { num: '17', desc: 'Inverse Secant Form',
+        tex: '\\int \\dfrac{dx}{|x|\\sqrt{x^2 - 1}} = \\sec^{-1}(x) + C' }
+    ]
+  },
+  {
+    name: 'Rational Logarithmic Forms',
+    color: '#2563EB',
+    bg: 'rgba(37,99,235,0.1)',
+    entries: [
+      { num: '18', desc: 'x² − a² in denominator',
+        tex: '\\int \\dfrac{dx}{x^2 - a^2} = \\dfrac{1}{2a}\\ln\\left|\\dfrac{x-a}{x+a}\\right| + C' },
+      { num: '19', desc: 'a² − x² in denominator',
+        tex: '\\int \\dfrac{dx}{a^2 - x^2} = \\dfrac{1}{2a}\\ln\\left|\\dfrac{a+x}{a-x}\\right| + C' }
+    ]
+  },
+  {
+    name: 'Radical Standard Forms',
+    color: '#059669',
+    bg: 'rgba(5,150,105,0.1)',
+    entries: [
+      { num: '20', desc: '1 / √(x²+a²)',
+        tex: '\\int \\dfrac{dx}{\\sqrt{x^2 + a^2}} = \\ln\\left|x + \\sqrt{x^2 + a^2}\\right| + C' },
+      { num: '21', desc: '1 / √(x²−a²)',
+        tex: '\\int \\dfrac{dx}{\\sqrt{x^2 - a^2}} = \\ln\\left|x + \\sqrt{x^2 - a^2}\\right| + C' },
+      { num: '22', desc: '√(u²+a²)',
+        tex: '\\int \\sqrt{u^2 + a^2}\\,du = \\dfrac{u}{2}\\sqrt{u^2+a^2} + \\dfrac{a^2}{2}\\ln\\left|u + \\sqrt{u^2+a^2}\\right| + C' },
+      { num: '23', desc: '√(u²−a²)',
+        tex: '\\int \\sqrt{u^2 - a^2}\\,du = \\dfrac{u}{2}\\sqrt{u^2-a^2} - \\dfrac{a^2}{2}\\ln\\left|u + \\sqrt{u^2-a^2}\\right| + C' },
+      { num: '24', desc: '√(a²−x²)',
+        tex: '\\int \\sqrt{a^2 - x^2}\\,dx = \\dfrac{x}{2}\\sqrt{a^2-x^2} + \\dfrac{a^2}{2}\\sin^{-1}\\!\\left(\\dfrac{x}{a}\\right) + C' }
+    ]
+  }
+];
+
+// ── Sequences & Series test data ──────────────────────────────────────────────
+const SERIES_GROUPS = [
+  {
+    name: 'Foundational Tests',
+    color: '#00A187',
+    bg: 'rgba(0,161,135,0.1)',
+    entries: [
+      {
+        name: 'nth Term Test for Divergence',
+        series: '\\sum_{n=1}^{\\infty} a_n',
+        converges: '\\text{n/a}',
+        diverges: '\\lim_{n\\to\\infty} a_n \\neq 0',
+        comment: 'Should be first test used. Inconclusive if the limit equals 0.'
+      },
+      {
+        name: 'Geometric Series Test',
+        series: '\\sum_{n=1}^{\\infty} a_n r^{n-1}',
+        converges: '|r| < 1',
+        diverges: '|r| \\geq 1',
+        comment: 'Use if there is a "common ratio": \\(S_n = \\dfrac{a}{1-r}\\)'
+      },
+      {
+        name: 'P-Series Test',
+        series: '\\sum_{n=1}^{\\infty} \\frac{1}{n^p}',
+        converges: 'p > 1',
+        diverges: 'p \\leq 1',
+        comment: 'Harmonic series when p = 1. Useful for comparison tests.'
+      }
+    ]
+  },
+  {
+    name: 'Comparison-Based Tests',
+    color: '#F0A012',
+    bg: 'rgba(240,160,18,0.1)',
+    entries: [
+      {
+        name: 'Integral Test',
+        series: '\\sum_{n=1}^{\\infty} a_n, \\quad a_n = f(x)',
+        converges: '\\int_1^{\\infty} f(x)\\,dx \\ \\text{converges}',
+        diverges: '\\int_1^{\\infty} f(x)\\,dx \\ \\text{diverges}',
+        comment: 'f(x) must be continuous, positive, and decreasing.'
+      },
+      {
+        name: 'Direct Comparison Test',
+        series: '\\sum_{n=1}^{\\infty} a_n',
+        converges: '0 \\leq a_n \\leq b_n, \\ \\sum b_n \\ \\text{converges}',
+        diverges: '0 \\leq b_n \\leq a_n, \\ \\sum b_n \\ \\text{diverges}',
+        comment: 'To show convergence, find a larger series. To show divergence, find a smaller series.'
+      },
+      {
+        name: 'Limit Comparison Test',
+        series: '\\sum_{n=1}^{\\infty} a_n',
+        converges: '\\lim_{n\\to\\infty}\\frac{a_n}{b_n} > 0, \\ \\sum b_n \\ \\text{converges}',
+        diverges: '\\lim_{n\\to\\infty}\\frac{a_n}{b_n} > 0, \\ \\sum b_n \\ \\text{diverges}',
+        comment: "Apply l'Hôpital's rule if necessary; inconclusive if the limit equals 0 or ∞."
+      }
+    ]
+  },
+  {
+    name: 'Advanced Convergence Tests',
+    color: '#7C3AED',
+    bg: 'rgba(124,58,237,0.1)',
+    entries: [
+      {
+        name: 'Alternating Series Test',
+        series: '\\sum_{n=1}^{\\infty} (-1)^{n+1} a_n',
+        converges: 'a_{n+1} \\leq a_n, \\ \\lim_{n\\to\\infty} a_n = 0',
+        diverges: '\\lim_{n\\to\\infty} a_n \\neq 0',
+        comment: 'Must prove that the limit equals 0 and that the terms are decreasing.'
+      },
+      {
+        name: 'Ratio Test',
+        series: '\\sum_{n=1}^{\\infty} a_n',
+        converges: '\\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right| < 1',
+        diverges: '\\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right| > 1',
+        comment: 'Test fails if \\(\\lim_{n\\to\\infty}\\left|\\frac{a_{n+1}}{a_n}\\right| = 1\\).'
+      },
+      {
+        name: 'Root Test',
+        series: '\\sum_{n=1}^{\\infty} a_n',
+        converges: '\\lim_{n\\to\\infty}\\sqrt[n]{|a_n|} < 1',
+        diverges: '\\lim_{n\\to\\infty}\\sqrt[n]{|a_n|} > 1',
+        comment: 'Test fails if \\(\\lim_{n\\to\\infty}\\sqrt[n]{|a_n|} = 1\\).'
+      }
+    ]
+  }
+];
+
+// ── Build Limits & Continuity HTML ────────────────────────────────────────────
+function buildLimitsHtml() {
+  return GROUPS.map(g => {
+    const rows = g.entries.map(e => `
+      <div class="fentry">
+        <span class="fnum" style="background:${g.bg};color:${g.color}">${e.num}</span>
+        <div class="fmath-wrap">
+          <div class="fmath">\\[${e.tex}\\]</div>
+          <div class="fdesc">${e.desc}</div>
+        </div>
+      </div>`).join('');
+
+    return `
+      <div class="fgroup">
+        <div class="fgroup-header">
+          <span class="fgroup-dot" style="background:${g.color}"></span>
+          <span class="fgroup-name">${g.name}</span>
+          <span class="fgroup-count">${g.entries.length} formula${g.entries.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="fgroup-body">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── Build Differentiation HTML ────────────────────────────────────────────────
+function buildDiffHtml() {
+  return DIFF_GROUPS.map(g => {
+    const rows = g.entries.map(e => `
+      <div class="fentry">
+        <span class="fnum" style="background:${g.bg};color:${g.color}">${e.num}</span>
+        <div class="fmath-wrap">
+          <div class="fmath">\\[${e.tex}\\]</div>
+          <div class="fdesc">${e.desc}</div>
+        </div>
+      </div>`).join('');
+    return `
+      <div class="fgroup">
+        <div class="fgroup-header">
+          <span class="fgroup-dot" style="background:${g.color}"></span>
+          <span class="fgroup-name">${g.name}</span>
+          <span class="fgroup-count">${g.entries.length} formula${g.entries.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="fgroup-body">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── Build Integration HTML ────────────────────────────────────────────────────
+function buildIntHtml() {
+  return INT_GROUPS.map(g => {
+    const rows = g.entries.map(e => `
+      <div class="fentry">
+        <span class="fnum" style="background:${g.bg};color:${g.color}">${e.num}</span>
+        <div class="fmath-wrap">
+          <div class="fmath">\\[${e.tex}\\]</div>
+          <div class="fdesc">${e.desc}</div>
+        </div>
+      </div>`).join('');
+    return `
+      <div class="fgroup">
+        <div class="fgroup-header">
+          <span class="fgroup-dot" style="background:${g.color}"></span>
+          <span class="fgroup-name">${g.name}</span>
+          <span class="fgroup-count">${g.entries.length} formula${g.entries.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="fgroup-body">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── Build Sequences & Series HTML ─────────────────────────────────────────────
+function buildSeriesHtml() {
+  return SERIES_GROUPS.map(g => {
+    const rows = g.entries.map(e => `
+      <div class="stest-entry">
+        <span class="stest-name">${e.name}</span>
+        <div class="stest-grid">
+          <span class="stest-label">Series</span>
+          <div class="stest-math">\\[${e.series}\\]</div>
+          <span class="stest-label">Converges if</span>
+          <div class="stest-math">\\[${e.converges}\\]</div>
+          <span class="stest-label">Diverges if</span>
+          <div class="stest-math">\\[${e.diverges}\\]</div>
+        </div>
+        <div class="stest-comment">${e.comment}</div>
+      </div>`).join('');
+    return `
+      <div class="fgroup">
+        <div class="fgroup-header">
+          <span class="fgroup-dot" style="background:${g.color}"></span>
+          <span class="fgroup-name">${g.name}</span>
+          <span class="fgroup-count">${g.entries.length} test${g.entries.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="fgroup-body">${rows}</div>
+      </div>`;
+  }).join('');
+}
+
+// ── Build coming-soon HTML ────────────────────────────────────────────────────
+function buildComingSoon(chapterName) {
+  return `
+    <div class="coming-soon">
+      <div class="coming-icon">
+        <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 8v5l3 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="coming-title">${chapterName} Formulas</div>
+      <div class="coming-sub">Formula sheets for this chapter are being prepared. Check back soon — they'll appear here when ready.</div>
+    </div>`;
+}
+
+// ── Render content & run KaTeX ────────────────────────────────────────────────
+function renderContent(ch) {
+  const el = document.getElementById('formulaContent');
+
+  if (ch === 'limits') {
+    el.innerHTML = buildLimitsHtml();
+  } else if (ch === 'diff') {
+    el.innerHTML = buildDiffHtml();
+  } else if (ch === 'int') {
+    el.innerHTML = buildIntHtml();
+  } else if (ch === 'series') {
+    el.innerHTML = buildSeriesHtml();
+  }
+
+  renderMathInElement(el, {
+    delimiters: [
+      { left: '\\[', right: '\\]', display: true },
+      { left: '\\(', right: '\\)', display: false }
+    ],
+    throwOnError: false
+  });
+}
+
+// ── Chapter tab switching ─────────────────────────────────────────────────────
+document.getElementById('chapterTabs').addEventListener('click', e => {
+  const btn = e.target.closest('.ctab');
+  if (!btn) return;
+  document.querySelectorAll('.ctab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderContent(btn.dataset.ch);
+});
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+  try {
+    if (token) {
+      await fetch(`${API_BASE}/logout`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+    }
+  } catch (_) {}
+  localStorage.removeItem('derive_token');
+  localStorage.removeItem('derive_name');
+  window.location.href = 'LOGIN.html';
+});
+
+// ── Initial render ────────────────────────────────────────────────────────────
+renderContent('limits');
+</script>
+</body>
+</html>

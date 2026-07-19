@@ -1,0 +1,47 @@
+<svg viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="ateal31" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#0F6E56"/>
+  </marker>
+  <marker id="acoral31" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L8,3 z" fill="#993C1D"/>
+  </marker>
+</defs>
+<rect width="580" height="220" fill="white"/>
+<rect x="20" y="16" width="540" height="140" rx="8" fill="white" stroke="#D3D1C7" stroke-width="1"/>
+<rect x="20" y="16" width="540" height="36" rx="8" fill="#F1EFE8" stroke="#D3D1C7" stroke-width="1"/>
+<rect x="20" y="36" width="540" height="16" fill="#F1EFE8"/>
+<text x="290" y="38" font-size="13" fill="#444441" font-family="sans-serif" text-anchor="middle" font-weight="500">x approaching 2</text>
+<line x1="290" y1="16" x2="290" y2="156" stroke="#D3D1C7" stroke-width="1.5" stroke-dasharray="4,3"/>
+<text x="155" y="38" font-size="11" fill="#0F6E56" font-family="sans-serif" text-anchor="middle" font-weight="500">from the left →</text>
+<text x="425" y="38" font-size="11" fill="#D85A30" font-family="sans-serif" text-anchor="middle" font-weight="500">← from the right</text>
+<line x1="20" y1="68" x2="560" y2="68" stroke="#D3D1C7" stroke-width="0.5"/>
+<line x1="20" y1="108" x2="560" y2="108" stroke="#D3D1C7" stroke-width="0.5"/>
+<text x="75" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">x</text>
+<text x="165" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">x</text>
+<text x="240" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">x</text>
+<text x="75" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">1.9</text>
+<text x="165" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">1.99</text>
+<text x="240" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">1.999</text>
+<text x="340" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">2.001</text>
+<text x="415" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">2.01</text>
+<text x="505" y="62" font-size="12" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">2.1</text>
+<text x="75" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">5.61</text>
+<text x="165" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">5.9601</text>
+<text x="240" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">5.9960</text>
+<text x="340" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">6.0040</text>
+<text x="415" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">6.0401</text>
+<text x="505" y="94" font-size="12" fill="#185FA5" font-family="sans-serif" text-anchor="middle">6.41</text>
+<text x="75" y="130" font-size="11" fill="#888780" font-family="sans-serif" text-anchor="middle">f(x)</text>
+<text x="75" y="130" font-size="11" fill="#888780" font-family="sans-serif" text-anchor="middle">f(x)</text>
+<line x1="20" y1="108" x2="560" y2="108" stroke="#D3D1C7" stroke-width="0.5"/>
+<text x="60" y="126" font-size="11" fill="#888780" font-family="sans-serif" text-anchor="middle">f(x)</text>
+<text x="75" y="126" font-size="11" fill="#5F5E5A" font-family="sans-serif" text-anchor="middle">f(x)</text>
+<line x1="240" y1="98" x2="278" y2="98" stroke="#0F6E56" stroke-width="1.5" marker-end="url(#ateal31)"/>
+<line x1="340" y1="98" x2="302" y2="98" stroke="#D85A30" stroke-width="1.5" marker-end="url(#acoral31)"/>
+<rect x="265" y="86" width="50" height="22" rx="4" fill="#E1F5EE" stroke="#9FE1CB" stroke-width="1"/>
+<text x="290" y="101" font-size="12" fill="#085041" font-family="sans-serif" text-anchor="middle" font-weight="500">→ 6 ←</text>
+<text x="75" y="126" font-size="11" fill="#888780" font-family="sans-serif" text-anchor="middle">↑ increasing</text>
+<text x="450" y="126" font-size="11" fill="#888780" font-family="sans-serif" text-anchor="middle">decreasing ↓</text>
+<text x="290" y="185" font-size="13" fill="#0F6E56" font-family="sans-serif" text-anchor="middle" font-weight="500">lim(x→2) f(x) = 6</text>
+</svg>

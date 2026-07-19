@@ -1,0 +1,1362 @@
+[
+  {
+    "ID": "BC-LC-001",
+    "option1": "3",
+    "option2": "6",
+    "option3": "Undefined because (s(3)) does not exist",
+    "option4": "9",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-002",
+    "option1": "(\\frac{1}{4})",
+    "option2": "(\\frac{1}{2})",
+    "option3": "0",
+    "option4": "Undefined because the denominator equals 0",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-003",
+    "option1": "4",
+    "option2": "8",
+    "option3": "16",
+    "option4": "Undefined because (T(4)) does not exist",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-004",
+    "option1": "5",
+    "option2": "8",
+    "option3": "9",
+    "option4": "Undefined because (d(4)) does not exist",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-005",
+    "option1": "5",
+    "option2": "10",
+    "option3": "25",
+    "option4": "Undefined because (p(5)) does not exist",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-006",
+    "option1": "2",
+    "option2": "4",
+    "option3": "6",
+    "option4": "Undefined",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-007",
+    "option1": "3",
+    "option2": "6",
+    "option3": "9",
+    "option4": "Undefined",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-008",
+    "option1": "5",
+    "option2": "0",
+    "option3": "10",
+    "option4": "Undefined",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-009",
+    "option1": "0",
+    "option2": "8",
+    "option3": "1",
+    "option4": "5",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-010",
+    "option1": "2",
+    "option2": "4",
+    "option3": "0",
+    "option4": "6",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-011",
+    "option1": "The limit does not exist because f(2) is undefined.",
+    "option2": "lim(x→2) f(x) = 12, because f(x) approaches 12 from both sides as x approaches 2.",
+    "option3": "lim(x→2) f(x) = 11.994, because that is the closest value of f(x) to x = 2 from the left.",
+    "option4": "lim(x→2) f(x) = 12.006, because that is the closest value of f(x) to x = 2 from the right.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-012",
+    "option1": "lim(x→−1) g(x) = 9, because g(−1) = 9.",
+    "option2": "lim(x→−1) g(x) does not exist, because g(x) behaves differently on either side of x = −1.",
+    "option3": "lim(x→−1) g(x) = 5, because g(x) approaches 5 from both sides as x approaches −1.",
+    "option4": "lim(x→−1) g(x) does not exist, because g(−1) ≠ lim(x→−1) g(x).",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-013",
+    "option1": "lim(x→0) f(x) = 0, because x is approaching 0.",
+    "option2": "lim(x→0) f(x) = 0.9983, because that is the first value shown in the table.",
+    "option3": "lim(x→0) f(x) = 1, because f(x) approaches 1 from both sides as x approaches 0.",
+    "option4": "The limit does not exist because f(0) is not shown in the table.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-014",
+    "option1": "lim(x→3) h(x) does not exist because h(3) ≠ 7.",
+    "option2": "lim(x→3) h(x) = 2, because h(3) = 2 defines the function at that point.",
+    "option3": "lim(x→3) h(x) = 7, because both one-sided limits equal 7 regardless of h(3).",
+    "option4": "lim(x→3) h(x) does not exist because h is not continuous at x = 3.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-015",
+    "option1": "lim(x→1) p(x) = 5, because p(1) = 5.",
+    "option2": "lim(x→1) p(x) = 4, because both one-sided limits approach 4.",
+    "option3": "The limit does not exist because the function has three separate rules.",
+    "option4": "The limit does not exist because p(1) = 5 ≠ 4.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-016",
+    "option1": "0",
+    "option2": "0.9516",
+    "option3": "1",
+    "option4": "The limit does not exist because f(0) = 0/0 is undefined.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-017",
+    "option1": "lim(x→0) f(x) = 0, since sin(0) = 0.",
+    "option2": "lim(x→0) f(x) = 1, since lim(x→0) sin(x)/x = 1.",
+    "option3": "lim(x→0) f(x) = 3, since f(x) approaches 3 from both sides.",
+    "option4": "The limit cannot be determined from a graph or table alone.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-018",
+    "option1": "2",
+    "option2": "1.5",
+    "option3": "3",
+    "option4": "The limit does not exist because both numerator and denominator equal 0 at x = 2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-019",
+    "option1": "lim(x→4) f(x) = 4, because x is approaching 4.",
+    "option2": "lim(x→4) f(x) = 7, because f(x) approaches 7 from both sides.",
+    "option3": "The limit does not exist because f(4) is not shown in the table.",
+    "option4": "lim(x→4) f(x) = 6.999, because that is the closest recorded value from the left.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-020",
+    "option1": "f(5) = 8, meaning the function is defined and equals 8 at x = 5.",
+    "option2": "f(x) gets closer to 8 as x gets closer to 5, regardless of the value of f(5).",
+    "option3": "f(x) = 8 for all values of x near 5.",
+    "option4": "The function f must be continuous at x = 5 for this limit to equal 8.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-021",
+    "option1": "lim(x→2) f(x) = 1, because f(2) = 1 is the only closed point at x = 2.",
+    "option2": "lim(x→2) f(x) does not exist, because f(2) = 1 ≠ 5.",
+    "option3": "lim(x→2) f(x) = 5, because both the left-hand and right-hand limits approach 5.",
+    "option4": "lim(x→2) f(x) does not exist, because there is an open circle at (2, 5).",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-022",
+    "option1": "lim(x→−1) f(x) = 4, because f(−1) = 4.",
+    "option2": "lim(x→−1) f(x) = −2, because the right-hand limit approaches −2.",
+    "option3": "lim(x→−1) f(x) = 1, because the average of 4 and −2 is 1.",
+    "option4": "lim(x→−1) f(x) does not exist, because the left-hand and right-hand limits are not equal.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-023",
+    "option1": "The student is correct — a limit cannot exist if the function is undefined at that point.",
+    "option2": "The student is incorrect — lim(x→0) f(x) = 6, because f(x) approaches 6 from both sides even though f(0) is undefined.",
+    "option3": "The student is incorrect — lim(x→0) f(x) = 0, because x is approaching 0.",
+    "option4": "The student is correct — f must be defined at x = 0 for any limit to exist there.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-024",
+    "option1": "lim(x→1) f(x) = 3, because f(1) = 3 and the left-hand limit equals 3.",
+    "option2": "lim(x→1) f(x) = ∞, because the right side goes to infinity.",
+    "option3": "lim(x→1) f(x) does not exist, because the right-hand limit is infinite while the left-hand limit equals 3.",
+    "option4": "lim(x→1) f(x) = 3, because the closed circle takes priority over the open behavior on the right.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-025",
+    "option1": "lim(x→3) f(x) does not exist because there is an open circle at (3, 4).",
+    "option2": "lim(x→3) f(x) = 3, because x is approaching 3.",
+    "option3": "lim(x→3) f(x) = 4, because f(x) approaches 4 from both sides.",
+    "option4": "lim(x→3) f(x) = 0, because the line crosses the x-axis.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-026",
+    "option1": "lim(x→0) f(x) does not exist because f(0) is undefined.",
+    "option2": "lim(x→0) f(x) = 0, because x is approaching 0.",
+    "option3": "lim(x→0) f(x) = 2, because f(x) approaches 2 from both sides.",
+    "option4": "lim(x→0) f(x) = 1, because the graph is symmetric around y = 1.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-027",
+    "option1": "lim(x→2) f(x) = 2, because f(2) = 2.",
+    "option2": "lim(x→2) f(x) = 5, because f(x) approaches 5 from both sides.",
+    "option3": "lim(x→2) f(x) does not exist, because f(2) = 2 ≠ 5.",
+    "option4": "lim(x→2) f(x) = 3.5, because the average of 2 and 5 is 3.5.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-028",
+    "option1": "lim(x→−2) f(x) = 6, because f(−2) = 6 is the defined value.",
+    "option2": "lim(x→−2) f(x) = 3, because f(x) approaches 3 from both sides.",
+    "option3": "lim(x→−2) f(x) does not exist, because f(−2) = 6 ≠ 3.",
+    "option4": "lim(x→−2) f(x) does not exist, because there are two different y-values at x = −2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-029",
+    "option1": "lim(x→1) f(x) = 2, because the left-hand limit approaches 2.",
+    "option2": "lim(x→1) f(x) = 5, because the right-hand limit approaches 5.",
+    "option3": "lim(x→1) f(x) = 3.5, because the average of 2 and 5 is 3.5.",
+    "option4": "lim(x→1) f(x) does not exist, because lim(x→1⁻) f(x) ≠ lim(x→1⁺) f(x).",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-030",
+    "option1": "The student is correct — the left and right sides must be the same type of function for the limit to exist.",
+    "option2": "The student is correct — since the graph changes shape at x = 0, the limit cannot exist.",
+    "option3": "The student is incorrect — lim(x→0) f(x) = 4, because both sides approach the same y-value of 4 regardless of their shape.",
+    "option4": "The student is incorrect — lim(x→0) f(x) does not exist, but for a different reason: f(0) = 4 makes the limit undefined.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-031",
+    "option1": "lim(x→2) f(x) = 2",
+    "option2": "lim(x→2) f(x) = 5.9960",
+    "option3": "lim(x→2) f(x) = 6",
+    "option4": "lim(x→2) f(x) does not exist because f(2) is not in the table.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-032",
+    "option1": "lim(x→0) g(x) = 0",
+    "option2": "lim(x→0) g(x) = 0.5",
+    "option3": "lim(x→0) g(x) = 0.5132",
+    "option4": "lim(x→0) g(x) does not exist because g(0) is undefined.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-033",
+    "option1": "lim(x→3) h(x) = 7, because h(3) = 7 is the defined value of h at x = 3.",
+    "option2": "lim(x→3) h(x) does not exist, because h(3) = 7 ≠ 12.",
+    "option3": "lim(x→3) h(x) = 12, because h(x) approaches 12 from both sides regardless of h(3).",
+    "option4": "lim(x→3) h(x) = 11.9920, because that is the closest recorded value to x = 3 from the left.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-034",
+    "option1": "lim(x→1) f(x) = 1, because x is approaching 1.",
+    "option2": "lim(x→1) f(x) = 1.999, because that is the closest recorded value from the left.",
+    "option3": "lim(x→1) f(x) = 2, because f(x) approaches 2 from both sides.",
+    "option4": "The limit does not exist because f(1) is not shown in the table.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-035",
+    "option1": "lim(x→4) g(x) = 16, because g(4) = 16.",
+    "option2": "lim(x→4) g(x) = 15.9920, because that is the closest table value to x = 4 from the left.",
+    "option3": "lim(x→4) g(x) does not exist, because the left and right values are different.",
+    "option4": "lim(x→4) g(x) = 16, because g(x) approaches 16 from both sides.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-036",
+    "option1": "lim(x→−1) h(x) = −1, because x is approaching −1.",
+    "option2": "lim(x→−1) h(x) = 3, because h(x) approaches 3 from both sides.",
+    "option3": "lim(x→−1) h(x) = 3.001, because that is the closest recorded value from the left.",
+    "option4": "The limit does not exist because x is approaching a negative number.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-037",
+    "option1": "lim(x→2) f(x) = 2",
+    "option2": "lim(x→2) f(x) = 3.999",
+    "option3": "lim(x→2) f(x) = 4",
+    "option4": "lim(x→2) f(x) does not exist",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-038",
+    "option1": "lim(x→5) g(x) = 5",
+    "option2": "lim(x→5) g(x) = 8.999",
+    "option3": "lim(x→5) g(x) = 9",
+    "option4": "The limit does not exist because g(5) is not in the table.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-039",
+    "option1": "The first student is correct — lim(x→1) f(x) = 1 because f(1) = 1.",
+    "option2": "The second student is correct — lim(x→1) f(x) = 0.7143.",
+    "option3": "Both students are wrong — lim(x→1) f(x) does not exist because f(1) ≠ the table values.",
+    "option4": "Both students are wrong — lim(x→1) f(x) ≈ 5/7, because both sides of the table converge to approximately 0.7143, which equals 5/7.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-040",
+    "option1": "Claim 1 is correct only — the limit is 1 but Claims 2 and 3 are both false.",
+    "option2": "Claims 1 and 3 are correct; Claim 2 is false — the limit exists and equals 1 even though the two sides approach from above and below.",
+    "option3": "Claim 2 is correct only — since the right side values exceed 1 and the left side values are below 1, the limit does not exist.",
+    "option4": "All three claims are correct — the limit both exists and does not exist simultaneously.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-041",
+    "option1": "6",
+    "option2": "10",
+    "option3": "16",
+    "option4": "2",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-042",
+    "option1": "8",
+    "option2": "2",
+    "option3": "15",
+    "option4": "53",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-043",
+    "option1": "4",
+    "option2": "3",
+    "option3": "12",
+    "option4": "The limit does not exist because division by a limit is not allowed.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-044",
+    "option1": "5",
+    "option2": "13",
+    "option3": "−4",
+    "option4": "−1",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-045",
+    "option1": "2",
+    "option2": "9",
+    "option3": "18",
+    "option4": "3",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-046",
+    "option1": "16",
+    "option2": "10",
+    "option3": "6",
+    "option4": "4",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-047",
+    "option1": "9",
+    "option2": "20",
+    "option3": "4",
+    "option4": "12",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-048",
+    "option1": "1",
+    "option2": "6",
+    "option3": "7",
+    "option4": "The limit does not exist.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-049",
+    "option1": "−6",
+    "option2": "6",
+    "option3": "−3",
+    "option4": "The limit does not exist because the denominator limit equals zero.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-050",
+    "option1": "Claims 1 and 2 are correct; Claim 3 is false because square roots cannot be distributed over limits.",
+    "option2": "Claim 2 and Claim 3 are correct; Claim 1 is false because continuity at x = c is not required for limit laws to apply.",
+    "option3": "All three claims are correct.",
+    "option4": "Only Claim 3 is correct; Claims 1 and 2 both require additional conditions not stated.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-051",
+    "option1": "0",
+    "option2": "3",
+    "option3": "6",
+    "option4": "The limit does not exist because direct substitution gives 0/0.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-052",
+    "option1": "0",
+    "option2": "7",
+    "option3": "5",
+    "option4": "The limit does not exist because the denominator is 0 at x = 5.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-053",
+    "option1": "0",
+    "option2": "1/3",
+    "option3": "1/6",
+    "option4": "The limit does not exist because the numerator and denominator are both 0 at x = 9.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-054",
+    "option1": "0",
+    "option2": "−3",
+    "option3": "3/2",
+    "option4": "The limit does not exist because both numerator and denominator equal 0 at x = −2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-055",
+    "option1": "0",
+    "option2": "1/2",
+    "option3": "1/4",
+    "option4": "The limit does not exist because direct substitution gives 0/0.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-056",
+    "option1": "1",
+    "option2": "0",
+    "option3": "−2",
+    "option4": "The limit does not exist because the denominator is a perfect square that equals 0 at x = 1.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-057",
+    "option1": "0",
+    "option2": "2",
+    "option3": "4",
+    "option4": "The limit does not exist because direct substitution gives 0/0.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-058",
+    "option1": "4",
+    "option2": "0",
+    "option3": "16",
+    "option4": "8",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-059",
+    "option1": "0",
+    "option2": "3",
+    "option3": "4",
+    "option4": "The limit does not exist because the denominator equals 0 at x = 3.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-060",
+    "option1": "0",
+    "option2": "1",
+    "option3": "2",
+    "option4": "The limit does not exist because two square roots appear in the numerator and direct substitution gives 0/0.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-061",
+    "option1": "lim = 3; technique: direct substitution",
+    "option2": "lim = 9; technique: difference of squares",
+    "option3": "lim = 6; technique: factor (x²−9) = (x−3)(x+3), cancel (x−3), substitute x = 3",
+    "option4": "The limit does not exist; the table shows values approaching from both sides but never reaching 3.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-062",
+    "option1": "Substitute x = 2: f(2) = (4+2−6)/(2−2) = 0/0, so the limit is 0.",
+    "option2": "Factor: (x²+x−6) = (x+3)(x−2), cancel (x−2), get (x+3); at x=2: 2+3=5. ✓",
+    "option3": "Factor: (x²+x−6) = (x−3)(x+2), cancel (x−2), get (x−3); at x=2: 2−3=−1.",
+    "option4": "The calculator result of 5 cannot be confirmed algebraically because f(2) is undefined.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-063",
+    "option1": "Factor: (√x−3)(√x+3) = x−9; cancel; get 1/(√x+3); at x=9: 1/6 ≈ 0.1667. ✓",
+    "option2": "Multiply numerator and denominator by (√x−3); simplify to get 1/(x−9); limit = 0.",
+    "option3": "The exact limit is 1/3 because √9 = 3 and the denominator is x−9.",
+    "option4": "The calculator shows 0.1667 but the exact limit cannot be determined algebraically.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-064",
+    "option1": "Factor x³−8 = (x−2)(x²+2x+4); factor x²−4 = (x−2)(x+2); cancel (x−2); get (x²+2x+4)/(x+2); at x=2: 12/4 = 3. Limit = 3.",
+    "option2": "Factor x³−8 = (x−2)(x²+2x+4); factor x²−4 = (x−2)(x+2); cancel (x−2); get (x²+2x+4)/(x+2); at x=2: (4+4+4)/(4) = 12/4 = 3. Limit = 3.",
+    "option3": "Factor x³−8 = (x−2)(x²+2x+4); factor x²−4 = (x−2)(x+2); cancel (x−2); get (x²+2x+4)/(x+2); at x=2: (4+4+4)/(2+2) = 12/4 = 3/2 when simplified incorrectly.",
+    "option4": "Factor x³−8 = (x−2)(x²+2x+4); factor x²−4 = (x−2)(x+2); cancel (x−2); get (x²+2x+4)/(x+2); at x=2: (4+4+4)/(2+2) = 12/4 = 3; but calculator shows 1.5 = 3/2, confirming 3/2 only because the calculator rounds.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-065",
+    "option1": "Rationalize only the numerator; the exact limit is −1/4.",
+    "option2": "Factor the denominator only; the exact limit is −1/2.",
+    "option3": "Rationalize the numerator AND factor the denominator; the exact limit is −1/4.",
+    "option4": "The expression requires L'Hopital's rule only; algebraic manipulation cannot resolve this limit.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-066",
+    "option1": "Procedure A — direct substitution gives (8−8)/(4−4) = 0/0, so the limit = 0.",
+    "option2": "Procedure C — graphical analysis is the only reliable method when substitution fails.",
+    "option3": "Procedure B — factor x³−8 = (x−2)(x²+2x+4) and x²−4 = (x−2)(x+2), cancel (x−2), substitute x=2 to get 12/4 = 3.",
+    "option4": "Procedure D — the squeeze theorem is needed whenever direct substitution gives 0/0.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-067",
+    "option1": "Procedure A — direct substitution gives 0·sin(undefined), so the limit does not exist.",
+    "option2": "Procedure C — the table shows values approaching 0 so lim = 0, but this cannot be confirmed exactly.",
+    "option3": "Procedure B — algebraic simplification gives lim(x→0) x·(x·sin(1/x)) which can be evaluated by substitution.",
+    "option4": "Procedure D — since −1 ≤ sin(1/x) ≤ 1, multiply by x² to get −x² ≤ x²sin(1/x) ≤ x²; both bounds → 0 so lim = 0.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-068",
+    "option1": "Procedure A — f(3) = 10, so by definition lim(x→3) f(x) = 10.",
+    "option2": "Procedure B — the table gives values near 6, so lim = 6, but cannot be confirmed exactly.",
+    "option3": "Procedure C — factor x²−9 = (x−3)(x+3), cancel (x−3), get x+3; at x=3: lim = 6. The value f(3)=10 is irrelevant.",
+    "option4": "Procedure D — the Squeeze Theorem is needed for all piecewise functions.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-069",
+    "option1": "Procedure A — direct substitution gives 0/0 which means the limit = 0.",
+    "option2": "Procedure B — cancel x from sin(x)/x to get sin(1) ≈ 0.841.",
+    "option3": "Procedure C — recognize lim(x→0) sin(x)/x = 1 as a fundamental trigonometric limit.",
+    "option4": "Procedure D — the Squeeze Theorem is the only rigorous method for this limit.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-070",
+    "option1": "Procedure A — ∞/∞ means the limit does not exist.",
+    "option2": "Procedure C — factor both expressions and cancel to simplify.",
+    "option3": "Procedure D — the table shows values approaching 0.6, so lim = 3/5.",
+    "option4": "Procedure B — divide by x²: (3 + 2/x − 1/x²)/(5 − 4/x²); as x→∞ all terms with x vanish; lim = 3/5.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-071",
+    "option1": "Procedure A — substitution gives (1−1)/0 = 0/0, so the limit = 0.",
+    "option2": "Procedure C — since lim(x→0)(1−cos(x))/x = 0, dividing by x again gives lim = 0.",
+    "option3": "Procedure D — the table shows values approaching 0.5, so lim = 1/2.",
+    "option4": "Procedure B — rationalize: (1−cos²x)/[x²(1+cosx)] = sin²x/[x²(1+cosx)] = [sin(x)/x]²·1/(1+cosx) → 1²·1/2 = 1/2.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-072",
+    "option1": "Expression (A) — factor difference of squares; lim = 8.",
+    "option2": "Expression (B) — rationalize numerator using conjugate (√(x+9)+3); lim = 1/6.",
+    "option3": "Expression (C) — factor difference of cubes and squares; lim = 3.",
+    "option4": "Expression (D) — divide by x; lim = 2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-073",
+    "option1": "1→P, 2→Q, 3→R, 4→S",
+    "option2": "1→Q, 2→P, 3→S, 4→R",
+    "option3": "1→S, 2→R, 3→Q, 4→P",
+    "option4": "1→P, 2→R, 3→Q, 4→S",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-074",
+    "option1": "Claims 1 and 4 are correct; Claims 2 and 3 are false.",
+    "option2": "Claims 2 and 4 are correct; Claims 1 and 3 are false.",
+    "option3": "Claims 1, 2, and 4 are all correct; only Claim 3 is false.",
+    "option4": "Only Claim 3 is correct; the limit does not exist.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-075",
+    "option1": "Direct substitution — f(5) = 0/0 so the limit = 0.",
+    "option2": "Table reading only — the table shows f(x) → 10 so lim = 10, no algebra needed.",
+    "option3": "Algebraic factoring — factor x²−25 = (x−5)(x+5), cancel (x−5), substitute x=5 to get lim = 10. The table confirms this.",
+    "option4": "Squeeze Theorem — bound f(x) between 9.999 and 10.001 from the table.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-076",
+    "option1": "1→P, 2→Q, 3→R, 4→S",
+    "option2": "1→Q, 2→P, 3→S, 4→R",
+    "option3": "1→R, 2→S, 3→P, 4→Q",
+    "option4": "1→S, 2→R, 3→Q, 4→P",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-077",
+    "option1": "Both limits require rationalization; lim f(x) = 1/4 and lim g(x) = −2.",
+    "option2": "f(x) requires rationalization giving lim = 1/4; g(x) requires factoring giving lim = −2.",
+    "option3": "f(x) requires factoring giving lim = 1/4; g(x) requires the Squeeze Theorem giving lim = −2.",
+    "option4": "Both limits require the Squeeze Theorem; lim f(x) = 0.25 and lim g(x) = −2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-078",
+    "option1": "Expression (A) — direct substitution gives 0/0; factor to get lim = 6.",
+    "option2": "Expression (B) — the table oscillates too rapidly near x=0 for the calculator to confirm; Squeeze Theorem gives lim = 0.",
+    "option3": "Expression (C) — the table at large x values gives 0.5; divide by x² to confirm lim = 1/2.",
+    "option4": "Expression (D) — the table shows values approaching 0.25; rationalize to confirm lim = 1/4.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-079",
+    "option1": "Beth — divide by x³; lim = 21.",
+    "option2": "Carl — Squeeze Theorem confirms lim = 21 from the table bounds.",
+    "option3": "Dana — the limit is undefined because f(2) = 0/0.",
+    "option4": "Alex — factor x³−8 = (x−2)(x²+2x+4), rationalize by multiplying (√x+√2); cancel (√x−√2); substitute x=2 to get 12·2√2 = 24√2 ≈ ... wait, let me recompute: exact lim = 6√2(√2+√2) ... rationalize correctly to get lim = 12√2.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-080",
+    "option1": "f→3/5 via standard trig limits; g→2 via rationalization and sin(x)/x; h→1/3 via Taylor series or repeated standard limit application.",
+    "option2": "f→3/5 via squeeze theorem; g→2 via direct substitution; h→1/3 via factoring.",
+    "option3": "f→0.6 via table only; g→2 via table only; h→0.333 via table only.",
+    "option4": "f→5/3 via standard trig limits; g→1/2 via rationalization; h→1/6 via Taylor series.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-081",
+    "option1": "Setup A — multiply the inequality by x and apply limits.",
+    "option2": "Setup C — the inequality only holds for x > 0 so the theorem fails.",
+    "option3": "Setup D — since cos(1/x) is bounded, direct substitution of x²  gives 0.",
+    "option4": "Setup B — multiply the inequality −1 ≤ cos(1/x) ≤ 1 by x² (always ≥ 0), giving −x² ≤ x²cos(1/x) ≤ x²; since lim(x→0)(−x²) = lim(x→0)(x²) = 0, the Squeeze Theorem gives lim = 0.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-082",
+    "option1": "Alex is correct — unequal bounds mean the Squeeze Theorem cannot be applied.",
+    "option2": "Beth is correct — the limit lies somewhere between 2 and 3.",
+    "option3": "All four students are wrong — substituting x=1 into 3+x²−x gives 3+1−1 = 3, and into 3x−x² gives 3−1=2; however the correct upper bound at x=1 is 3+(1)²−1 = 3 and the lower is 2, so the Squeeze Theorem cannot be applied since 2 ≠ 3.",
+    "option4": "All four students made an arithmetic error — the correct upper bound at x=1 is 3+(1)²−1 = 3 and the correct lower bound is 3(1)−(1)² = 2; since 2 ≠ 3 the Squeeze Theorem fails here.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-083",
+    "option1": "Claims 1 and 2 are correct; Claims 3 and 4 are false.",
+    "option2": "Claims 1, 2 and 3 are correct; Claim 4 is false.",
+    "option3": "Claims 1 and 3 are correct; Claims 2 and 4 are false.",
+    "option4": "All four claims are correct.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-084",
+    "option1": "SqueezeA only — bounding sin(1/x²) between −1 and 1 and multiplying by x⁴ is the correct and complete argument.",
+    "option2": "SqueezeC — the inequality only holds for x > 0, making the theorem incomplete.",
+    "option3": "SqueezeB and SqueezeD are both correct and equivalent — both use sin²(1/x²) ≥ 0 to establish the tighter lower bound of 0, giving the same conclusion lim = 0.",
+    "option4": "SqueezeA is correct in conclusion but uses a weaker bound than necessary; SqueezeB is both correct and tighter since sin²(1/x²) ≥ 0 gives the lower bound 0 instead of −x⁴.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-085",
+    "option1": "Statements 1 and 4 are correct; Statements 2 and 3 are false.",
+    "option2": "Statements 2 and 3 are correct; Statements 1 and 4 are false.",
+    "option3": "Statements 3 and 4 are correct; Statements 1 and 2 are false.",
+    "option4": "Statements 2, 3 and 4 are correct; Statement 1 is false.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-086",
+    "option1": "Approach 4 is correct — 0/0 means the limit does not exist.",
+    "option2": "Approach 1 is correct — bounding sin(x) between −1 and 1 and applying the Squeeze Theorem gives lim = 0.",
+    "option3": "Approach 2 is correct and most elegant — factor out x², evaluate the remaining limit as 1/2, conclude lim = 0 by product law.",
+    "option4": "Approaches 2 and 3 are both correct and rigorous; Approach 1 has a flaw; Approach 4 commits the 0/0 misconception.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-087",
+    "option1": "lim(x→0) f(x) = 0, because x² → 0 as x → 0.",
+    "option2": "lim(x→0) f(x) = 3, because both bounds approach 3 as x → 0.",
+    "option3": "The limit cannot be determined because f(0) is not given.",
+    "option4": "lim(x→0) f(x) does not exist because f(x) is bounded above and below by different functions.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-088",
+    "option1": "Claims 2 and 3 are correct; Claims 1 and 4 are false.",
+    "option2": "Claims 1 and 2 are both correct — the limit equals both 1 and 5 simultaneously.",
+    "option3": "Claims 1 and 4 are correct; Claims 2 and 3 are false.",
+    "option4": "Claim 3 is correct — f(0) = 5 violates the bounds so the Squeeze Theorem fails.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-089",
+    "option1": "Setup 1 is correct — multiplying −1 ≤ sin(x) ≤ 1 by x directly gives the correct squeeze.",
+    "option2": "Setup 4 is correct — x·sin(x) is bounded by ±x² and both → 0.",
+    "option3": "Setup 3 is correct — the product law applies directly since both factors → 0.",
+    "option4": "Setup 2 is the most rigorous — multiplying by |x| avoids the sign issue when x < 0, giving −|x| ≤ x·sin(x) ≤ |x|; both bounds → 0 so lim = 0. Setup 3 is also correct via product law.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-090",
+    "option1": "Alex is correct — substituting x=0 into both bounds confirms lim = 1.",
+    "option2": "Beth is correct only — she correctly evaluates both limits and applies the theorem properly without making additional false claims.",
+    "option3": "Alex and Beth are both correct — substitution and limit evaluation give the same answer.",
+    "option4": "Dana is correct — f(0) must be known before the Squeeze Theorem can be applied.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-091",
+    "option1": "lim(x→0) f(x) = 0, because both −x² and x² approach 0 as x → 0.",
+    "option2": "lim(x→0) f(x) cannot be determined because f(x) is not explicitly given.",
+    "option3": "lim(x→0) f(x) = 0.000001, because that is the closest recorded bound value to x = 0.",
+    "option4": "lim(x→0) f(x) does not exist because f(x) is trapped between two different functions.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-092",
+    "option1": "Beth is correct — the oscillation visible on the calculator graph means the limit does not exist.",
+    "option2": "Alex and Carl are both correct — Squeeze Theorem and product law both validly give lim = 0.",
+    "option3": "Dana is correct — direct substitution gives f(0) = 0 so no further work is needed.",
+    "option4": "Alex is correct only — the Squeeze Theorem is the only valid method here.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-093",
+    "option1": "All three attempts are equally valid — any method that gives lim = 0 is acceptable.",
+    "option2": "Attempt 1 has a sign flaw for x < 0; Attempt 2 is rigorous and correct; Attempt 3 is numerical only and insufficient for a proof. Exact limit = 0.",
+    "option3": "Attempt 3 is the most reliable because it uses calculator evidence; Attempts 1 and 2 are algebraic approximations.",
+    "option4": "Attempt 2 has a flaw — |x·sin(1/x)| ≤ |x| does not imply −|x| ≤ x·sin(1/x) ≤ |x|.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-094",
+    "option1": "Alex is correct — multiply sin inequality by (x−1) to get the bounds.",
+    "option2": "Carl is correct — factor and cancel (x−1) to simplify the bounds to ±(x+1).",
+    "option3": "Beth is correct — |f(x)| ≤ |x²−1| giving −|x²−1| ≤ f(x) ≤ |x²−1|; factor |x²−1| = |x−1|·|x+1|; both → 0 as x → 1 since |x−1| → 0; lim = 0.",
+    "option4": "Dana is correct — (x−1)² bounds are tightest near x = 1.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-095",
+    "option1": "All three pairs are valid squeezes — all give lim = 0 since all outer bounds → 0.",
+    "option2": "Only Pair 3 is valid — it is the only symmetric bound that works for both x > 0 and x < 0.",
+    "option3": "Pairs 1 and 2 are valid for x > 0; Pair 3 is valid for all x; all give lim(x→0) f(x) = 0. Pair 2 is the tightest valid squeeze.",
+    "option4": "Pair 1 is invalid because x² > 0 cannot serve as a lower bound when f(x) can be less than x²; Pairs 2 and 3 are both valid; Pair 2 is tighter; exact lim = 0.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-096",
+    "option1": "Representation A is inconsistent — the verbal description incorrectly states f(2) = 9.",
+    "option2": "Representation D is inconsistent — it incorrectly equates the limit with f(2) = 9, while A, B, and C all show the limit is 5.",
+    "option3": "Representation B is inconsistent — the table values do not approach a single value.",
+    "option4": "Representation C is inconsistent — a graph cannot have both an open and closed circle at the same x-value.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-097",
+    "option1": "Alex and Carl are correct — f(1) = 7 determines the limit.",
+    "option2": "Beth and Dana are correct — the limit is 4 from both the table and graph representations.",
+    "option3": "All four students are correct — each representation gives the same value.",
+    "option4": "Only Dana is correct — graphs are the most reliable representation of limits.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-098",
+    "option1": "Representation 1 contains an error — a jump discontinuity always means the two-sided limit exists and equals the average of the one-sided limits.",
+    "option2": "Representation 3 contains an error — a graph cannot have two open circles at the same x-value.",
+    "option3": "Representation 4 contains an error — the two-sided limit does not exist when LHL ≠ RHL; limits are never computed as averages of one-sided limits.",
+    "option4": "Representation 2 contains an error — the table cannot show different values approaching from each side.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-099",
+    "option1": "Representation 3 is correct — sin(0)/0 = 0/0 = 0 is valid by L'Hopital's Rule at the AP level.",
+    "option2": "Representation 3 incorrectly treats 0/0 as equal to 0. The correct limit is 1. A verbal restatement: 'Even though sin(x)/x is undefined at x=0, as x gets arbitrarily close to 0 from both sides, the ratio sin(x)/x approaches 1 — this is a fundamental standard limit.'",
+    "option3": "Representation 3 is correct — the table shows values approaching 1, confirming lim = 0 by direct substitution.",
+    "option4": "Representation 2 contains the error — sin(x)/x is defined at x = 0 since sin(0) = 0.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-100",
+    "option1": "Representation 1 contains the error — lim(x→0⁺) ln(x) = 0 because ln(1) = 0 is the closest defined value.",
+    "option2": "Representation 2 contains the error — ln(0.0001) is undefined.",
+    "option3": "Representation 4 contains the error — ln(x) is only defined for x > 0, so the two-sided limit lim(x→0) ln(x) does not exist because the left-hand limit lim(x→0⁻) ln(x) is undefined (ln of a negative number is not real).",
+    "option4": "Representation 3 contains the error — ln(x) approaches 0, not −∞, as x → 0⁺.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-101",
+    "option1": "All four representations are correct — each describes a different and valid aspect of f.",
+    "option2": "Representations 1, 2, and 3 are correct; Representation 4 is false — a limit can exist at a point where f is undefined, as shown by Representations 1 and 3 both confirming lim(x→2) f(x) = 4.",
+    "option3": "Representations 1 and 3 are correct; Representations 2 and 4 are both false.",
+    "option4": "Only Representation 3 is correct — algebraic manipulation is the only reliable method.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-102",
+    "option1": "All three representations state that f(1) = 2.",
+    "option2": "All three representations state that lim(x→1) f(x) = 2 — the table shows f(x) approaching 2, the verbal description says f(x) approaches 2 as x → 1, and the equation directly states the limit equals 2.",
+    "option3": "The table and verbal description agree, but the equation is wrong because it should say lim(x→1) f(x) = 1.",
+    "option4": "Only the equation is reliable — tables and verbal descriptions are too imprecise to determine limits.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-103",
+    "option1": "Table A and Verbal A — Table A shows f(x) → 7 from both sides; Verbal A correctly describes limit behavior without referencing f(4).",
+    "option2": "Table B and Verbal A — Table B shows values approaching 7 and Verbal A correctly describes the limit.",
+    "option3": "Table A and Verbal B — Table A is correct and Verbal B correctly identifies f(4) = 7 as the reason.",
+    "option4": "Both tables match — either can represent lim(x→4) f(x) = 7.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-104",
+    "option1": "Representation 1 is the odd one out — the table values are inconsistent and do not approach a single value.",
+    "option2": "Representation 3 is the odd one out — a function must be defined at x = 2 for the limit to exist.",
+    "option3": "Representation 4 is the odd one out — 11.994 is a recorded table entry, not the value being approached; the limit is 12, consistent with Representations 1, 2, and 3.",
+    "option4": "Representation 2 is the odd one out — the equation should state lim(x→2) f(x) = 12.006 since that is the right-side closest value.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-105",
+    "option1": "Representations 3 and 5 contain errors — the table in Representation 3 is wrong because f(−1) is undefined, and Representation 5 incorrectly applies direct substitution.",
+    "option2": "Representations 1 and 4 contain errors — the factoring in Representation 1 is wrong, and Representation 4 incorrectly states the limit at x=1 equals 1.",
+    "option3": "Representations 3 and 4 contain errors — the table shows f(x) = x but this is only valid for x ≠ ±1, so the table entries near x=−1 are wrong; and Representation 4 incorrectly claims the two-sided limit exists at BOTH points since lim(x→−1) f(x) = −1 requires verification that both one-sided limits agree, which they do — so Representation 4 is actually correct.",
+    "option4": "Representations 2 and 5 contain errors — lim(x→1) f(x) ≠ 1, and lim(x→0) f(x) ≠ 0.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-106",
+    "option1": "Statements 1 and 3 are correct.",
+    "option2": "Statements 1, 2, and 4 are correct — table, graph, and algebra all confirm lim = 4; Statement 3 is false.",
+    "option3": "Only Statement 4 is correct — algebra is the only reliable method.",
+    "option4": "All four statements are correct.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-107",
+    "option1": "Rep A and Rep D are correct.",
+    "option2": "Rep B and Rep C are correct — the table confirms lim = 5 and the verbal correctly identifies this as a removable discontinuity.",
+    "option3": "Rep A and Rep B are both correct since the filled point and table can have different values.",
+    "option4": "Only Rep C is correct — verbal descriptions are most precise.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-108",
+    "option1": "lim(x→2) f(x) = 5 — the filled point at (2,5) is shown on the graph so the limit equals f(2).",
+    "option2": "lim(x→2) f(x) = 4 — the left branch approaches 4 so the limit equals the left-hand limit.",
+    "option3": "lim(x→2) f(x) does not exist — the table shows left values approaching 4 and right values approaching 6; since 4 ≠ 6, LHL ≠ RHL, confirming a jump discontinuity where the two-sided limit fails to exist regardless of f(2) = 5.",
+    "option4": "lim(x→2) f(x) = (4+6)/2 = 5 — the limit is the average of the left and right limits, which happens to equal f(2).",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-109",
+    "option1": "Rep 1 is correct — the table shows π so lim = π. Reps 2, 3, 4 are all wrong.",
+    "option2": "Rep 4 is correct — the algebraic derivation gives −π. The table is wrong because the calculator displayed absolute values.",
+    "option3": "The table (Rep 1) shows values approaching +3.1416 ≈ π; however Rep 4's algebra gives −π. The discrepancy reveals the table is showing |f(x)| or the calculator is rounding; the exact algebraic limit is −π. Rep 3 correctly flags that the sign must be checked algebraically — making Reps 3 and 4 correct.",
+    "option4": "All four representations are consistent — π and −π are equal in magnitude so the limit is π.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-110",
+    "option1": "Reps 1, 2, and 4 are correct — calculator and graph confirm lim = −1/3; Reps 3 and 5 have algebra errors.",
+    "option2": "Rep 3 has an arithmetic error but the method is correct; Rep 5 correctly gives −2/3; Reps 1 and 4 trust the calculator too much — the exact limit is −2/3, revealing a subtle calculator precision error near x=0. Rep 2 correctly identifies removable discontinuity but states wrong limit value.",
+    "option3": "All five representations are correct — −1/3 and −2/3 are approximately equal.",
+    "option4": "Only Rep 4 is correct — the calculator is the most reliable tool for limits.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-111",
+    "option1": "Function (B) — g(x) = 1/(x−3) has a removable discontinuity at x = 3.",
+    "option2": "Function (C) — h(x) is piecewise so it always has a removable discontinuity.",
+    "option3": "Function (A) — f(x) = (x²−9)/(x−3) simplifies to x+3 for x ≠ 3, creating a hole at (3, 6) that can be removed by defining f(3) = 6.",
+    "option4": "Function (D) — p(x) = |x−3|/(x−3) has a removable discontinuity at x = 3.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-112",
+    "option1": "f has a jump discontinuity at x = 2 because f(2) = 5 is defined separately from both branches.",
+    "option2": "f has a removable discontinuity at x = 2 because f(2) = 5 can be redefined to remove the discontinuity.",
+    "option3": "f has an infinite discontinuity at x = 2 because the two branches produce different values.",
+    "option4": "f has a jump discontinuity at x = 2 because lim(x→2⁻) f(x) = 3 and lim(x→2⁺) f(x) = 5, and since 3 ≠ 5, the two-sided limit does not exist.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-113",
+    "option1": "1→J, 2→I, 3→R, 4→J",
+    "option2": "1→R, 2→I, 3→J, 4→R",
+    "option3": "1→I, 2→R, 3→J, 4→I",
+    "option4": "1→R, 2→J, 3→I, 4→R",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-114",
+    "option1": "x=−1: removable; x=2: infinite; x=5: jump.",
+    "option2": "x=−1: jump; x=2: infinite; x=5: removable.",
+    "option3": "x=−1: removable; x=2: jump; x=5: infinite.",
+    "option4": "x=−1: continuous; x=2: infinite; x=5: jump.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-115",
+    "option1": "Alex and Carl are correct; Beth and Dana are wrong.",
+    "option2": "Beth and Carl are correct; Alex and Dana are wrong.",
+    "option3": "Carl and Dana are correct; Alex and Beth are wrong.",
+    "option4": "All four students are correct.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-116",
+    "option1": "Claims 1 and 4 are correct; Claims 2 and 3 are wrong.",
+    "option2": "Claims 2 and 3 are correct; Claims 1 and 4 are wrong.",
+    "option3": "Claims 1 and 3 are correct; Claims 2 and 4 are wrong.",
+    "option4": "Claims 3 and 4 are correct; Claims 1 and 2 are wrong.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-117",
+    "option1": "x = 2: jump discontinuity; x = 4: removable discontinuity.",
+    "option2": "x = 2: continuous; x = 4: removable discontinuity.",
+    "option3": "x = 2: removable discontinuity; x = 4: jump discontinuity.",
+    "option4": "x = 2: continuous; x = 4: infinite discontinuity.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-118",
+    "option1": "Removable discontinuity — the graph has an open circle at (1, 3) so the function can be redefined.",
+    "option2": "No discontinuity — g(1) = 3 is defined so the function is continuous.",
+    "option3": "Jump discontinuity — lim(x→1⁻) g(x) = 3 and lim(x→1⁺) g(x) = 7, and since 3 ≠ 7 the two-sided limit does not exist.",
+    "option4": "Infinite discontinuity — the graph jumps from 3 to 7 which is an infinite change.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-119",
+    "option1": "Claims 1 and 3 are correct.",
+    "option2": "Claims 2 and 4 are correct.",
+    "option3": "Claims 1 and 2 are correct.",
+    "option4": "Claims 3 and 4 are correct.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-120",
+    "option1": "Claims 1, 2, and 5 are correct; Claims 3 and 4 are false.",
+    "option2": "Claims 1, 3, and 4 are correct; Claims 2 and 5 are false.",
+    "option3": "Claims 2, 4, and 5 are correct; Claims 1 and 3 are false.",
+    "option4": "Claims 1, 2, 4, and 5 are correct; only Claim 3 is false.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-121",
+    "option1": "Jump discontinuity; define f(2) = 2 to make f continuous.",
+    "option2": "Infinite discontinuity; no value of f(2) can make f continuous.",
+    "option3": "Removable discontinuity; define f(2) = 4 to make f continuous.",
+    "option4": "Removable discontinuity; define f(2) = 0 to make f continuous.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-122",
+    "option1": "Removable discontinuity — lim(x→3) f(x) = 0 because the calculator shows symmetric values.",
+    "option2": "Jump discontinuity — lim(x→3) f(x) does not exist because f(x) takes different values on each side.",
+    "option3": "Infinite discontinuity — lim(x→3) f(x) does not exist as a finite value; f(x) → +∞ from BOTH sides since 1/(x−3)² > 0 always.",
+    "option4": "Infinite discontinuity — lim(x→3⁻) f(x) = −∞ and lim(x→3⁺) f(x) = +∞ because the sign alternates.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-123",
+    "option1": "x=1: infinite discontinuity because f(1)=8; x=3: removable discontinuity because both sides approach different values.",
+    "option2": "x=1: removable discontinuity because lim(x→1) f(x)=2 but f(1)=8≠2; x=3: jump discontinuity because lim(x→3⁻)=5 and lim(x→3⁺)=6, and 5≠6.",
+    "option3": "x=1: jump discontinuity because f(1)=8≠2; x=3: removable discontinuity because lim(x→3) f(x)=6=f(3).",
+    "option4": "x=1: removable discontinuity; x=3: continuous because f(3)=6 is defined.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-124",
+    "option1": "x=3: removable, define f(3)=1/4; x=−1: infinite, no value removes it because one-sided limits are ±∞.",
+    "option2": "x=3: jump, no value removes it; x=−1: removable, define f(−1)=0.",
+    "option3": "x=3: infinite, no value removes it; x=−1: jump, define f(−1)=500.",
+    "option4": "x=3: removable, define f(3)=0.25; x=−1: removable, define f(−1)=1000.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-125",
+    "option1": "x=0: removable; x=1: continuous; x=−1: removable.",
+    "option2": "x=0: jump (LHL=−1≠RHL=1); x=1: removable (lim=1, f(1) undefined); x=−1: jump (LHL=1≠RHL=−1).",
+    "option3": "x=0: infinite; x=1: jump; x=−1: infinite.",
+    "option4": "x=0: jump; x=1: jump; x=−1: removable.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-126",
+    "option1": "k = 3 — because f(3) must equal x at x = 3.",
+    "option2": "k = 9 — because the numerator equals 9 when x = 3.",
+    "option3": "k = 6 — because lim(x→3) f(x) = 6, and setting k = 6 satisfies all three continuity conditions.",
+    "option4": "k = 0 — because (x²−9)/(x−3) = 0 at x = 3 by direct substitution.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-127",
+    "option1": "Alex is correct — g is defined everywhere so it is continuous.",
+    "option2": "Carl is correct — lim(x→2) g(x) = g(2) = 9 so all three conditions hold.",
+    "option3": "Beth is correct only — the limit does not exist so g is not continuous.",
+    "option4": "Beth and Dana are both correct — both correctly identify that LHL ≠ RHL, so the two-sided limit fails to exist and g is not continuous. Dana's reasoning is more complete.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-128",
+    "option1": "Function A only — both branches agree at x=1 and equal f(1).",
+    "option2": "Functions A and D — both are piecewise with matching values at x=1.",
+    "option3": "Function B only — g(1) = 0 is defined so it is continuous.",
+    "option4": "Functions A and B — Function A satisfies all three conditions; Function B has g(1)=0 defined and limits exist.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-129",
+    "option1": "Condition 1: f(2) = 9 ✓. Condition 2: lim(x→2) f(x) = 9 because polynomials are continuous ✓. Condition 3: 9 = 9 ✓. f is continuous at x = 2.",
+    "option2": "Condition 1: f(2) = 9 ✓. Condition 2: the limit does not exist because f is a polynomial ✗. f is not continuous at x = 2.",
+    "option3": "Condition 1: f(2) is undefined because 2²+3(2)−1 requires a calculator ✗. f is not continuous at x = 2.",
+    "option4": "Condition 1: f(2) = 9 ✓. Condition 2: lim(x→2) f(x) = 2 because x → 2 ✗. Condition 3 cannot be checked. f is not continuous.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-130",
+    "option1": "Condition 1 fails — g(3) = 10 is defined but 10 is not in the range of x+4, so the function is undefined.",
+    "option2": "Condition 2 fails — the limit does not exist because the function changes rule at x = 3.",
+    "option3": "Condition 3 fails — lim(x→3) g(x) = 7 but g(3) = 10, so the limit and function value disagree; this creates a removable discontinuity.",
+    "option4": "No condition fails — g(3) = 10 is defined, the limit exists, and 10 = 10 so g is continuous.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-131",
+    "option1": "Condition 1 fails — h(5) = 1/0 is undefined. The limit also does not exist as a finite value since h(x) → ±∞. This creates an infinite discontinuity, and since Condition 1 fails there is no need to check Conditions 2 or 3.",
+    "option2": "Condition 1 passes — h(5) = 0. Condition 2 passes — lim(x→5) h(x) = 0. Condition 3 passes — 0 = 0. h is continuous at x = 5.",
+    "option3": "Condition 1 fails — h(5) is undefined. The limit exists and equals 0 so Condition 2 passes. Condition 3 cannot be checked. This creates a removable discontinuity.",
+    "option4": "Condition 1 passes — h(5) = 1. Condition 2 fails — the limit does not exist. This creates a jump discontinuity.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-132",
+    "option1": "f is not continuous at x = 4 because 3x + 2 is a linear function and linear functions have gaps.",
+    "option2": "f is continuous at x = 4 because: Condition 1: f(4) = 14 is defined; Condition 2: lim(x→4) f(x) = 14 exists; Condition 3: lim(x→4) f(x) = 14 = f(4). All three conditions hold.",
+    "option3": "f is continuous at x = 4 because: Condition 1: f(4) = 14 is defined; Condition 2: lim(x→4) f(x) = 4 exists; Condition 3: 4 = 14 fails. f is not actually continuous.",
+    "option4": "f is continuous at x = 4 because f(4) = 14 is defined. No further conditions need to be checked for linear functions.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-133",
+    "option1": "f is not continuous at x = 3 because f(3) = 7 and the limit = 7 are the same number — they must be different for continuity.",
+    "option2": "f is continuous at x = 3 — Condition 1: f(3)=7 defined ✓; Condition 2: LHL=RHL=7 so lim=7 exists ✓; Condition 3: lim=7=f(3) ✓. All three conditions hold.",
+    "option3": "More information is needed — we must know the formula for f(x) before deciding continuity.",
+    "option4": "f is continuous at x = 3 because f(3) = 7 is defined. Conditions 2 and 3 are automatically satisfied whenever Condition 1 holds.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-134",
+    "option1": "Part A: k=3; Part B: continuous at x=−2; Part C: student is correct — both are removable discontinuities.",
+    "option2": "Part A: k=3/2; Part B: not continuous at x=−2 because lim(x→−2) f(x) = ±∞ making it infinite; Part C: student is wrong — x=2 is removable but x=−2 is infinite.",
+    "option3": "Part A: k=3; Part B: not continuous at x=−2 because lim(x→−2) does not exist as a finite value; Part C: student is wrong — same denominator zero does not mean same discontinuity type.",
+    "option4": "Part A: k=2; Part B: continuous at x=−2 because f(−2)=3 is defined; Part C: student is correct.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-135",
+    "option1": "Claims 1, 2, 3, 4 and 5 are all correct — c=3 and a+b=2 with any individual a,b values.",
+    "option2": "Claims 1, 3, and 5 are correct; Claims 2 and 4 are wrong — the limit at x=1 is 2 not 3, so c=2 and a+b=1.",
+    "option3": "Claims 1, 2, 3, 4, and 5 are correct but Claim 4 is incomplete — additional constraints on a and b individually arise from differentiability requirements.",
+    "option4": "Claims 1, 4, and 5 are correct; Claim 2 is wrong because lim(x→1)(x²+x−2)/(x−1) = 3; but Claim 3 is wrong because the left-hand limit at x=1 uses f(1)=c, not ax²+bx+1.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-136",
+    "option1": "Condition 1: f(3) = 5 ✓. Condition 2: table shows f(x)→5 from both sides so lim = 5 ✓. Condition 3: lim = 5 = f(3) ✓. f is continuous at x = 3.",
+    "option2": "Condition 1: f(3) = 5 ✓. Condition 2: table shows values approaching 5 from left and 5 from right, but the limit cannot be confirmed without a formula ✗. Cannot conclude continuity.",
+    "option3": "Condition 1: f(3) = 5 ✓. Condition 2: lim = 3 because x → 3 ✗. Condition 3 fails. f is not continuous.",
+    "option4": "Condition 1: f(3) = 5 ✓. Condition 2: lim = 5 ✓. Condition 3: 5 ≠ 3 ✗. f is not continuous because the limit does not equal the x-value.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-137",
+    "option1": "Alex is correct only — Condition 3 fails so g is not continuous.",
+    "option2": "Beth is correct — the open circle means g is undefined.",
+    "option3": "Alex and Dana are both correct — both identify Condition 3 failing with complete reasoning. Dana's answer is more thorough.",
+    "option4": "Carl is correct — the filled point confirms continuity.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-138",
+    "option1": "Set k = 5 — since the table shows both sides approaching 5, the limit exists and defining k=5 satisfies all three conditions.",
+    "option2": "No value of k makes f continuous — the table shows left values approaching 4.996 ≈ 5 and right values approaching 5.003 ≈ 5, so the limit exists and k=5 works.",
+    "option3": "No value of k makes f continuous at x=2 — lim(x→2⁻) f(x) = 5 but lim(x→2⁺) f(x) = 5, wait these agree — so k=5 does make f continuous.",
+    "option4": "No value of k makes f continuous — Condition 2 fails because the left branch uses x²+1 and the right branch uses 3x−1, which are different formulas.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-139",
+    "option1": "Claims 1 and 4 are correct — table suggests 1/6 but exact value needs algebra to confirm.",
+    "option2": "Claims 1, 2, and 3 are correct — table, algebra, and substitution all agree.",
+    "option3": "Claims 1 and 3 are correct; Claims 2 and 4 are wrong — Claim 2 mistakes 0/0 for undefined f(2); Claim 4 is wrong because Claim 3's algebra confirms exactly 1/6.",
+    "option4": "All four claims are correct.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-140",
+    "option1": "Claims 1, 2, and 5 are correct — the limit is 0, not 1/2; the table has rounding errors.",
+    "option2": "Claims 1, 3, and 4 are correct; Claims 2 and 5 contain a critical algebraic error.",
+    "option3": "All five claims are correct — both 0 and 1/2 are valid limits depending on the method.",
+    "option4": "Claims 3 and 4 are correct only — the table is unreliable and Claim 1 should not be trusted.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-141",
+    "option1": "Alex is correct only — continuous on (−∞,−2)∪(−2,3)∪(3,+∞).",
+    "option2": "Beth and Alex are both correct — continuous everywhere except x=3 and x=−2.",
+    "option3": "Dana is the most complete — correctly factors both, confirms no cancellation, states continuity intervals, and correctly classifies both discontinuities as infinite.",
+    "option4": "Carl is correct only — both are infinite discontinuities.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-142",
+    "option1": "f is continuous on (−∞, −1) ∪ (−1, 3) ∪ (3, +∞) because each piece is individually continuous on its piece.",
+    "option2": "f is continuous on (−∞, +∞) — at x=−1: lim(x→−1⁻)=0 and lim(x→−1⁺)=0 and f(−1)=0, all agree ✓. At x=3: lim(x→3⁻)=8 and lim(x→3⁺)=0 and f(3)=8, since 8≠0 Condition 3 fails at x=3. So f is NOT continuous on all of (−∞,+∞).",
+    "option3": "f is continuous on (−∞, −1) ∪ [−1, 3) because x=−1 is continuous but x=3 is not, and √(x−3) requires x>3.",
+    "option4": "f is continuous on (−∞, 3) — continuous at x=−1 since all three conditions hold, but NOT continuous at x=3 since lim(x→3⁻) f(x)=8 ≠ lim(x→3⁺) f(x)=0, giving a jump discontinuity there.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-143",
+    "option1": "Claims 1 and 2 are correct — after cancellation g is continuous everywhere except x=−3.",
+    "option2": "Claims 1 and 3 are correct — x=2 is removable (hole) and x=−3 is infinite; continuity intervals of the ORIGINAL g are (−∞,−3)∪(−3,2)∪(2,+∞).",
+    "option3": "All four claims are correct — Claims 2 and 3 describe the same intervals.",
+    "option4": "Only Claim 1 is correct — Claims 2, 3, and 4 all have errors.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-144",
+    "option1": "f is continuous on (−∞, +∞) because each piece is continuous and the closed circles fill the gaps.",
+    "option2": "f is continuous on (−∞, 1) ∪ (1, +∞) — continuous at x=−2 but not at x=1 because f(1)=4 while lim(x→1⁻)=9 and lim(x→1⁺)=4, giving LHL≠RHL.",
+    "option3": "f is continuous on (−∞, −2) ∪ (−2, 1) ∪ (1, +∞) — discontinuous at both boundary points.",
+    "option4": "f is continuous on (−∞, +∞) except at x=1 where f(1)=4≠9=lim(x→1⁻) creating a jump, so continuity holds on (−∞,1)∪(1,+∞).",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-145",
+    "option1": "g is continuous on (−∞, 0) ∪ (0, 2) ∪ (2, 4) ∪ (4, +∞) — discontinuous at x=0, x=2, and x=4.",
+    "option2": "g is continuous on (−∞, 2) ∪ (2, 4) ∪ (4, +∞) — continuous at x=0 but not at x=2 or x=4.",
+    "option3": "g is continuous on (−∞, 4) ∪ (4, +∞) — continuous at both x=0 and x=2.",
+    "option4": "g is continuous on (−∞, 0) ∪ (0, 4) ∪ (4, +∞) — discontinuous at x=0 and x=4 only.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-146",
+    "option1": "f is continuous on (−∞,−1)∪(−1,2)∪(2,+∞) — both x=−1 and x=2 are removable discontinuities because the formula gives 0/0 at both points.",
+    "option2": "f is continuous on (−∞,2)∪(2,+∞) — x=−1 is made continuous by f(−1)=3 matching the limit, but x=2 remains a removable discontinuity because f(2)=5≠lim(x→2) f(x).",
+    "option3": "f is continuous on (−∞,−1)∪(−1,+∞) — x=2 is an infinite discontinuity and x=−1 is removable.",
+    "option4": "f is continuous on (−∞,+∞) — both defined values f(−1)=3 and f(2)=5 fill in the holes perfectly.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-147",
+    "option1": "f is continuous only on (0, +∞) because linear functions start at the origin.",
+    "option2": "f is continuous on (−∞, 0) ∪ (0, +∞) because x = 0 is where f(0) = 1 which might cause issues.",
+    "option3": "f is continuous on (−∞, +∞) because f(x) = 2x+1 is a polynomial — defined, limit exists, and limit equals function value at every real number.",
+    "option4": "f is continuous on [0, +∞) only because the graph only makes sense for non-negative x.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-148",
+    "option1": "Function (A) — 1/x is a simple rational function and rational functions are always continuous.",
+    "option2": "Function (B) — √x is defined for all x so it is continuous everywhere.",
+    "option3": "Function (C) — h(x) = x³−5x+2 is a polynomial and all polynomials are continuous on (−∞,+∞).",
+    "option4": "Function (D) — p(x) = 1/(x²+1) is continuous everywhere because 1/(x²+1) never equals zero.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-149",
+    "option1": "f is continuous on (−∞, +∞) because every piece is a line and lines are always continuous.",
+    "option2": "f is continuous on (−∞, 4) ∪ (4, +∞) — continuous at x=0 because the same rule x+3 applies on both sides giving lim=f(0)=3; but NOT continuous at x=4 because lim(x→4⁻)=7 ≠ f(4)=2, even though lim(x→4⁺)=2=f(4).",
+    "option3": "f is continuous on (−∞, 0) ∪ (0, +∞) — the open circles at (0,3) mean a gap exists at x=0.",
+    "option4": "f is continuous on (−∞, 4) only — the line x−2 for x>4 causes a new discontinuity beyond x=4.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-150",
+    "option1": "Claims 1, 2, 3, and 4 are all correct — the given conditions are contradictory and no solution exists.",
+    "option2": "Claims 1, 2, and 3 are correct; Claim 4 reveals a contradiction; Claim 5 is wrong — both must be 0/0.",
+    "option3": "Claims 1, 2, 4, and 5 are correct; Claim 3 contains an arithmetic error — the correct cancellation gives f(x) = (x+c₁)/(x+c₂) not f(x)=1, and using f(0)=−3/4 determines the remaining constants.",
+    "option4": "Claims 1, 2, 3, and 5 are correct; Claim 4 is wrong because f(0)=−3/4 determines a and b BEFORE the cancellation analysis, giving a≠0.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-151",
+    "option1": "f is continuous on (−∞, +∞) because it simplifies to x+3 which is a line.",
+    "option2": "f is continuous on (−∞, 3) ∪ (3, +∞) because f(3) is undefined creating a removable discontinuity at x=3, so x=3 must be excluded.",
+    "option3": "f is continuous on (−∞, 3) only because the table shows values only approaching from the left.",
+    "option4": "f is continuous on (3, +∞) only because the calculator shows the line only on the right side of x=3.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-152",
+    "option1": "g is continuous on (−∞,−2)∪(−2,3)∪(3,+∞) — both x=−2 and x=3 are infinite discontinuities.",
+    "option2": "g is continuous on (−∞,−2)∪(−2,3)∪(3,+∞) — x=3 is a removable discontinuity (table shows lim=1, finite) and x=−2 is an infinite discontinuity (table shows g→±∞).",
+    "option3": "g is continuous on (−∞,3)∪(3,+∞) — x=−2 is continuous because lim exists there.",
+    "option4": "g is continuous on (−∞,−2)∪(3,+∞) only — both middle intervals are excluded.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-153",
+    "option1": "h is continuous on [−2, 5) ∪ (5, +∞) — continuous at x=2 but discontinuous at x=5.",
+    "option2": "h is continuous on (−2, 2) ∪ (2, 5) ∪ (5, +∞) — discontinuous at all three boundary points x=−2, x=2, and x=5.",
+    "option3": "h is continuous on [−2, 2) ∪ (2, 5) — the semicircle ends at x=2 causing a jump and ln is undefined at x=5.",
+    "option4": "h is continuous on [−2, +∞) — all three pieces connect smoothly.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-154",
+    "option1": "x=2: removable (lim≈1/3); x=−2: infinite (lim=±∞); x=−1: removable (lim≈−3). Continuous on (−∞,−2)∪(−2,−1)∪(−1,2)∪(2,+∞).",
+    "option2": "x=2: infinite; x=−2: infinite; x=−1: removable. Continuous on (−∞,−2)∪(−2,−1)∪(−1,+∞).",
+    "option3": "x=2: removable; x=−2: removable; x=−1: infinite. Continuous on (−∞,−1)∪(−1,+∞).",
+    "option4": "All three are removable discontinuities. Continuous on (−∞,−2)∪(−2,−1)∪(−1,2)∪(2,+∞).",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-155",
+    "option1": "Claims 1, 2, 3, 4, and 5 are all correct.",
+    "option2": "Claims 1, 2, 4, and 5 are correct; Claim 3 is wrong because continuity at x=3 requires the LEFT limit (9a+3b) to equal the RIGHT limit (+∞), which is impossible — but this doesn't change that x=3 is always discontinuous, just the reasoning differs.",
+    "option3": "Claims 1, 4, and 5 are correct; Claims 2 and 3 need verification — Claim 2 correctly identifies infinite discontinuity at x=3; Claim 3 correctly explains why continuity at x=3 is impossible.",
+    "option4": "All five claims are correct and mutually consistent — the full solution is a+b=−π with x=3 always discontinuous.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-156",
+    "option1": "k = 2 and m = 3 — both discontinuities are removable and these values fix both.",
+    "option2": "k = 2 only — the discontinuity at x=2 is removable; x=−3 is an infinite discontinuity that cannot be removed by any value of m.",
+    "option3": "k = 0 and m = 1 — direct substitution gives these values.",
+    "option4": "Neither discontinuity is removable — both x=2 and x=−3 must be excluded from the domain permanently.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-157",
+    "option1": "k = 1/3 — from rationalization: multiply by (√(x+5)+3)/(√(x+5)+3) to get (x−4)/[(x−4)(√(x+5)+3)] = 1/(√(x+5)+3); at x=4: 1/(3+3) = 1/6.",
+    "option2": "k = 1/6 — rationalize numerator: multiply by conjugate (√(x+5)+3)/(√(x+5)+3); numerator becomes (x+5)−9 = x−4; cancel (x−4); get 1/(√(x+5)+3); at x=4: 1/(√9+3) = 1/6.",
+    "option3": "k = 0 — because direct substitution gives (√9−3)/(4−4) = 0/0 = 0.",
+    "option4": "k = 3 — because √(4+5) = √9 = 3 which is the numerator value at x=4.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-158",
+    "option1": "Alex's method is incomplete and gives only one equation; Carl's method is the most complete giving a=1 and b=−12.",
+    "option2": "Beth's method is incorrect — plugging x=3 into 0/0 is invalid. Carl's method is fully correct: a=1 and b=−12.",
+    "option3": "Carl and Dana both give a=1, b=−12. Alex gives one correct equation. Beth's reasoning is invalid (cross-multiplying 0/0). The answer is a=1, b=−12.",
+    "option4": "All four methods give a=1, b=−12 and are equally valid.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-159",
+    "option1": "Claims 1 and 2 are correct; Claims 3 and 4 are both wrong.",
+    "option2": "Claims 1, 2, and 3 are correct; Claim 4 is unnecessarily complicated and wrong.",
+    "option3": "Claims 1, 2, 3, and 4 are all correct — Claim 4 simply gives more rigorous domain justification for the same conclusion as Claim 3.",
+    "option4": "Claims 1 and 2 are correct; Claim 3 is wrong because f ≠ x²+x−2; Claim 4 is correct — it properly distinguishes the original f from the simplified polynomial and correctly concludes f is continuous on all of (−∞,+∞) once a=−2 and b=4 are defined.",
+    "Answer": "option4"
+  },
+  {
+    "ID": "BC-LC-160",
+    "option1": "Approach A is correct only — the rest overcomplicate a simple observation.",
+    "option2": "Approaches A and D are both correct — A identifies 1/0, D verifies numerator≠0. B and C both make an error in the limit computation.",
+    "option3": "Approaches A, B, C, and D all reach the same correct conclusion — no k removes the discontinuity — but through different levels of rigor. D is most concise, B and C most detailed.",
+    "option4": "Approaches A, C, and D are correct; Approach B contains an algebraic error in the tan addition formula expansion.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-161",
+    "option1": "Claims 1, 2, 3, and 5 are correct; Claim 4 is wrong because c is fixed, not a free parameter.",
+    "option2": "Claims 1 and 3 are correct; Claims 2, 4, and 5 require verification.",
+    "option3": "Claims 1, 2, 3, 4, and 5 are all correct — Claim 2 uses the derivative definition legitimately, Claims 4 and 5 correctly identify the free parameter structure.",
+    "option4": "Claims 1, 3, and 5 are correct; Claim 2 is wrong because N′(c) requires N to be differentiable at c; Claim 4 is wrong because a, b, c are all independent choices.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-162",
+    "option1": "k = 3, because x = 3 at the point of discontinuity.",
+    "option2": "k = 5, because the constant in x+5 is 5.",
+    "option3": "k = 8, because lim(x→3)(x+5) = 3+5 = 8, and setting k=8 satisfies all three continuity conditions.",
+    "option4": "k = 0, because the discontinuity is removed by setting k to zero.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-163",
+    "option1": "The student is wrong — k=4 because x²=4 when x=2 and we ignore the −4.",
+    "option2": "The student is correct — k=0 because lim(x→2)(x²−4) = 2²−4 = 0, and setting k=0 satisfies all three continuity conditions.",
+    "option3": "The student is wrong — k=2 because x=2 at the point of discontinuity.",
+    "option4": "The student is correct but for the wrong reason — k=0 but only because the function 'passes through' zero near x=2.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-164",
+    "option1": "k = 4 — direct substitution fails because x=4 makes the denominator zero; after factoring x²−16=(x−4)(x+4) and cancelling (x−4), lim(x→4)(x+4)=8. So k should be 8, not 4.",
+    "option2": "k = 8 — direct substitution gives (16−16)/(4−4)=0/0 which is indeterminate, not a value. Factor x²−16=(x−4)(x+4), cancel (x−4), substitute x=4 into (x+4) to get 8. Setting k=8 satisfies all three continuity conditions.",
+    "option3": "k = 0 — direct substitution gives 0/0=0 so k=0 removes the discontinuity.",
+    "option4": "k = 16 — because the numerator x²−16 equals 0 at x=4, and 16 is the value of x².",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-165",
+    "option1": "Alex is correct only — there are infinitely many solutions without the f(0) constraint.",
+    "option2": "Beth, Carl, and Dana are all correct — all three find a=7 and b=12 using both constraints correctly. Alex is also correct about the infinite solution set before applying f(0)=7.",
+    "option3": "Only Dana is correct — she is the only one who verifies the answer.",
+    "option4": "Carl is correct only — the others make arithmetic errors.",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-166",
+    "option1": "k = 5 — the table shows x approaching 5 so the limit is 5.",
+    "option2": "k = 10 — the table shows f(x) approaching 10 from both sides; algebraically: factor x²−25=(x−5)(x+5), cancel (x−5), get x+5; at x=5: 5+5=10.",
+    "option3": "k = 0 — because direct substitution gives 0/0=0.",
+    "option4": "k = 25 — because the numerator x²−25 has value 0 at x=5, and 25=5².",
+    "Answer": "option2"
+  },
+  {
+    "ID": "BC-LC-167",
+    "option1": "Alex is correct — k=2 since x→2.",
+    "option2": "Carl is correct — 0/0=0 so k=0.",
+    "option3": "Beth and Dana are both correct — k=5 with correct reasoning from both table and algebra.",
+    "option4": "Beth is correct only — Dana's verification step is unnecessary.",
+    "Answer": "option3"
+  },
+  {
+    "ID": "BC-LC-168",
+    "option1": "k = 1/8 — rationalize: multiply by (√(x+7)+4)/(√(x+7)+4); numerator becomes (x+7)−16=x−9; cancel (x−9); get 1/(√(x+7)+4); at x=9: 1/(√16+4)=1/(4+4)=1/8. Calculator shows 0.125=1/8 ✓.",
+    "option2": "k = 1/4 — the calculator shows 0.125 and 1/4=0.25, close enough.",
+    "option3": "k = 0.125 exactly — the decimal is the exact answer; no algebraic confirmation needed.",
+    "option4": "k = 4 — because √(9+7)=√16=4 which is the numerator value at x=9.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-169",
+    "option1": "a=1, b=1 — left lim=5 from table; set 9b−4=5 giving b=1. Verify: f(3)=9(1)−4=5=lim ✓.",
+    "option2": "a=1, b=1/9 — left lim=5; right piece at x=3: 9b−4=5 gives b=1. Error: 9(1/9)−4=1−4=−3≠5.",
+    "option3": "a=2, b=1 — need to recompute left limit with a=2.",
+    "option4": "a=1, b=5 — set b equal to the limit value directly.",
+    "Answer": "option1"
+  },
+  {
+    "ID": "BC-LC-170",
+    "option1": "Claims 1, 3, 4, and 5 are correct; Claim 2 uses an incorrect standard limit.",
+    "option2": "Claims 1, 2, 4, and 5 are correct; Claim 3 is wrong — it confuses lim(1−cos(u))/u=0 with lim(1−cos(u))/u²=1/2.",
+    "option3": "All five claims are correct.",
+    "option4": "Claims 1, 4, and 5 are correct; Claims 2 and 3 both contain errors.",
+    "Answer": "option2"
+  }
+]

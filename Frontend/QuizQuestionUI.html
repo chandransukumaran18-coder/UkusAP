@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — UkusAP</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.css">
+<style>
+:root {
+  --bg:     #F4F5F7;
+  --bg2:    #FFFFFF;
+  --bg3:    #FAFBFC;
+  --gold: #F0A012;
+  --gold2: #D88A0A;
+  --teal: #00A187;
+  --border: rgba(15,23,42,0.1);
+  --text: #15171F;
+  --muted: #6B7280;
+  --muted2: #9CA3AF;
+  --green: #15803D;
+  --green-bg: #F0FDF4;
+  --red: #B91C1C;
+  --red-bg: #FEF2F2;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html, body {
+  height: 100%;
+  background: #fff;
+  color: #15171F;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#fff; }
+::-webkit-scrollbar-thumb { background:rgba(0,0,0,0.15); border-radius:3px; }
+
+/* ─── TOP BAR ─── */
+.exam-top {
+  background: var(--bg2);
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1.6rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 1rem;
+}
+.exam-top-left { display: flex; align-items: center; gap: 0.6rem; font-size: 0.92rem; font-weight: 600; }
+.exam-top-left .logo-int { color: var(--gold); }
+.exam-top-sub { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+.exam-top-center { display: flex; justify-content: center; align-items: center; }
+.exam-top-right { display: flex; justify-content: flex-end; }
+
+/* ─── INSTRUCTIONS SCREEN ─── */
+#instructionsScreen {
+  flex: 1;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ─── QUIZ SCREEN ─── */
+#quizScreen {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+}
+
+.instr-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2.6rem 2.8rem;
+  max-width: 620px;
+  width: 100%;
+  color: var(--text);
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04);
+}
+
+.instr-eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+.instr-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.instr-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.8rem;
+}
+
+.instr-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+.instr-stat {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.9rem 0.6rem;
+  text-align: center;
+}
+.instr-stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold2);
+  display: block;
+}
+.instr-stat-label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-family: 'Space Mono', monospace;
+}
+
+.instr-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2.2rem;
+}
+.instr-list li {
+  display: flex;
+  gap: 0.7rem;
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+.instr-list svg { width: 16px; height: 16px; color: var(--teal); flex-shrink: 0; margin-top: 0.2rem; }
+
+.continue-btn {
+  width: 100%;
+  padding: 0.95rem;
+  border-radius: 10px;
+  border: none;
+  background: var(--gold);
+  color: #07080F;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.continue-btn:hover { background: var(--gold2); transform: translateY(-1px); box-shadow: 0 10px 28px rgba(240,160,18,0.3); }
+
+/* ─── TIMER ─── */
+.timer-box {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #1A1A2E;
+  border: none;
+  padding: 0.55rem 1.1rem;
+  border-radius: 9px;
+}
+.timer-clock-icon { width: 15px; height: 15px; color: #fff; flex-shrink: 0; }
+.timer-box.danger { background: #7F1D1D; }
+.timer-display {
+  font-family: 'Space Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  min-width: 52px;
+  color: #fff;
+}
+.timer-box.danger .timer-display { color: #FCA5A5; }
+.timer-hide-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.55);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  cursor: pointer;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+}
+.timer-hide-btn:hover { color: #fff; }
+.timer-hide-btn:disabled { color: rgba(255,255,255,0.25); cursor: not-allowed; }
+
+/* ─── QUESTION NAV POPUP ─── */
+.q-nav-popup {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(15,23,42,0.13);
+  padding: 1rem;
+  display: none;
+  z-index: 100;
+  min-width: 220px;
+}
+.q-nav-popup.open { display: block; }
+.q-nav-popup-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.4rem;
+}
+.q-grid-btn {
+  width: 36px; height: 36px;
+  border-radius: 7px;
+  border: 1.5px solid #D1D5DB;
+  background: #fff;
+  color: var(--muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.15s;
+}
+.q-grid-btn:hover { border-color: #9CA3AF; }
+.q-grid-btn.answered { background: rgba(0,161,135,0.1); border-color: var(--teal); color: var(--teal); }
+.q-grid-btn.current { border-color: var(--gold); border-width: 2px; color: var(--gold2); }
+.q-grid-btn.marked::after {
+  content: '';
+  position: absolute;
+  top: -3px; right: -3px;
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  border: 1.5px solid #fff;
+}
+
+/* ─── MAIN QUIZ AREA (reused exam pane pattern) ─── */
+.exam-main { flex: 1; display: flex; overflow: hidden; }
+.exam-pane { flex: 1; overflow-y: auto; padding: 2.2rem 2.6rem; }
+.exam-pane-left { background: #FAFAF8; border-right: 1px solid var(--border); }
+.question-prompt { font-family: Georgia, 'Times New Roman', serif; font-size: 1.06rem; line-height: 1.85; color: #1A1A1A; max-width: 540px; }
+.question-graph { margin-top: 1.4rem; max-width: 540px; }
+.question-graph svg { max-width: 100%; height: auto; display: block; }
+
+/* ─── REPORT A PROBLEM ─── */
+.report-line { margin-top: 1.4rem; }
+.report-trigger {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  background: none; border: none; color: var(--muted);
+  font-size: 0.8rem; font-family: 'Inter', sans-serif; cursor: pointer; padding: 0.3rem 0; transition: color 0.15s;
+}
+.report-trigger:hover { color: var(--red); }
+.report-trigger svg { width: 14px; height: 14px; flex-shrink: 0; }
+.report-panel {
+  margin-top: 0.6rem; max-width: 480px;
+  background: #FAFAFA; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.1rem;
+}
+.report-panel-title { font-size: 0.82rem; font-weight: 600; margin-bottom: 0.7rem; }
+.report-options { display: flex; flex-direction: column; gap: 0.55rem; margin-bottom: 0.8rem; }
+.report-options label { display: flex; align-items: center; gap: 0.55rem; font-size: 0.82rem; cursor: pointer; }
+.report-options input[type=radio] { accent-color: var(--red); cursor: pointer; }
+.report-textarea {
+  width: 100%; min-height: 70px; padding: 0.6rem 0.7rem; border-radius: 8px; border: 1px solid var(--border);
+  font-family: inherit; font-size: 0.82rem; resize: vertical; margin-bottom: 0.8rem; display: none;
+}
+.report-textarea:focus { outline: none; border-color: var(--red); }
+.report-actions { display: flex; gap: 0.6rem; justify-content: flex-end; }
+.report-btn { font-size: 0.8rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 7px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; }
+.report-btn.cancel { background: none; color: var(--muted); }
+.report-btn.cancel:hover { color: #15171F; }
+.report-btn.send { background: var(--red); color: #fff; }
+.report-btn.send:hover { background: #991B1B; }
+.report-btn.send:disabled { opacity: 0.5; cursor: not-allowed; }
+.report-confirm { font-size: 0.82rem; color: var(--green); font-weight: 600; }
+
+.exam-pane-right { background: #fff; }
+
+table.q-table {
+  border-collapse: collapse;
+  margin: 1.2rem 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+}
+table.q-table th,
+table.q-table td {
+  border: 1px solid #1A1A1A;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+}
+table.q-table th { background: #F0EDE6; font-weight: 700; }
+table.q-table td.q-table-gap { border: none; padding: 0 0.5rem; background: transparent; }
+
+.question-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.question-num-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; background: #131417; color: #fff;
+  font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; border-radius: 5px;
+}
+.mark-review {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.84rem; color: var(--muted); cursor: pointer; user-select: none;
+}
+.mark-review input { accent-color: var(--gold); width: 15px; height: 15px; cursor: pointer; }
+.mark-review svg { width: 15px; height: 15px; }
+.mark-review.marked { color: var(--gold); font-weight: 600; }
+
+.choices-list { display: flex; flex-direction: column; gap: 0.65rem; max-width: 520px; }
+.choice-row {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 0.8rem 1.05rem; border: 1.5px solid var(--border); border-radius: 10px;
+  cursor: pointer; transition: all 0.15s;
+}
+.choice-row:hover { border-color: rgba(15,23,42,0.25); background: #FAFAFA; }
+.choice-badge {
+  flex-shrink: 0; width: 25px; height: 25px; border-radius: 50%;
+  border: 1.5px solid #9CA3AF; display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 0.76rem; font-weight: 700; color: var(--muted);
+  transition: all 0.15s;
+}
+.choice-text { padding-top: 0.08rem; font-size: 0.93rem; }
+.choice-row.selected { border-color: var(--teal); background: rgba(0,161,135,0.05); }
+.choice-row.selected .choice-badge { border-color: var(--teal); background: var(--teal); color: #fff; }
+
+/* ─── BOTTOM NAV BAR ─── */
+.exam-bottom {
+  background: #fff; border-top: 1px solid var(--border);
+  padding: 0.9rem 1.6rem; display: flex; align-items: center; justify-content: space-between;
+  flex-shrink: 0; gap: 1rem; position: relative;
+}
+.exam-btn {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.88rem;
+  padding: 0.6rem 1.3rem; border-radius: 8px; cursor: pointer; transition: all 0.18s; border: none;
+}
+.exam-btn.ghost { background: #fff; border: 1.5px solid var(--border); color: #15171F; }
+.exam-btn.ghost:hover { border-color: rgba(15,23,42,0.25); }
+.exam-btn.ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+.exam-btn.primary { background: var(--gold); color: #fff; }
+.exam-btn.primary:hover { background: #D88A0A; }
+.exam-btn.submit { background: var(--red); color: #fff; }
+.exam-btn.submit:hover { background: #991B1B; }
+.q-nav-btn {
+  background: #131417;
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.86rem;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+  transition: background 0.18s;
+  white-space: nowrap;
+}
+.q-nav-btn:hover { background: #2D2F36; }
+.bottom-right { display: flex; gap: 0.6rem; align-items: center; }
+
+/* ─── RESULTS SCREEN ─── */
+#resultsScreen { flex: 1; padding: 2.4rem 3rem 4rem; max-width: 760px; margin: 0 auto; width: 100%; display: none; }
+.results-score-card {
+  background: #FAFBFC; border: 1px solid var(--border); border-radius: 18px;
+  padding: 2rem; text-align: center; margin-bottom: 2rem;
+}
+.results-score-num {
+  font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; color: var(--gold);
+}
+.results-score-label { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+
+.review-item {
+  border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.8rem; overflow: hidden;
+}
+.review-item-header {
+  display: flex; align-items: center; gap: 0.8rem; padding: 0.9rem 1.1rem;
+  cursor: pointer; background: #FAFBFC; transition: background 0.15s;
+}
+.review-item-header:hover { background: #F4F5F7; }
+.review-status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.review-status-dot.correct { background: var(--green); }
+.review-status-dot.incorrect { background: var(--red); }
+.review-item-title { flex: 1; font-size: 0.86rem; font-weight: 600; }
+.review-item-chevron { width: 16px; height: 16px; color: var(--muted); transition: transform 0.2s; }
+.review-item.open .review-item-chevron { transform: rotate(180deg); }
+.review-item-body { display: none; padding: 1.2rem 1.4rem; border-top: 1px solid var(--border); }
+.review-item.open .review-item-body { display: block; }
+.review-item-body p { margin-bottom: 0.7rem; }
+.review-label { font-family: 'Space Mono', monospace; font-size: 0.68rem; text-transform: uppercase; color: var(--muted); letter-spacing: 0.05em; }
+.review-graph:not(:empty) { margin-top: 1rem; }
+
+.results-actions { display: flex; gap: 0.8rem; margin-top: 1.6rem; }
+.results-actions a {
+  flex: 1; text-align: center; padding: 0.85rem; border-radius: 10px; text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; transition: all 0.18s;
+}
+.results-actions .primary { background: var(--gold); color: #fff; }
+.results-actions .primary:hover { background: #D88A0A; }
+.results-actions .ghost { background: #fff; border: 1.5px solid var(--border); color: #15171F; }
+.results-actions .ghost:hover { border-color: rgba(15,23,42,0.25); }
+
+@media (max-width: 860px) {
+  .exam-main { flex-direction: column; overflow-y: auto; }
+  .exam-pane { overflow-y: visible; }
+  .exam-pane-left { border-right: none; border-bottom: 1px solid var(--border); }
+  .instr-stats { grid-template-columns: repeat(2, 1fr); }
+}
+sup, sub { font-size: 0.72em; line-height: 0; position: relative; vertical-align: baseline; }
+sup { top: -0.5em; }
+sub { bottom: -0.2em; }
+</style>
+</head>
+<body>
+
+<!-- ─── INSTRUCTIONS SCREEN ─── -->
+<div id="instructionsScreen">
+  <div class="instr-card">
+    <span class="instr-eyebrow">Before you begin</span>
+    <h1 class="instr-title">AP Calculus BC Quiz</h1>
+    <p class="instr-sub" id="instrChapter">Loading quiz details…</p>
+
+    <div class="instr-stats">
+      <div class="instr-stat"><span class="instr-stat-num" id="statTotal">—</span><span class="instr-stat-label">Questions</span></div>
+      <div class="instr-stat"><span class="instr-stat-num">35</span><span class="instr-stat-label">Minutes</span></div>
+      <div class="instr-stat"><span class="instr-stat-num" id="statCalc">—</span><span class="instr-stat-label">Calculator</span></div>
+      <div class="instr-stat"><span class="instr-stat-num" id="statNonCalc">—</span><span class="instr-stat-label">No Calculator</span></div>
+    </div>
+
+    <ul class="instr-list" id="instrList">
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> This quiz mixes calculator-active and non-calculator questions throughout — treat non-calculator questions as if you have no calculator, for realistic practice.</li>
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> You have 35 minutes once you click Continue. There is no penalty for guessing — attempt every question.</li>
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Use the question navigator to jump between questions and revisit any of them before submitting.</li>
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Mark a question for review if you want to double-check it later.</li>
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> In the final 5 minutes, the timer turns red and can no longer be hidden.</li>
+      <li><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> The quiz submits automatically when time runs out, using whatever you've answered so far.</li>
+    </ul>
+
+    <button class="continue-btn" id="continueBtn" disabled>Loading quiz…</button>
+  </div>
+</div>
+
+<!-- ─── QUIZ SCREEN ─── -->
+<div id="quizScreen">
+  <header class="exam-top">
+    <div class="exam-top-left">
+      <span class="logo-int">∫</span>
+      <span id="examLabel">AP Calculus BC</span>
+      <span class="exam-top-sub" id="examSub"></span>
+    </div>
+    <div class="exam-top-center">
+      <div class="timer-box" id="timerBox">
+        <svg class="timer-clock-icon" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        <span class="timer-display" id="timerDisplay">35:00</span>
+        <button class="timer-hide-btn" id="timerHideBtn">Hide</button>
+      </div>
+    </div>
+    <div class="exam-top-right"></div>
+  </header>
+
+  <main class="exam-main">
+    <section class="exam-pane exam-pane-left">
+      <div class="question-prompt" id="questionPrompt">Loading question…</div>
+      <div class="question-graph" id="stimulusGraph" style="display:none"></div>
+
+      <div class="report-line">
+        <button class="report-trigger" id="reportTrigger" type="button">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.7 17a2 2 0 001.7 3h15.2a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Report a problem with this question
+        </button>
+        <div class="report-panel" id="reportPanel" style="display:none"></div>
+      </div>
+    </section>
+    <section class="exam-pane exam-pane-right">
+      <div class="question-header-row">
+        <span class="question-num-badge" id="qNumBadge">1</span>
+        <label class="mark-review" id="markReviewLabel">
+          <input type="checkbox" id="markReview">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 3v18M5 4h12l-3 4 3 4H5" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Mark for Review
+        </label>
+      </div>
+      <div class="choices-list" id="choicesList"></div>
+    </section>
+  </main>
+
+  <footer class="exam-bottom">
+    <div id="qNavPopup" class="q-nav-popup"></div>
+    <button class="exam-btn ghost" id="backBtn">← Back</button>
+    <button class="q-nav-btn" id="qNavBtn">Question 1 of 15 ↑</button>
+    <div class="bottom-right">
+      <button class="exam-btn ghost" id="nextBtn">Next →</button>
+      <button class="exam-btn submit" id="submitBtn" style="display:none;">Submit Quiz</button>
+    </div>
+  </footer>
+</div>
+
+<!-- ─── RESULTS SCREEN ─── -->
+<div id="resultsScreen">
+  <div class="results-score-card">
+    <div class="results-score-num" id="resultsScoreNum">0/15</div>
+    <div class="results-score-label" id="resultsScoreLabel">questions correct</div>
+  </div>
+  <div id="reviewList"></div>
+  <div class="results-actions">
+    <a href="QuizzersPage.html" class="ghost">Take Another Quiz</a>
+    <a href="homepage.html" class="primary">Back to Dashboard</a>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/contrib/auto-render.min.js"></script>
+<script src="config.js"></script>
+<script>
+const token = localStorage.getItem('derive_token');
+if (!token) { window.location.href = 'LOGIN.html'; }
+
+const params  = new URLSearchParams(window.location.search);
+const chapter = params.get('chapter');
+if (!chapter) { window.location.href = 'QuizzersPage.html'; }
+
+/* ─── MATH RENDERING HELPERS (same approach as QuestionUI.html) ─── */
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str == null ? '' : str;
+  return div.innerHTML;
+}
+function convertLimNotation(text) {
+  return text.replace(/lim\(([a-zA-Z]+)\s*(?:→|->)\s*([^()]+)\)/g, '\\(\\displaystyle\\lim_{$1 \\to $2}\\)');
+}
+function buildTableHtml(tableLines) {
+  const rows = tableLines.map(line => {
+    const colonIdx = line.indexOf(':');
+    const label = line.slice(0, colonIdx).trim();
+    const rest = line.slice(colonIdx + 1).trim();
+    const groups = rest.split('|').map(group => group.trim().split(/\s+/).filter(Boolean));
+    return { label, groups };
+  });
+  let html = '<table class="q-table">';
+  rows.forEach(row => {
+    html += '<tr><th>' + escapeHtml(row.label) + '</th>';
+    row.groups.forEach((group, gi) => {
+      group.forEach(val => { html += '<td>' + escapeHtml(val) + '</td>'; });
+      if (gi < row.groups.length - 1) html += '<td class="q-table-gap"></td>';
+    });
+    html += '</tr>';
+  });
+  html += '</table>';
+  return html;
+}
+/* Values must be numeric-ish (numbers, signs, DNE, ∞) so prose lines that
+   contain a colon (e.g. "Claim 1: ...") are never mistaken for table rows. */
+function looksLikeTableValues(rest) {
+  const tokens = rest.split('|').join(' ').trim().split(/\s+/);
+  if (tokens.length < 2) return false;
+  return tokens.every(t =>
+    /^(?:[+\-−–]?(?:\d+(?:\.\d+)?|\.\d+|\d+\/\d+|∞)|[+\-−–0]|DNE|undef(?:ined)?)$/i.test(t)
+  );
+}
+function isTableRowLine(line) {
+  const m = line.match(/^\s*([^:\n]{1,40}?):\s+(\S.*)$/);
+  return !!m && looksLikeTableValues(m[2]);
+}
+
+function convertTables(text) {
+  const lines = text.split('\n');
+  const result = [];
+  let i = 0;
+  while (i < lines.length) {
+    let j = i;
+    const tableLines = [];
+    while (j < lines.length && isTableRowLine(lines[j])) {
+      tableLines.push(lines[j]);
+      j++;
+    }
+    if (tableLines.length >= 2) {
+      result.push(buildTableHtml(tableLines));
+      i = j;
+    } else {
+      result.push(lines[i]);
+      i++;
+    }
+  }
+  return result.join('\n');
+}
+function prepMath(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '[' && text[i - 1] === '\\') {
+      let close = text.indexOf('\\]', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(' && text[i - 1] === '\\') {
+      let close = text.indexOf('\\)', i);
+      if (close === -1) { out += text.slice(i); break; }
+      close += 2;
+      out += text.slice(i, close);
+      i = close;
+    } else if (text[i] === '(') {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const inner = text.slice(i + 1, j - 1);
+      if (/\\[a-zA-Z]+|[\^_]/.test(inner)) {
+        out += '\\(' + inner + '\\)';
+      } else {
+        out += text.slice(i, j);
+      }
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+function renderMathInto(el) {
+  renderMathInElement(el, {
+    delimiters: [
+      { left: '\\(', right: '\\)', display: false },
+      { left: '\\[', right: '\\]', display: true }
+    ],
+    throwOnError: false
+  });
+}
+/* Converts inline slash fractions like "(x-5)/x" or "(x^2-9)/(x-3)" into a
+   proper stacked \frac{...}{...}. Skips cases where the "(" belongs to a
+   preceding function name (e.g. sin(3x)/x), to avoid mis-rendering those. */
+function convertSlashFractions(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '(' && !/[a-zA-Z]/.test(text[i - 1] || '')) {
+      let depth = 1, j = i + 1;
+      while (j < text.length && depth > 0) {
+        if (text[j] === '(') depth++;
+        else if (text[j] === ')') depth--;
+        j++;
+      }
+      const numerator = text.slice(i + 1, j - 1);
+      if (text[j] === '/') {
+        const k = j + 1;
+        let denominator = null;
+        let afterDenom = k;
+        if (text[k] === '(') {
+          let d2 = 1, m = k + 1;
+          while (m < text.length && d2 > 0) {
+            if (text[m] === '(') d2++;
+            else if (text[m] === ')') d2--;
+            m++;
+          }
+          denominator = text.slice(k + 1, m - 1);
+          afterDenom = m;
+        } else {
+          const match = text.slice(k).match(/^[^\s()/?.,;:!]+/);
+          if (match) {
+            denominator = match[0];
+            afterDenom = k + match[0].length;
+          }
+        }
+        if (denominator) {
+          out += '\\(\\frac{' + numerator + '}{' + denominator + '}\\)';
+          i = afterDenom;
+          continue;
+        }
+      }
+      out += text.slice(i, j);
+      i = j;
+    } else {
+      out += text[i];
+      i++;
+    }
+  }
+  return out;
+}
+
+function convertUnicodeSuperSub(text) {
+  const supMap = {'²':'2','³':'3','¹':'1','⁰':'0','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁻':'-','⁺':'+'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  return text
+    .replace(/[²³¹⁰⁴⁵⁶⁷⁸⁹⁻⁺]/g, c => `<sup>${supMap[c]}</sup>`)
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]/g, c => `<sub>${subMap[c]}</sub>`);
+}
+
+/* Questions store a mix of plain text and real LaTeX — either wrapped in
+   \( \) / \[ \] or as bare commands like \displaystyle\lim_{x \to 1}.
+   Math segments must never pass through the plain-text helpers
+   (slash fractions, <sup>/<sub> injection) or the LaTeX breaks. */
+const MATH_SEGMENT = /(\\\([\s\S]*?\\\)|\\\[[\s\S]*?\\\])/;
+
+/* Wraps bare LaTeX command runs in \( \) so KaTeX picks them up. */
+function wrapBareLatex(text) {
+  const braceGroup = '\\{(?:[^{}]|\\{[^{}]*\\})*\\}';
+  const cmdRun = new RegExp(
+    '\\\\[a-zA-Z]+(?:\\s*(?:\\\\[a-zA-Z]+|[_^]\\s*(?:' + braceGroup + '|[A-Za-z0-9+\\-])|' + braceGroup + '))*',
+    'g'
+  );
+  return text.split(MATH_SEGMENT).map((part, k) => {
+    if (k % 2 === 1) return part;
+    return part.replace(cmdRun, m => '\\(' + m + '\\)');
+  }).join('');
+}
+
+/* Cleans the inside of one \(...\) / \[...\] segment: removes stray nested
+   delimiters (a KaTeX parse error — the red text) and converts unicode
+   math symbols to LaTeX equivalents. */
+function normalizeLatexSegment(seg) {
+  const supMap = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-'};
+  const subMap = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9'};
+  const open = seg.slice(0, 2), close = seg.slice(-2);
+  const inner = seg.slice(2, -2)
+    .replace(/\\[()[\]]/g, '')
+    .replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+/g, r => '^{' + r.split('').map(c => supMap[c]).join('') + '}')
+    .replace(/[₀₁₂₃₄₅₆₇₈₉]+/g, r => '_{' + r.split('').map(c => subMap[c]).join('') + '}')
+    .replace(/[−–]/g, '-')
+    .replace(/→/g, '\\to ')
+    .replace(/≠/g, '\\ne ')
+    .replace(/≤/g, '\\le ')
+    .replace(/≥/g, '\\ge ')
+    .replace(/∞/g, '\\infty ')
+    .replace(/π/g, '\\pi ')
+    .replace(/[·⋅]/g, '\\cdot ')
+    .replace(/×/g, '\\times ');
+  return open + inner + close;
+}
+
+/* Plain text: slash fractions may create new \( \) segments, so re-split
+   before applying the HTML sup/sub conversion. */
+function processPlainSegment(seg) {
+  return convertSlashFractions(seg).split(MATH_SEGMENT).map((s, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(s));
+    return convertUnicodeSuperSub(escapeHtml(s));
+  }).join('');
+}
+
+function setMathHtml(el, rawText, asParagraphs) {
+  let text = convertLimNotation(rawText == null ? '' : String(rawText));
+  text = wrapBareLatex(text);
+  const processed = text.split(MATH_SEGMENT).map((seg, k) => {
+    if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(seg));
+    return processPlainSegment(seg);
+  }).join('');
+  const withTables = convertTables(processed);
+  const withBreaks = asParagraphs
+    ? withTables.split(/\n\s*\n/).map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('')
+    : withTables.replace(/\n/g, '<br>');
+  el.innerHTML = prepMath(withBreaks);
+  renderMathInto(el);
+}
+
+/* ─── QUIZ STATE ─── */
+let quizQuestions = [];
+let currentIndex = 0;
+let userAnswers = {};
+let markedForReview = {};
+let timerInterval = null;
+let secondsLeft = 35 * 60;
+let timerHidden = false;
+let submitted = false;
+
+const continueBtn = document.getElementById('continueBtn');
+
+/* ─── FETCH QUIZ + POPULATE INSTRUCTIONS ─── */
+async function loadQuiz() {
+  try {
+    const res = await fetch(`${API_BASE}/generateQuiz?chap=${encodeURIComponent(chapter)}`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (!res.ok) {
+      document.getElementById('instrChapter').textContent = 'Could not load a quiz for this chapter yet.';
+      return;
+    }
+    const data = await res.json();
+    quizQuestions = data.questions;
+    document.getElementById('instrChapter').textContent = chapter;
+    document.getElementById('statTotal').textContent = quizQuestions.length;
+    document.getElementById('statCalc').textContent = data.calculatorCount;
+    document.getElementById('statNonCalc').textContent = data.nonCalculatorCount;
+    continueBtn.disabled = quizQuestions.length === 0;
+    continueBtn.textContent = quizQuestions.length === 0 ? 'No questions available' : 'Continue';
+  } catch (err) {
+    document.getElementById('instrChapter').textContent = 'Could not reach the server. Is the backend running?';
+  }
+}
+loadQuiz();
+
+continueBtn.addEventListener('click', () => {
+  if (quizQuestions.length === 0) return;
+  document.getElementById('instructionsScreen').style.display = 'none';
+  document.getElementById('quizScreen').style.display = 'flex';
+  document.getElementById('examSub').textContent = '— ' + chapter;
+  buildNavigator();
+  renderQuestion(0);
+  startTimer();
+});
+
+/* ─── TIMER ─── */
+function formatTime(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2, '0')}`;
+}
+function startTimer() {
+  const timerBox = document.getElementById('timerBox');
+  const timerDisplay = document.getElementById('timerDisplay');
+  const hideBtn = document.getElementById('timerHideBtn');
+  timerInterval = setInterval(() => {
+    secondsLeft--;
+    if (secondsLeft <= 300 && !timerBox.classList.contains('danger')) {
+      timerBox.classList.add('danger');
+      hideBtn.disabled = true;
+      timerHidden = false;
+    }
+    timerDisplay.textContent = timerHidden ? 'Hidden' : formatTime(Math.max(secondsLeft, 0));
+    if (secondsLeft <= 0) {
+      clearInterval(timerInterval);
+      submitQuiz(true);
+    }
+  }, 1000);
+}
+document.getElementById('timerHideBtn').addEventListener('click', () => {
+  if (document.getElementById('timerHideBtn').disabled) return;
+  timerHidden = !timerHidden;
+  document.getElementById('timerHideBtn').textContent = timerHidden ? 'Show' : 'Hide';
+  document.getElementById('timerDisplay').textContent = timerHidden ? 'Hidden' : formatTime(secondsLeft);
+});
+
+/* ─── NAVIGATOR POPUP ─── */
+function buildNavigator() {
+  const popup = document.getElementById('qNavPopup');
+  const grid = document.createElement('div');
+  grid.className = 'q-nav-popup-grid';
+  popup.appendChild(grid);
+  quizQuestions.forEach((q, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'q-grid-btn';
+    btn.textContent = idx + 1;
+    btn.id = `navdot-${idx}`;
+    btn.addEventListener('click', () => {
+      renderQuestion(idx);
+      popup.classList.remove('open');
+    });
+    grid.appendChild(btn);
+  });
+  refreshNavigator();
+}
+function refreshNavigator() {
+  const total = quizQuestions.length;
+  document.getElementById('qNavBtn').textContent = `Question ${currentIndex + 1} of ${total} ↑`;
+  quizQuestions.forEach((q, idx) => {
+    const btn = document.getElementById(`navdot-${idx}`);
+    if (!btn) return;
+    btn.classList.toggle('answered', !!userAnswers[q.ID]);
+    btn.classList.toggle('marked', !!markedForReview[q.ID]);
+    btn.classList.toggle('current', idx === currentIndex);
+  });
+}
+
+document.getElementById('qNavBtn').addEventListener('click', (e) => {
+  e.stopPropagation();
+  document.getElementById('qNavPopup').classList.toggle('open');
+});
+document.addEventListener('click', (e) => {
+  const popup = document.getElementById('qNavPopup');
+  if (!popup.contains(e.target) && e.target !== document.getElementById('qNavBtn')) {
+    popup.classList.remove('open');
+  }
+});
+
+/* ── STIMULUS GRAPHS ──
+   Many Graph SVGs double as answer explanations (annotations like "→ DNE ✓").
+   When the question text references its graph, show it while answering with
+   those answer-revealing <text> labels stripped; the full annotated version
+   still appears in the post-quiz review. Neutral labels (e.g. "slope = 3") stay. */
+const GRAPH_REF = /graph|figure|table|diagram|curve|plot|shown/i;
+const GRAPH_SPOILER = /[✓✗→⇒≠≈]|\bapparent\b|\bDNE\b|\bnot\b|\bcorrect\b|\bconfirm|\bfalse\b|\btrue\b(?!\s*:)|\bvalid\b|\bwrong\b|\bmin\b|\bmax\b|\bjump\b|\bcusp\b|\bcorner\b|\bhole\b|\bremovable\b|\bLHL\b|\bRHL\b|\blim\s*=|\bexact\b|\bbest\b|\buse|\bavg\b|\bratio\b|both sides|\bset\b|squeeze|horizontal tangent|=[^=,]*=|\([^()]*\)\s*\/\s*\([^()]*\)\s*=/i;
+
+function sanitizeGraph(svg) {
+  try {
+    const doc = new DOMParser().parseFromString(svg, 'image/svg+xml');
+    if (doc.querySelector('parsererror')) return svg;
+    doc.querySelectorAll('text').forEach(t => {
+      if (GRAPH_SPOILER.test(t.textContent)) t.remove();
+    });
+    return new XMLSerializer().serializeToString(doc.documentElement);
+  } catch (e) { return svg; }
+}
+function stimulusGraphHtml(q) {
+  return (q.Graph && GRAPH_REF.test(q.Question || '')) ? sanitizeGraph(q.Graph) : '';
+}
+
+/* ─── QUESTION RENDERING ─── */
+function renderQuestion(idx) {
+  currentIndex = idx;
+  const q = quizQuestions[idx];
+  document.getElementById('qNumBadge').textContent = idx + 1;
+
+  resetReportPanel();
+  setMathHtml(document.getElementById('questionPrompt'), q.Question, false);
+  const stimulusEl = document.getElementById('stimulusGraph');
+  const stimulus = stimulusGraphHtml(q);
+  stimulusEl.innerHTML = stimulus;
+  stimulusEl.style.display = stimulus ? 'block' : 'none';
+
+  const markReview = document.getElementById('markReview');
+  const markReviewLabel = document.getElementById('markReviewLabel');
+  markReview.checked = !!markedForReview[q.ID];
+  markReviewLabel.classList.toggle('marked', markReview.checked);
+
+  const choicesList = document.getElementById('choicesList');
+  choicesList.innerHTML = '';
+  ['option1', 'option2', 'option3', 'option4'].forEach((key, i) => {
+    const letter = ['A', 'B', 'C', 'D'][i];
+    const row = document.createElement('div');
+    row.className = 'choice-row';
+    row.dataset.value = q[key];
+    if (userAnswers[q.ID] === q[key]) row.classList.add('selected');
+    row.innerHTML = `<span class="choice-badge">${letter}</span><span class="choice-text"></span>`;
+    row.addEventListener('click', () => selectChoice(row, q.ID));
+    choicesList.appendChild(row);
+    setMathHtml(row.querySelector('.choice-text'), q[key], false);
+  });
+
+  document.getElementById('backBtn').disabled = idx === 0;
+  const isLast = idx === quizQuestions.length - 1;
+  document.getElementById('nextBtn').style.display = isLast ? 'none' : '';
+  document.getElementById('submitBtn').style.display = isLast ? '' : 'none';
+  refreshNavigator();
+}
+
+function selectChoice(row, questionID) {
+  document.querySelectorAll('.choice-row').forEach(r => r.classList.remove('selected'));
+  row.classList.add('selected');
+  userAnswers[questionID] = row.dataset.value;
+  refreshNavigator();
+}
+
+document.getElementById('markReviewLabel').addEventListener('click', (e) => {
+  e.preventDefault();
+  const q = quizQuestions[currentIndex];
+  markedForReview[q.ID] = !markedForReview[q.ID];
+  document.getElementById('markReview').checked = markedForReview[q.ID];
+  document.getElementById('markReviewLabel').classList.toggle('marked', markedForReview[q.ID]);
+  refreshNavigator();
+});
+
+document.getElementById('backBtn').addEventListener('click', () => {
+  if (currentIndex > 0) renderQuestion(currentIndex - 1);
+});
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (currentIndex < quizQuestions.length - 1) renderQuestion(currentIndex + 1);
+});
+document.getElementById('submitBtn').addEventListener('click', () => submitQuiz(false));
+
+/* ─── SUBMIT + RESULTS ─── */
+async function submitQuiz(timeIsUp) {
+  if (submitted) return;
+  submitted = true;
+  clearInterval(timerInterval);
+
+  const answersPayload = quizQuestions.map(q => ({ ID: q.ID, Answer: userAnswers[q.ID] || '' }));
+
+  try {
+    const res = await fetch(`${API_BASE}/AnswerQuiz`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify(answersPayload)
+    });
+    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    const result = await res.json();
+    showResults(result, timeIsUp);
+  } catch (err) {
+    alert('Could not submit the quiz — the server may be unreachable. Please try again.');
+    submitted = false;
+  }
+}
+
+function showResults(result, timeIsUp) {
+  document.getElementById('quizScreen').style.display = 'none';
+  document.getElementById('resultsScreen').style.display = 'block';
+
+  const details = result.Details || [];
+  const correctCount = details.filter(d => d.Correct).length;
+  document.getElementById('resultsScoreNum').textContent = `${correctCount}/${details.length}`;
+  document.getElementById('resultsScoreLabel').textContent =
+    (timeIsUp ? "Time's up — " : '') + 'questions correct';
+
+  const detailsByID = {};
+  details.forEach(d => { detailsByID[d.ID] = d; });
+
+  const reviewList = document.getElementById('reviewList');
+  reviewList.innerHTML = '';
+  quizQuestions.forEach((q, idx) => {
+    const d = detailsByID[q.ID];
+    const item = document.createElement('div');
+    item.className = 'review-item';
+    item.innerHTML = `
+      <div class="review-item-header">
+        <span class="review-status-dot ${d && d.Correct ? 'correct' : 'incorrect'}"></span>
+        <span class="review-item-title">Question ${idx + 1}</span>
+        <svg class="review-item-chevron" viewBox="0 0 20 20" fill="none"><path d="M5 8l5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="review-item-body">
+        <div class="review-question"></div>
+        <p><span class="review-label">Your answer: </span><span class="review-your-answer"></span></p>
+        <p><span class="review-label">Correct answer: </span><span class="review-correct-answer"></span></p>
+        <p><span class="review-label">Solution</span></p>
+        <div class="review-solution"></div>
+        <div class="review-graph"></div>
+      </div>
+    `;
+    reviewList.appendChild(item);
+
+    item.querySelector('.review-item-header').addEventListener('click', () => {
+      item.classList.toggle('open');
+    });
+
+    setMathHtml(item.querySelector('.review-question'), q.Question, false);
+    setMathHtml(item.querySelector('.review-your-answer'), userAnswers[q.ID] || '(no answer)', false);
+    setMathHtml(item.querySelector('.review-correct-answer'), d ? d.CorrectAnswer : '', false);
+    setMathHtml(item.querySelector('.review-solution'), d ? d.Solution : '', true);
+    if (q.Graph) {
+      item.querySelector('.review-graph').innerHTML = q.Graph;
+    }
+  });
+}
+
+/* ─── REPORT A PROBLEM ─── */
+const reportTrigger = document.getElementById('reportTrigger');
+const reportPanel   = document.getElementById('reportPanel');
+
+function resetReportPanel() {
+  reportPanel.innerHTML = `
+    <div class="report-panel-title">What's wrong with this question?</div>
+    <div class="report-options">
+      <label><input type="radio" name="reportReason" value="Question is wrong"> The question itself is wrong</label>
+      <label><input type="radio" name="reportReason" value="All the options are wrong"> All the options are wrong</label>
+      <label><input type="radio" name="reportReason" value="Question leaks the answer"> The question leaks the answer</label>
+      <label><input type="radio" name="reportReason" value="Other"> Other</label>
+    </div>
+    <textarea class="report-textarea" id="reportDetails" placeholder="Describe the issue…"></textarea>
+    <div class="report-actions">
+      <button class="report-btn cancel" id="reportCancelBtn" type="button">Cancel</button>
+      <button class="report-btn send" id="reportSendBtn" type="button" disabled>Send Report</button>
+    </div>
+  `;
+  reportPanel.style.display = 'none';
+  reportTrigger.style.display = 'inline-flex';
+  bindReportPanelEvents();
+}
+
+function bindReportPanelEvents() {
+  const details = document.getElementById('reportDetails');
+  const sendBtn = document.getElementById('reportSendBtn');
+  const cancelBtn = document.getElementById('reportCancelBtn');
+
+  document.querySelectorAll('input[name="reportReason"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+      const isOther = radio.value === 'Other' && radio.checked;
+      details.style.display = isOther ? 'block' : 'none';
+      sendBtn.disabled = isOther ? !details.value.trim() : false;
+    });
+  });
+  details.addEventListener('input', () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    if (selected && selected.value === 'Other') sendBtn.disabled = !details.value.trim();
+  });
+  cancelBtn.addEventListener('click', () => {
+    reportPanel.style.display = 'none';
+    reportTrigger.style.display = 'inline-flex';
+  });
+  sendBtn.addEventListener('click', async () => {
+    const selected = document.querySelector('input[name="reportReason"]:checked');
+    const q = quizQuestions[currentIndex];
+    if (!selected || !q) return;
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending…';
+    try {
+      const res = await fetch(`${API_BASE}/ReportQuestion`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({
+          QuestionID: q.ID,
+          Chapter: q.Chapter,
+          Reason: selected.value,
+          Details: details.value.trim()
+        })
+      });
+      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (!res.ok) throw new Error('failed');
+      reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
+    } catch (err) {
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send Report';
+      alert('Could not send the report. Please try again.');
+    }
+  });
+}
+
+reportTrigger.addEventListener('click', () => {
+  reportTrigger.style.display = 'none';
+  reportPanel.style.display = 'block';
+});
+resetReportPanel();
+</script>
+</body>
+</html>
