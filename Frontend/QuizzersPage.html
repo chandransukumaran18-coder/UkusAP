@@ -151,6 +151,27 @@ body {
   line-height: 1;
 }
 
+.sidebar-topbar { display: flex; align-items: center; justify-content: space-between; }
+.mobile-menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px; height: 38px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  color: var(--text);
+  cursor: pointer;
+}
+.mobile-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.4);
+  z-index: 150;
+}
+
 /* ─── MAIN ─── */
 .main {
   margin-left: var(--sidebar-w);
@@ -302,29 +323,49 @@ body {
 @media (max-width: 900px) {
   body { flex-direction: column; }
   .sidebar {
-    position: relative;
+    position: fixed;
+    top: 0; left: 0; right: 0;
     width: 100%;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     height: auto;
+    max-height: 100vh;
     border-right: none;
     border-bottom: 1px solid var(--border);
-    padding: 1rem;
-    overflow-x: auto;
-    gap: 1.2rem;
+    padding: 12px 1.2rem;
+    overflow: hidden;
+    z-index: 200;
   }
+  .sidebar.mobile-open { overflow-y: auto; }
   .sidebar-logo { margin-bottom: 0; }
-  .sidebar-user { border-bottom: none; padding: 0; margin-bottom: 0; }
-  .nav-list { flex-direction: row; }
-  .nav-item { white-space: nowrap; }
-  .main { margin-left: 0; padding: 1.6rem 1.2rem 3rem; }
+  .sidebar-topbar { min-height: 38px; }
+  .mobile-menu-btn { display: flex; }
+  .sidebar-user, .nav-list { display: none; }
+  .sidebar.mobile-open .sidebar-user {
+    display: flex;
+    padding: 1rem 0 1.2rem;
+    margin-bottom: 0;
+  }
+  .sidebar.mobile-open .nav-list {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.6rem;
+  }
+  .nav-item { white-space: normal; }
+  .sidebar.mobile-open + .mobile-backdrop { display: block; }
+  .main { margin-left: 0; margin-top: 65px; padding: 1.6rem 1.2rem 3rem; }
 }
 </style>
 </head>
 <body>
 
-<aside class="sidebar">
-  <a href="homepage.html" class="sidebar-logo"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></a>
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-topbar">
+    <a href="homepage.html" class="sidebar-logo"><span class="logo-int">∫</span> Ukus<span style="color:#F0A012;">AP</span></a>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" width="20" height="20"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
 
   <div class="sidebar-user">
     <div class="user-avi" id="userAvi">S</div>
@@ -368,6 +409,7 @@ body {
     </a></li>
   </ul>
 </aside>
+<div class="mobile-backdrop" id="mobileBackdrop"></div>
 
 <main class="main">
   <div class="main-header">
@@ -428,6 +470,21 @@ if (storedName) {
   document.getElementById('userName').textContent = storedName;
   document.getElementById('userAvi').textContent = storedName.charAt(0).toUpperCase();
 }
+
+const sidebar = document.getElementById('sidebar');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+function closeMobileMenu() {
+  sidebar.classList.remove('mobile-open');
+  mobileMenuBtn.setAttribute('aria-expanded', 'false');
+}
+mobileMenuBtn.addEventListener('click', () => {
+  const open = sidebar.classList.toggle('mobile-open');
+  mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+mobileBackdrop.addEventListener('click', closeMobileMenu);
+window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMobileMenu(); });
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   const token = localStorage.getItem('derive_token');
