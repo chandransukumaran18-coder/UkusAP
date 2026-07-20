@@ -761,8 +761,94 @@ function processPlainSegment(seg) {
     return convertUnicodeSuperSub(escapeHtml(s));
   }).join('');
 }
+/* The bank sometimes writes a bare "√(...)" or "√term" instead of \sqrt{...}
+   - a lone √ glyph has no bar drawn over the radicand, so it looks visually
+   cut off. Convert to the real LaTeX command; must run before
+   convertIntegralNotation, since a √ inside an integrand needs to already
+   be \sqrt{...} before the whole integral expression gets wrapped. */
+function convertSqrtNotation(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] !== '√') { out += text[i]; i++; continue; }
+    const j = i + 1;
+    if (text[j] === '(') {
+      let depth = 1, k = j + 1;
+      while (k < text.length && depth > 0) {
+        if (text[k] === '(') depth++;
+        else if (text[k] === ')') depth--;
+        k++;
+      }
+      out += '\\sqrt{' + text.slice(j + 1, k - 1) + '}';
+      i = k;
+    } else {
+      const m = text.slice(j).match(/^[a-zA-Z0-9²³¹⁰⁴⁵⁶⁷⁸⁹]+/);
+      if (m) { out += '\\sqrt{' + m[0] + '}'; i = j + m[0].length; }
+      else { out += text[i]; i++; }
+    }
+  }
+  return out;
+}
+
+/* The bank writes definite-integral bounds as Unicode sub/superscripts
+   directly after "∫" (e.g. "∫₀¹", "∫₀ˣ", or occasionally already-LaTeX
+   "∫_{−3}^{−1}") instead of real \int_{a}^{b}. Left alone, the bounds
+   flatten into inline sub/superscript text next to the sign instead of
+   stacking above and below it. Must run after convertSqrtNotation. */
+const INT_SUP_MAP = {'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','⁺':'+','⁻':'-','ˣ':'x','ᵃ':'a','ᵇ':'b','ᵗ':'t','ᶜ':'c'};
+const INT_SUB_MAP = {'₀':'0','₁':'1','₂':'2','₃':'3','₄':'4','₅':'5','₆':'6','₇':'7','₈':'8','₉':'9','₋':'-','ₐ':'a','ᵦ':'b','ₓ':'x','ₛ':'s'};
+const INT_SUP_CHARS = Object.keys(INT_SUP_MAP).join('');
+const INT_SUB_CHARS = Object.keys(INT_SUB_MAP).join('');
+
+function convertIntegralNotation(text) {
+  let out = '';
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] !== '∫') { out += text[i]; i++; continue; }
+    let j = i + 1;
+    let bounds = '';
+    for (let pass = 0; pass < 2; pass++) {
+      if (text[j] === '_' || text[j] === '^') {
+        if (text[j + 1] === '{') {
+          let depth = 1, k = j + 2;
+          while (k < text.length && depth > 0) {
+            if (text[k] === '{') depth++;
+            else if (text[k] === '}') depth--;
+            k++;
+          }
+          bounds += text[j] + text.slice(j + 1, k);
+          j = k;
+        }
+        continue;
+      }
+      let k = j;
+      while (k < text.length && INT_SUB_CHARS.indexOf(text[k]) !== -1) k++;
+      if (k > j) {
+        bounds += '_{' + text.slice(j, k).split('').map(c => INT_SUB_MAP[c]).join('') + '}';
+        j = k;
+        continue;
+      }
+      k = j;
+      while (k < text.length && INT_SUP_CHARS.indexOf(text[k]) !== -1) k++;
+      if (k > j) {
+        bounds += '^{' + text.slice(j, k).split('').map(c => INT_SUP_MAP[c]).join('') + '}';
+        j = k;
+        continue;
+      }
+    }
+    const rest = text.slice(j);
+    const m = rest.match(/^\s*([\s\S]*?)\s*d([xtuyshv]|θ)\b/);
+    if (!m) { out += text[i]; i++; continue; }
+    out += '\\(\\displaystyle\\int' + bounds + '\\,' + m[1] + '\\,d' + m[2] + '\\)';
+    i = j + m[0].length;
+  }
+  return out;
+}
+
 function setMathHtml(el, rawText, asParagraphs) {
   let text = convertLimNotation(rawText == null ? '' : String(rawText));
+  text = convertSqrtNotation(text);
+  text = convertIntegralNotation(text);
   text = wrapBareLatex(text);
   const processed = text.split(MATH_SEGMENT).map((seg, k) => {
     if (k % 2 === 1) return escapeHtml(normalizeLatexSegment(seg));
