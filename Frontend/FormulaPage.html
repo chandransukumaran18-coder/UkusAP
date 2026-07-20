@@ -150,44 +150,6 @@ body {
   z-index: 150;
 }
 
-/* ── RESPONSIVE ── */
-@media (max-width: 900px) {
-  body { flex-direction: column; }
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    bottom: auto;
-    width: 100%;
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
-    max-height: 100vh;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 12px 1.2rem;
-    overflow: hidden;
-    z-index: 200;
-  }
-  .sidebar.mobile-open { overflow-y: auto; }
-  .sidebar-logo { margin-bottom: 0; }
-  .sidebar-topbar { min-height: 38px; }
-  .mobile-menu-btn { display: flex; }
-  .sidebar-user, .nav-list { display: none; }
-  .sidebar.mobile-open .sidebar-user {
-    display: flex;
-    padding: 1rem 0 1.2rem;
-    margin-bottom: 0;
-  }
-  .sidebar.mobile-open .nav-list {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0.6rem;
-  }
-  .nav-item { white-space: normal; }
-  .sidebar.mobile-open + .mobile-backdrop { display: block; }
-  .main { margin-left: 0; margin-top: 65px; padding: 1.6rem 1.2rem 3rem; }
-}
-
 /* ── Main ── */
 .main {
   margin-left: var(--sidebar-w);
@@ -389,6 +351,44 @@ body {
 @keyframes fadeUp { to { opacity: 1; transform: none; } }
 .fade-up:nth-child(2) { animation-delay: 0.06s; }
 .fade-up:nth-child(3) { animation-delay: 0.12s; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+  body { flex-direction: column; }
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    bottom: auto;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+    max-height: 100vh;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 1.2rem;
+    overflow: hidden;
+    z-index: 200;
+  }
+  .sidebar.mobile-open { overflow-y: auto; }
+  .sidebar-logo { margin-bottom: 0; }
+  .sidebar-topbar { min-height: 38px; }
+  .mobile-menu-btn { display: flex; }
+  .sidebar-user, .nav-list { display: none; }
+  .sidebar.mobile-open .sidebar-user {
+    display: flex;
+    padding: 1rem 0 1.2rem;
+    margin-bottom: 0;
+  }
+  .sidebar.mobile-open .nav-list {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0.6rem;
+  }
+  .nav-item { white-space: normal; }
+  .sidebar.mobile-open + .mobile-backdrop { display: block; }
+  .main { margin-left: 0; margin-top: 65px; padding: 1.6rem 1.2rem 3rem; }
+}
 </style>
 </head>
 <body>
