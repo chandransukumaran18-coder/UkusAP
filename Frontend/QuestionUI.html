@@ -523,6 +523,7 @@ calcPanelClose.addEventListener('click', closeCalcPanel);
 
 let calcDrag = null;
 calcPanelHeader.addEventListener('pointerdown', (e) => {
+  if (e.target.closest('.calc-panel-close')) return;
   const rect = calcPanel.getBoundingClientRect();
   calcDrag = { offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
   calcPanel.style.left = rect.left + 'px';
