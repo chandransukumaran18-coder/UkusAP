@@ -141,6 +141,68 @@ body { display: flex; min-height: 100vh; }
 .exit-btn:hover { border-color: #DC2626; color: #DC2626; }
 .exit-btn svg { width: 15px; height: 15px; }
 
+.frq-top-right { display: flex; align-items: center; gap: 0.6rem; }
+
+.calc-toggle-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.calc-toggle-btn:hover, .calc-toggle-btn.active { background: #F4F5F7; color: #15171F; border-color: rgba(15,23,42,0.2); }
+
+.calc-panel {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 80px; left: calc(100vw - 404px);
+  width: 380px; height: 540px;
+  min-width: 300px; min-height: 360px;
+  max-width: 92vw; max-height: 88vh;
+  background: #fff;
+  border: 1px solid rgba(15,23,42,0.14);
+  border-radius: 12px;
+  box-shadow: 0 20px 48px rgba(15,23,42,0.24);
+  overflow: hidden;
+  resize: both;
+  z-index: 500;
+}
+.calc-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.55rem 0.5rem 0.55rem 0.9rem;
+  background: #F4F5F7;
+  border-bottom: 1px solid rgba(15,23,42,0.1);
+  cursor: move;
+  user-select: none;
+  touch-action: none;
+  flex-shrink: 0;
+}
+.calc-panel-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #15171F;
+}
+.calc-panel-close {
+  display: flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.calc-panel-close:hover { background: rgba(15,23,42,0.08); color: #15171F; }
+.calc-panel-frame { flex: 1; width: 100%; border: none; }
+@media (max-width: 480px) {
+  .calc-panel { left: 4vw; top: 8vh; }
+}
+
 .frq-body { flex: 1; overflow-y: auto; padding: 2.2rem 1.8rem 3rem; }
 .frq-wrap { max-width: 720px; margin: 0 auto; }
 
@@ -348,16 +410,40 @@ sub { bottom: -0.2em; }
       <span class="frq-top-badge">FRQ Bank</span>
       <span class="frq-top-chapter" id="chapterLabel"></span>
     </div>
-    <button class="exit-btn" id="exitBtn">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Exit
-    </button>
+    <div class="frq-top-right">
+      <button class="calc-toggle-btn" id="calcToggleBtn" type="button" aria-label="Open calculator" title="Calculator">
+        <svg viewBox="0 0 24 24" fill="none" width="17" height="17">
+          <rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.6"/>
+          <rect x="7.5" y="4.5" width="9" height="4" rx="0.5" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="8.5" cy="13" r="1" fill="currentColor"/>
+          <circle cx="12" cy="13" r="1" fill="currentColor"/>
+          <circle cx="15.5" cy="13" r="1" fill="currentColor"/>
+          <circle cx="8.5" cy="17" r="1" fill="currentColor"/>
+          <circle cx="12" cy="17" r="1" fill="currentColor"/>
+          <circle cx="15.5" cy="17" r="1" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="exit-btn" id="exitBtn">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 4H5a1 1 0 00-1 1v14a1 1 0 001 1h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M16 16l4-4-4-4M20 12H9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Exit
+      </button>
+    </div>
   </header>
   <div class="frq-body">
     <div class="frq-wrap" id="frqWrap">
       <div class="frq-loading"><div class="spinner"></div><span>Loading a question…</span></div>
     </div>
   </div>
+</div>
+
+<div class="calc-panel" id="calcPanel">
+  <div class="calc-panel-header" id="calcPanelHeader">
+    <span class="calc-panel-title">Calculator</span>
+    <button class="calc-panel-close" id="calcPanelClose" type="button" aria-label="Close calculator">
+      <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <iframe class="calc-panel-frame" id="calcPanelFrame" title="Desmos Scientific Calculator"></iframe>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/katex@0.17.0/dist/katex.min.js"></script>
@@ -387,6 +473,50 @@ mobileMenuBtn.addEventListener('click', () => {
 });
 mobileBackdrop.addEventListener('click', closeMobileMenu);
 window.addEventListener('resize', () => { if (window.innerWidth > 900) closeMobileMenu(); });
+
+/* ─── DESMOS CALCULATOR (floating, draggable, closable) ─── */
+const calcToggleBtn = document.getElementById('calcToggleBtn');
+const calcPanel = document.getElementById('calcPanel');
+const calcPanelHeader = document.getElementById('calcPanelHeader');
+const calcPanelClose = document.getElementById('calcPanelClose');
+const calcPanelFrame = document.getElementById('calcPanelFrame');
+let calcLoaded = false;
+
+function openCalcPanel() {
+  if (!calcLoaded) { calcPanelFrame.src = 'https://www.desmos.com/scientific'; calcLoaded = true; }
+  calcPanel.style.display = 'flex';
+  calcToggleBtn.classList.add('active');
+}
+function closeCalcPanel() {
+  calcPanel.style.display = 'none';
+  calcToggleBtn.classList.remove('active');
+}
+calcToggleBtn.addEventListener('click', () => {
+  calcPanel.style.display === 'flex' ? closeCalcPanel() : openCalcPanel();
+});
+calcPanelClose.addEventListener('click', closeCalcPanel);
+
+let calcDrag = null;
+calcPanelHeader.addEventListener('pointerdown', (e) => {
+  const rect = calcPanel.getBoundingClientRect();
+  calcDrag = { offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top };
+  calcPanel.style.left = rect.left + 'px';
+  calcPanel.style.top = rect.top + 'px';
+  calcPanelFrame.style.pointerEvents = 'none';
+  calcPanelHeader.setPointerCapture(e.pointerId);
+});
+calcPanelHeader.addEventListener('pointermove', (e) => {
+  if (!calcDrag) return;
+  const maxX = window.innerWidth - calcPanel.offsetWidth;
+  const maxY = window.innerHeight - calcPanel.offsetHeight;
+  const x = Math.max(0, Math.min(e.clientX - calcDrag.offsetX, maxX));
+  const y = Math.max(0, Math.min(e.clientY - calcDrag.offsetY, maxY));
+  calcPanel.style.left = x + 'px';
+  calcPanel.style.top = y + 'px';
+});
+function endCalcDrag() { calcDrag = null; calcPanelFrame.style.pointerEvents = ''; }
+calcPanelHeader.addEventListener('pointerup', endCalcDrag);
+calcPanelHeader.addEventListener('pointercancel', endCalcDrag);
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   try {
