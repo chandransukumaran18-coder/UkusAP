@@ -531,8 +531,8 @@ sub { bottom: -0.2em; }
     <div id="frqReviewList"></div>
 
     <div class="results-actions">
-      <a href="SamplePaper.html" class="ghost">Take Another Paper</a>
-      <a href="homepage.html" class="primary">Back to Dashboard</a>
+      <a href="SamplePaper" class="ghost">Take Another Paper</a>
+      <a href="homepage" class="primary">Back to Dashboard</a>
     </div>
   </div>
 </div>
@@ -542,7 +542,7 @@ sub { bottom: -0.2em; }
 <script src="config.js"></script>
 <script>
 const token = localStorage.getItem('derive_token');
-if (!token) { window.location.href = 'LOGIN.html'; }
+if (!token) { window.location.href = 'LOGIN'; }
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   try {
@@ -555,15 +555,15 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   } catch (_) {}
   localStorage.removeItem('derive_token');
   localStorage.removeItem('derive_name');
-  window.location.href = 'LOGIN.html';
+  window.location.href = 'LOGIN';
 });
 
 const params = new URLSearchParams(window.location.search);
 const paper  = params.get('paper');
-if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) { window.location.href = 'SamplePaper.html'; }
+if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) { window.location.href = 'SamplePaper'; }
 const paperNum = paper ? paper.replace('BC-EXAM', '') : '';
 
-/* ─── MATH RENDERING HELPERS (same approach as QuizQuestionUI.html) ─── */
+/* ─── MATH RENDERING HELPERS (same approach as QuizQuestionUI) ─── */
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str == null ? '' : str;
@@ -903,7 +903,7 @@ async function loadExam() {
     const res = await fetch(`${API_BASE}/SamplePaper?p=${encodeURIComponent(paper)}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     if (!res.ok) {
       document.getElementById('loadingScreen').innerHTML = '<span>Could not load this sample paper. Is the backend running?</span>';
       return;
@@ -1308,7 +1308,7 @@ async function revealFrqAnswer(f, partKeys) {
       const res = await fetch(`${API_BASE}/SamplePaperFRQAnswer?id=${encodeURIComponent(f.ID)}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
-      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (res.status === 401) { window.location.href = 'LOGIN'; return; }
       if (!res.ok) throw new Error('Could not load the answer.');
       answerData = await res.json();
       frqAnswerCache[f.ID] = answerData;
@@ -1390,7 +1390,7 @@ async function submitAndShowResults() {
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify({ mcq: mcqPayload, frq: frqPayload })
     });
-    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     const result = await res.json();
     renderResults(result);
   } catch (err) {
@@ -1532,7 +1532,7 @@ function bindReportPanelEvents() {
           Details: details.value.trim()
         })
       });
-      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (res.status === 401) { window.location.href = 'LOGIN'; return; }
       if (!res.ok) throw new Error('failed');
       reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
     } catch (err) {

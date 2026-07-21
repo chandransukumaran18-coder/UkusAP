@@ -557,7 +557,7 @@ sub { bottom: -0.2em; }
 <script src="config.js"></script>
 <script>
 const token = localStorage.getItem('derive_token');
-if (!token) { window.location.href = 'LOGIN.html'; }
+if (!token) { window.location.href = 'LOGIN'; }
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
   try {
@@ -570,7 +570,7 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   } catch (_) {}
   localStorage.removeItem('derive_token');
   localStorage.removeItem('derive_name');
-  window.location.href = 'LOGIN.html';
+  window.location.href = 'LOGIN';
 });
 
 const storedName = localStorage.getItem('derive_name');
@@ -583,7 +583,7 @@ const grade   = params.get('grade');
 const type    = params.get('type');
 const count   = parseInt(params.get('count'), 10) || 10;
 
-if (!chapter) { window.location.href = 'AdvancedCustomizationPage.html'; }
+if (!chapter) { window.location.href = 'AdvancedCustomizationPage'; }
 
 const subParts = [chapter];
 if (topic) subParts.push(topic);
@@ -985,7 +985,7 @@ async function loadSet() {
 
   try {
     const res = await fetch(url, { headers: { 'Authorization': `Bearer ${token}` } });
-    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     if (!res.ok) {
       setMathHtml(questionPrompt, 'Could not load your custom set. Try adjusting your filters.', false);
       return;
@@ -1014,7 +1014,7 @@ function showEmptyState() {
     <h2>No questions matched your filters</h2>
     <p>Try widening your topic, difficulty, or calculator settings.</p>
     <div class="center-card-actions">
-      <a class="btn-primary" href="AdvancedCustomizationPage.html">Adjust filters</a>
+      <a class="btn-primary" href="AdvancedCustomizationPage">Adjust filters</a>
     </div>`;
 }
 
@@ -1160,8 +1160,8 @@ function showSummary() {
     <h2>${pct}% correct</h2>
     <p>That's your custom set on ${escapeHtml(chapter)}${topic ? ' · ' + escapeHtml(topic) : ''}. Build another set to keep practicing.</p>
     <div class="center-card-actions">
-      <a class="btn-secondary" href="homepage.html">Back to home</a>
-      <a class="btn-primary" href="AdvancedCustomizationPage.html">Build another set</a>
+      <a class="btn-secondary" href="homepage">Back to home</a>
+      <a class="btn-primary" href="AdvancedCustomizationPage">Build another set</a>
     </div>`;
 }
 
@@ -1176,7 +1176,7 @@ actionBtn.addEventListener('click', async () => {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ ID: currentQuestion.ID, Answer: selectedChoice })
       });
-      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (res.status === 401) { window.location.href = 'LOGIN'; return; }
       const result = await res.json();
       answers[currentQuestion.ID] = {
         selectedChoice,
@@ -1257,7 +1257,7 @@ function bindReportPanelEvents() {
           Details: details.value.trim()
         })
       });
-      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (res.status === 401) { window.location.href = 'LOGIN'; return; }
       if (!res.ok) throw new Error('failed');
       reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
     } catch (err) {

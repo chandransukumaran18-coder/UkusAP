@@ -553,8 +553,8 @@ sub { bottom: -0.2em; }
   </div>
   <div id="reviewList"></div>
   <div class="results-actions">
-    <a href="QuizzersPage.html" class="ghost">Take Another Quiz</a>
-    <a href="homepage.html" class="primary">Back to Dashboard</a>
+    <a href="QuizzersPage" class="ghost">Take Another Quiz</a>
+    <a href="homepage" class="primary">Back to Dashboard</a>
   </div>
 </div>
 
@@ -563,7 +563,7 @@ sub { bottom: -0.2em; }
 <script src="config.js"></script>
 <script>
 const token = localStorage.getItem('derive_token');
-if (!token) { window.location.href = 'LOGIN.html'; }
+if (!token) { window.location.href = 'LOGIN'; }
 
 document.querySelectorAll('.logout-btn-trigger').forEach(btn => {
   btn.addEventListener('click', async () => {
@@ -577,15 +577,15 @@ document.querySelectorAll('.logout-btn-trigger').forEach(btn => {
     } catch (_) {}
     localStorage.removeItem('derive_token');
     localStorage.removeItem('derive_name');
-    window.location.href = 'LOGIN.html';
+    window.location.href = 'LOGIN';
   });
 });
 
 const params  = new URLSearchParams(window.location.search);
 const chapter = params.get('chapter');
-if (!chapter) { window.location.href = 'QuizzersPage.html'; }
+if (!chapter) { window.location.href = 'QuizzersPage'; }
 
-/* ─── MATH RENDERING HELPERS (same approach as QuestionUI.html) ─── */
+/* ─── MATH RENDERING HELPERS (same approach as QuestionUI) ─── */
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.textContent = str == null ? '' : str;
@@ -924,7 +924,7 @@ async function loadQuiz() {
     const res = await fetch(`${API_BASE}/generateQuiz?chap=${encodeURIComponent(chapter)}`, {
       headers: { 'Authorization': `Bearer ${token}` }
     });
-    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     if (!res.ok) {
       document.getElementById('instrChapter').textContent = 'Could not load a quiz for this chapter yet.';
       return;
@@ -1125,7 +1125,7 @@ async function submitQuiz(timeIsUp) {
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
       body: JSON.stringify(answersPayload)
     });
-    if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+    if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     const result = await res.json();
     showResults(result, timeIsUp);
   } catch (err) {
@@ -1245,7 +1245,7 @@ function bindReportPanelEvents() {
           Details: details.value.trim()
         })
       });
-      if (res.status === 401) { window.location.href = 'LOGIN.html'; return; }
+      if (res.status === 401) { window.location.href = 'LOGIN'; return; }
       if (!res.ok) throw new Error('failed');
       reportPanel.innerHTML = '<div class="report-confirm">Thanks — your report has been sent.</div>';
     } catch (err) {

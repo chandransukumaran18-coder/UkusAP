@@ -508,7 +508,7 @@ body {
   <div class="lp-orb2"></div>
 
   <div class="lp-top">
-    <a href="derive-landing.html" class="logo">
+    <a href="derive-landing" class="logo">
       <span class="logo-int">&#x222B;</span> Ukus<span style="color:#F0A012;">AP</span>
     </a>
   </div>
@@ -566,7 +566,7 @@ body {
 
 <!-- RIGHT PANEL -->
 <div class="right-panel">
-  <a href="derive-landing.html" class="mobile-logo">
+  <a href="derive-landing" class="mobile-logo">
     <span class="logo-int">&#x222B;</span> Ukus<span style="color:#F0A012;">AP</span>
   </a>
 
@@ -680,7 +680,7 @@ body {
     </button>
 
     <p class="legal-consent">
-      By creating an account, you agree to our <a href="TermsOfService.html" target="_blank" rel="noopener">Terms of Service</a> and <a href="PrivacyPolicy.html" target="_blank" rel="noopener">Privacy Policy</a>.
+      By creating an account, you agree to our <a href="TermsOfService" target="_blank" rel="noopener">Terms of Service</a> and <a href="PrivacyPolicy" target="_blank" rel="noopener">Privacy Policy</a>.
     </p>
   </form>
 
@@ -691,7 +691,7 @@ body {
   </div>
 
   <p class="legal-consent">
-    <a href="TermsOfService.html" target="_blank" rel="noopener">Terms of Service</a> &middot; <a href="PrivacyPolicy.html" target="_blank" rel="noopener">Privacy Policy</a>
+    <a href="TermsOfService" target="_blank" rel="noopener">Terms of Service</a> &middot; <a href="PrivacyPolicy" target="_blank" rel="noopener">Privacy Policy</a>
   </p>
 </div>
 
@@ -725,7 +725,7 @@ async function performLogin(email, password) {
   const data = await res.json();
   localStorage.setItem('derive_token', data.token);
   localStorage.setItem('derive_name', data.name);
-  window.location.href = 'homepage.html';
+  window.location.href = 'homepage';
 }
 
 async function performGoogleAuth(credential) {
@@ -741,7 +741,7 @@ async function performGoogleAuth(credential) {
   const data = await res.json();
   localStorage.setItem('derive_token', data.token);
   localStorage.setItem('derive_name', data.name);
-  window.location.href = 'homepage.html';
+  window.location.href = 'homepage';
 }
 
 /* ─── GOOGLE SIGN-IN ───

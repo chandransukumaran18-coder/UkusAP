@@ -182,7 +182,7 @@ html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sy
 
 <div class="page">
   <div class="top-nav">
-    <a href="SamplePaper.html" class="back-link">
+    <a href="SamplePaper" class="back-link">
       <svg viewBox="0 0 24 24" fill="none"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       All Sample Papers
     </a>
@@ -310,7 +310,7 @@ html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sy
 <script>
 const token = localStorage.getItem('derive_token');
 if (!token) {
-  window.location.href = 'LOGIN.html';
+  window.location.href = 'LOGIN';
 }
 
 document.getElementById('logoutBtn').addEventListener('click', async () => {
@@ -324,13 +324,13 @@ document.getElementById('logoutBtn').addEventListener('click', async () => {
   } catch (_) {}
   localStorage.removeItem('derive_token');
   localStorage.removeItem('derive_name');
-  window.location.href = 'LOGIN.html';
+  window.location.href = 'LOGIN';
 });
 
 const params = new URLSearchParams(window.location.search);
 const paper = params.get('paper');
 if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) {
-  window.location.href = 'SamplePaper.html';
+  window.location.href = 'SamplePaper';
 } else {
   const num = paper.replace('BC-EXAM', '');
   document.getElementById('examTitle').textContent = `AP Calculus BC — Practice Exam ${num}`;
@@ -338,7 +338,7 @@ if (!paper || !/^BC-EXAM(10|[1-9])$/.test(paper)) {
   const beginBtn = document.getElementById('beginBtn');
   beginBtn.disabled = false;
   beginBtn.addEventListener('click', () => {
-    window.location.href = `SamplePaperExam.html?paper=${encodeURIComponent(paper)}`;
+    window.location.href = `SamplePaperExam?paper=${encodeURIComponent(paper)}`;
   });
 }
 </script>
