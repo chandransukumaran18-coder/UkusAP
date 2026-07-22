@@ -1,5 +1,6 @@
 import fastapi
 import enum
+from collections import Counter
 
 import pydantic
 import bcrypt
@@ -640,43 +641,13 @@ async def showweak(db=Depends(get_db),user=Depends(get_current_user)):
     con,cur=db
     cur.execute("select *from calculusbc where USER_ID=%s",(user["user_id"],))
     x=cur.fetchall()
-    wrganst=[]
-    for i in x:
-        if i[9]=='Wrong':
-            wrganst.append(i[3])
-    topics=[]
-    for i in reversed(wrganst):
-        v=wrganst.pop(wrganst.index(i))
-        if v in wrganst:
-            continue
-        else:
-            topics.append(v)
-    for i in x:
-        if i[9]=='Wrong':
-            wrganst.append(i[3])
-    occurences=[]
-    for i in topics:
-        w=wrganst.count(i)
-        occurences.append(w)
-    ord=[]
-    if len(occurences)>=3:
-        for i in range(3):
-            m=max(occurences)
-            for i in topics:
-                if wrganst.count(i)==m:
-                    ord.append(i)
-            occurences.pop(occurences.index(m))
-        return ord
-    elif len(occurences)==0:
+    wrganst=[i[3] for i in x if i[9]=='Wrong']
+    if not wrganst:
         return {"Message":"No Topics Yet"}
-    else:
-        while occurences:
-            m=max(occurences)
-            for i in topics:
-                if wrganst.count(i)==m:
-                    ord.append(i)
-            occurences.pop(occurences.index(m))
-        return ord
+    counts=Counter(wrganst)
+    topics=list(dict.fromkeys(wrganst))
+    ranked=sorted(topics, key=lambda t: counts[t], reverse=True)
+    return ranked[:3]
 
 class paper(enum.Enum):
     paper1='BC-EXAM1'

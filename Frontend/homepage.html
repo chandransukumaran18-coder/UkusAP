@@ -661,7 +661,7 @@ async function loadProgressRadar() {
   const token = localStorage.getItem('derive_token');
   if (!token) return;
   try {
-    const res = await fetch(`${API_BASE}/ProgressRadar`, { headers: { 'Authorization': `Bearer ${token}` } });
+    const res = await fetch(`${API_BASE}/ProgressRadar`, { headers: { 'Authorization': `Bearer ${token}` }, cache: 'no-store' });
     if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     if (!res.ok) return;
     const perc = await res.json();
@@ -721,7 +721,8 @@ async function loadWeakAreas() {
   const container = document.getElementById('weakAreasList');
   try {
     const res = await fetch(`${API_BASE}/WeakAreas`, {
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { 'Authorization': `Bearer ${token}` },
+      cache: 'no-store'
     });
     if (res.status === 401) { window.location.href = 'LOGIN'; return; }
     if (!res.ok) { container.innerHTML = ''; return; }
