@@ -1,0 +1,15 @@
+User-agent: *
+Disallow: /homepage
+Disallow: /QuestionBankPage
+Disallow: /QuestionUI
+Disallow: /QuizzersPage
+Disallow: /QuizQuestionUI
+Disallow: /SamplePaper
+Disallow: /SamplePaperExam
+Disallow: /AdvancedCustomizationPage
+Disallow: /AdvancedCustomizationQuestions
+Disallow: /FormulaPage
+Disallow: /FRQ
+Disallow: /Info
+
+Sitemap: https://ukusap.com/sitemap.xml
